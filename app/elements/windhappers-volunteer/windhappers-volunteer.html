@@ -1,0 +1,104 @@
+<script src="../../bower_components/js-md5/build/md5.min.js"></script>
+
+<dom-module id="windhappers-volunteer">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-horizontal);
+      }
+
+      paper-card.volunteer {
+        @apply(--layout-flex);
+        @apply(--layout-horizontal);
+      }
+
+      .volunteer-gravatar {
+        width: 100px;
+      }
+
+      .volunteer-content {
+        @apply(--layout-flex);
+      }
+
+      .volunteer-header { 
+        @apply(--paper-font-headline); 
+      }
+
+      .volunteer-function {
+        color: var(--secondary-text-color);
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+    <paper-card class$="volunteer {{_computeNarrowClass(narrow)}}">
+      <iron-image class="volunteer-gravatar"
+                  sizing="cover"
+                  src="{{image}}"></iron-image>
+      <div class="volunteer-content">
+        <div class="card-content">
+          <div class="volunteer-header">{{name}}</div>
+          <div class="volunteer-function">{{function}}</div>
+        </div>
+        <div hidden$="{{_hiddenActions}}" class="card-actions">
+          <a hidden$="{{!email}}" href="mailto:{{email}}">
+            <iron-icon icon="communication:email"></iron-icon>
+            <span hidden$="{{narrow}}">{{email}}</span>
+          </a>
+          <br hidden$="{{narrow}}"/>
+          <a hidden$="{{!phone}}" href="tel:{{phone}}">
+            <iron-icon icon="communication:phone"></iron-icon>
+            <span hidden$="{{narrow}}">{{phone}}</span>
+          </a>
+        </div>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-volunteer',
+
+        properties: {
+          name: String,
+          function: String,
+          email: String,
+          emailPersonal: String,
+          phone: String,
+          narrow: Boolean,
+          image: {
+            type: String,
+            computed: '_computeGravatarUrl(emailPersonal, email)'
+          },
+          _hiddenActions: {
+            type: Boolean,
+            computed: '_computeHiddenActions(email, phone)'
+          }
+        },
+
+        _computeNarrowClass: function() {
+          if (this.narrow) {
+            return 'narrow';
+          }
+        },
+
+        _computeHiddenActions: function(email, phone) {
+          return !(email || phone)
+        },
+
+        _computeGravatarUrl: function(emailPersonal, email) {
+          if (emailPersonal) {
+            var value = emailPersonal.toLowerCase();
+          } else {
+            var value = email.toLowerCase();
+          }
+          var hash = md5(value);
+          return 'https://secure.gravatar.com/avatar/' + hash + '?size=100&default=identicon'
+        }
+      });
+    })();
+  </script>
+</dom-module>

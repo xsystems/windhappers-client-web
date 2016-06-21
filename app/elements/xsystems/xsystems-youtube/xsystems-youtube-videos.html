@@ -1,0 +1,107 @@
+<dom-module id="xsystems-youtube-videos">
+  <template>
+    <style>
+      :host {     
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
+        @apply(--layout-wrap);          
+        padding-left: 2%;
+        padding-bottom: 1%;
+      }
+
+      .video {
+        width: 32%;
+        margin-top: 1%;
+        margin-right: 1%;
+        --paper-card-header-color: #00FFFF;
+      }
+
+      .video-title {
+        margin-top: 0;
+      }
+
+      .video-thumbnail {
+        width: 100%;
+        padding-bottom: 55%;
+      }
+    </style>
+
+    <xsystems-youtube-search  key="AIzaSyBXP5W7ZDQTkWaW_kys6lUFpYAWI-Tqi-M"
+                              query="Polycast"
+                              channel="UCnUYZLuoy1rq1aVMwx4aTzw"
+                              type="video"
+                              results-per-page="9"
+                              page-token="{{_pageToken}}"
+                              items="{{_items}}"
+                              page-token-next="{{_pageTokenNext}}">
+    </xsystems-youtube-search>
+
+    <iron-scroll-threshold  id="scrollThreshold"
+                            scroll-target="document"
+                            on-lower-threshold="_loadMoreVideos"> 
+    </iron-scroll-threshold>
+
+    <template is="dom-repeat" items="[[_videos]]" as="video">
+      <paper-card class="video">
+        <iron-image class="video-thumbnail"
+                    on-tap="_showVideo"
+                    sizing="cover"
+                    src="[[video.snippet.thumbnails.high.url]]"></iron-image>
+        <div class="card-content">
+          <h2 class="video-title">[[video.snippet.title]]</h2>
+          [[video.snippet.description]]
+        </div>
+      </paper-card>
+    </template>
+
+    <array-selector id="videoSelector" items="{{_videos}}" selected="{{selected}}"></array-selector>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'xsystems-youtube-videos',
+
+        properties: {
+          selected: {
+            type: Object,
+            notify: true
+          },
+          _items: Array,
+          _videos: Array,
+          _pageToken: String,
+          _pageTokenNext: String
+        },
+
+        observers: [
+          '_handleSearchResult(_items)'
+        ],
+
+        _loadMoreVideos: function(e) {
+          if (this._pageTokenNext) {
+            this._pageToken = this._pageTokenNext;
+          } else {
+            this.$.scrollThreshold.clearTriggers();
+          }
+        },
+
+        _handleSearchResult: function(items) {
+          if (this._pageToken) {
+            for (var i = 0; i < items.length; i++) {
+              this.push('_videos', items[i]);
+            }
+          } else {
+            this._videos = items;
+          }
+          this.$.scrollThreshold.clearTriggers();
+        },
+
+        _showVideo: function(event) {
+          var video = event.model.video;
+          this.$.videoSelector.select(video);
+        }
+      });
+    })();
+  </script>
+</dom-module>

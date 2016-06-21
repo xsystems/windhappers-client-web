@@ -1,0 +1,20 @@
+{
+  "name": "windhappers-client-web",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "app-elements": "PolymerElements/app-elements#^0.9.0",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.10",
+    "neon-elements": "PolymerElements/neon-elements#^1.0.0",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.7",
+    "platinum-elements": "PolymerElements/platinum-elements#^2.0.0",
+    "google-map": "GoogleWebComponents/google-map#1.1.10",
+    "google-sheets": "GoogleWebComponents/google-sheets#1.0.5",
+    "google-youtube": "GoogleWebComponents/google-youtube#1.2.1",
+    "js-md5": "md5#^0.4.1"
+  },
+  "devDependencies": {
+    "web-component-tester": "^4.0.0"
+  },
+  "ignore": []
+}

@@ -1,0 +1,78 @@
+<dom-module id="windhappers-page-location">
+  <template>
+    <style>
+      #addressInput {
+        position: absolute;
+        z-index: 1;
+        top: 2%;
+        left: 2%;
+        --paper-input-container-input: {
+          font-weight: bolder;
+        };
+        --paper-input-container-label: {
+          font-weight: bolder;
+        };
+        --paper-input-container-underline: {
+          height: 2px;
+        };
+      }
+
+      /* Small */
+      @media (max-width: 600px) {
+        #addressInput {
+          width: 90%;       
+        }
+      }
+
+      /* Tablet+ */
+      @media (min-width: 601px) {
+        #addressInput {
+          width: 25%;       
+        }
+      }
+    </style>
+
+    <iron-a11y-keys id="a11y" target="[[targetAddressInput]]" keys="enter" on-keys-pressed="calculateDirections"></iron-a11y-keys>
+
+    <paper-input id="addressInput" label="Waar kom je vandaan?" value="{{startAddress}}">
+      <paper-icon-button suffix icon="icons:search" on-tap="calculateDirections"></paper-icon-button>
+    </paper-input>
+    <google-map map="{{map}}" disable-default-ui latitude="52.079124" longitude="4.236238" on-google-map-ready="showMarkers">
+      <google-map-marker id="windhapperMarker" animation="DROP" latitude="52.039119" longitude="4.236241">
+        <b>Kanovereniging De Windhappers</b><br/>
+        Nieuweweg 75, 2544NG Den Haag<br/>
+        <i>52.039124, 4.236238</i>
+      </google-map-marker>
+    </google-map>
+    <google-map-directions id="directionsService" map="{{map}}" end-address="52.038249, 4.237861"></google-map-directions>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-location',
+
+        properties: {
+          targetAddressInput: {
+            type: Object,
+            value: function() {
+              return this.$.addressInput;
+            }
+          }
+        },
+
+        showMarkers: function() {
+          this.async(function() {
+            this.$.windhapperMarker.open = true;
+          }, 2000);
+        },
+
+        calculateDirections: function() {
+          this.$.directionsService.startAddress = this.$.addressInput.value;
+          this.$.addressInput.$.input.blur();
+        }
+      });
+    })();
+  </script>
+</dom-module>

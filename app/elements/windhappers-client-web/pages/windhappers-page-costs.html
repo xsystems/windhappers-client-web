@@ -1,0 +1,187 @@
+<dom-module id="windhappers-page-costs">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-vertical);
+        padding-top: 1%;
+        padding-bottom: 1%;
+        padding-left: 1%;
+      }
+
+      paper-card.cost {
+        margin-right: 1%;
+        margin-bottom: 1%;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      th, td {
+        text-align: left;
+        padding: 1%;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2
+      }
+
+      .volunteer-container {
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+      }
+
+      windhappers-volunteer {
+        @apply(--layout-flex);
+        margin-bottom: 1%;
+        margin-right: 1%;
+      }
+
+      windhappers-volunteer:not(.narrow) {
+        min-width: 32%;
+      }
+    </style>
+
+    <google-sheets  id="sheetVolunteers" 
+                    key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                    tab-id="1"
+                    published 
+                    rows="{{rowsVolunteers}}"></google-sheets>
+
+    <google-sheets  id="sheetCosts" 
+                    key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                    tab-id="2"
+                    published 
+                    rows="{{rowsCosts}}"></google-sheets>
+
+    <div class="volunteer-container">
+      <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
+        <windhappers-volunteer class$="{{_computeNarrowClass(narrow)}}"
+                               name="{{row.gsx$name.$t}}"
+                               function="{{row.gsx$function.$t}}"
+                               email="{{row.gsx$email.$t}}"
+                               email-personal="{{row.gsx$emailpersonal.$t}}"
+                               phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
+      </template>                    
+    </div>
+
+    <paper-card class="cost" heading="Contributie">
+      <div class="cost-content">
+        <div class="card-content">
+          <table>
+            <tr>
+              <th>Omschrijving</th>
+              <th>{{_period1}}</th>
+              <th>{{_period2}}</th>
+            </tr>
+            <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isContributionCost">
+              <tr>
+                <td>{{row.gsx$description.$t}}</td>
+                <td>{{row.gsx$period1.$t}}</td>
+                <td>{{row.gsx$period2.$t}}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </div>
+    </paper-card>
+
+    <paper-card class="cost" heading="Stalling">
+      <div class="cost-content">
+        <div class="card-content">
+          <table>
+            <tr>
+              <th>Omschrijving</th>
+              <th>{{_period1}}</th>
+              <th>{{_period2}}</th>
+            </tr>
+            <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isStorageCost">
+              <tr>
+                <td>{{row.gsx$description.$t}}</td>
+                <td>{{row.gsx$period1.$t}}</td>
+                <td>{{row.gsx$period2.$t}}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </div>
+    </paper-card>
+
+    <paper-card class="cost" heading="Overige">
+      <div class="cost-content">
+        <div class="card-content">
+          <table>
+            <tr>
+              <th>Omschrijving</th>
+              <th>{{_period1}}</th>
+              <th>{{_period2}}</th>
+            </tr>
+            <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isOtherCost">
+              <tr>
+                <td>{{row.gsx$description.$t}}</td>
+                <td>{{row.gsx$period1.$t}}</td>
+                <td>{{row.gsx$period2.$t}}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </div>
+    </paper-card>  
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-costs',
+
+        properties: {
+          narrow: Boolean,
+          _period1: String,
+          _period2: String
+        },
+
+        observers: [
+          '_computePeriods(rowsCosts)'
+        ],
+
+        _computeNarrowClass: function() {
+          if (this.narrow) {
+            return 'narrow';
+          }
+        },
+
+        _computePeriods: function() {
+          var rows = this.$.sheetCosts.rows;
+          rows.forEach(function(row) {
+            if (row.gsx$type.$t == 'period') {
+              this._period1 = row.gsx$period1.$t;
+              this._period2 = row.gsx$period2.$t;
+            }
+          }.bind(this));
+        },
+
+        _isContributionCost: function(row) {
+          return row.gsx$type.$t == 'contribution';
+        },
+
+        _isStorageCost: function(row) {
+          return row.gsx$type.$t == 'storage';
+        },
+
+        _isOtherCost: function(row) {
+          return row.gsx$type.$t == 'other';
+        },
+
+        _isRelatedVolunteer: function(row) {
+          return row.gsx$function.$t == 'Ledenadministratie' || row.gsx$function.$t == 'Beheer boten en materieel' || row.gsx$function.$t == 'Introductiecursus';
+        }
+      });
+    })();
+  </script>
+</dom-module>

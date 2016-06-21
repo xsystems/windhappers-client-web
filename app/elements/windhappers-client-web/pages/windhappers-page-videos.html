@@ -1,0 +1,57 @@
+<link rel="import" href="../../xsystems/xsystems-overlay/xsystems-overlay.html">
+
+<dom-module id="windhappers-page-videos">
+  <template>
+    <style>
+
+    </style>
+
+    <xsystems-youtube-videos selected="{{_selectedVideo}}"></xsystems-youtube-videos>
+
+    <xsystems-overlay id="videoOverlay"
+                      on-iron-overlay-closed="_deselectVideo">
+      <google-youtube id="videoPlayer"
+                      rel="0"
+                      showinfo="0"
+                      iv_load_policy="3"
+                      modestbranding="1">
+      </google-youtube>  
+    </xsystems-overlay>    
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-videos',
+
+        properties: {
+          narrow: Boolean,
+          _selectedVideo: {
+            type: Object,
+            observer: '_handleSelectedVideo'
+          }
+        },
+
+        _computeNarrowClass: function() {
+          if (this.narrow) {
+            return 'narrow';
+          }
+        },
+
+        _handleSelectedVideo: function(newVideo, oldVideo) {
+          if (newVideo != null) {
+            this.$.videoPlayer.videoId = newVideo.id.videoId;
+            this.$.videoPlayer.play();
+            this.$.videoOverlay.open();
+          }
+        },
+
+        _deselectVideo: function(event) {
+          this._selectedVideo = null;
+          this.$.videoPlayer.pause();
+        }
+      });
+    })();
+  </script>
+</dom-module>

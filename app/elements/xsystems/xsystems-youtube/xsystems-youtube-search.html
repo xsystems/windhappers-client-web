@@ -1,0 +1,107 @@
+<dom-module id="xsystems-youtube-search">
+  <template>
+    <style>
+
+    </style>
+
+    <iron-ajax  auto
+                id="youtubeSearch"
+                url="https://www.googleapis.com/youtube/v3/search"
+                params="{{_requestParams}}"
+                last-response="{{_response}}"></iron-ajax>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'xsystems-youtube-search',
+
+        properties: {
+          key: String,
+          query: String,
+          channel: String,
+          pageToken: {
+            type: String,
+            observer: '_fetchNextPage'
+          },
+          resultsPerPage: {
+            type: Number,
+            value: 5
+          },
+          type: {
+            type: String,
+            value: 'video,channel,playlist'
+          },
+          params: Object,
+          
+          pageTokenNext: {
+            type: String,
+            readOnly: true,
+            notify: true
+          },
+          pageTokenPrev: {
+            type: String,
+            readOnly: true,
+            notify: true
+          },
+          resultsTotal: {
+            type: Number,
+            readOnly: true,
+            notify: true
+          },
+          items: {
+            type: Object,
+            readOnly: true,
+            notify: true
+          },
+
+          _requestParams: Object,
+          _response: {
+            type: Object,
+            observer: '_processResponse'
+          }
+        },
+
+        observers: [
+          '_computeRequestParams(key, query, type)',
+          '_computeRequestParams(key, query, type, channel)'
+        ],
+
+        _computeRequestParams: function(key, query, type, channel) {
+          var requestParams = {};
+          requestParams.key = key;
+          requestParams.part = 'snippet';
+          requestParams.q = query;
+          requestParams.maxResults = this.resultsPerPage;
+          requestParams.type = type;
+
+          if (this.channel != null) {
+            requestParams.channelId  = this.channel;
+          }
+
+          if (this.pageToken != null) {
+            requestParams.pageToken = this.pageToken;
+          }      
+
+          for (var param in this.params) {
+            requestParams[param] = this.params[param];
+          }
+
+          this._requestParams = requestParams;
+        },
+
+        _processResponse: function() {
+          this._setPageTokenNext(this._response.nextPageToken);
+          this._setPageTokenPrev(this._response.prevPageToken);
+          this._setResultsTotal(this._response.pageInfo.totalResults);
+          this._setItems(this._response.items);
+        },
+
+        _fetchNextPage: function() {
+          this._computeRequestParams(this.key, this.query, this.type, this.channel);
+        }
+      });
+    })();
+  </script>
+</dom-module>
