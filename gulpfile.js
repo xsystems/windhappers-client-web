@@ -24,6 +24,7 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ensureFiles = require('./tasks/ensure-files.js');
+var GulpDocker = require("gulp-docker");
 
 // var ghPages = require('gulp-gh-pages');
 
@@ -40,6 +41,16 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 var DIST = 'dist';
+
+process.env.IMAGE="windhappers-client-web"
+process.env.PUSH="1"
+new GulpDocker(gulp, {
+  "windhappers-client-web": {
+    dockerfile: ".",
+    repo: "xsystems/windhappers-client-web",
+    tags: ["latest"]
+  }
+});
 
 var dist = function(subpath) {
   return !subpath ? DIST : path.join(DIST, subpath);
@@ -296,6 +307,13 @@ gulp.task('deploy-gh-pages', function() {
       silent: true,
       branch: 'gh-pages'
     }), $.ghPages()));
+});
+
+// Build production files, and deploy to the Docker repository
+gulp.task('deploy', function() {
+  runSequence(
+    'default',
+    'docker:image');
 });
 
 // Load tasks for web-component-tester
