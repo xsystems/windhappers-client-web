@@ -3,23 +3,23 @@
     <style>
       :host {        
         @apply(--layout-horizontal);
-        @apply(--layout-start-justified);
+        @apply(--layout-justified);
         @apply(--layout-wrap);
-        padding-left: 2%;
-        padding-bottom: 1%;
+        padding-top: 1%;
+        padding-left: 1%;
+        padding-right: 1%;
       }
 
       windhappers-volunteer {
-        margin-top: 1%;
-        margin-right: 1%;
+        margin-bottom: 1%;
       }
 
-      windhappers-volunteer.narrow {
-        @apply(--layout-flex);
+      windhappers-volunteer[narrow] {
+        width: 100%;
       }
 
-      windhappers-volunteer:not(.narrow) {
-        width: 32%;
+      windhappers-volunteer:not([narrow]) {
+        width: 32.66%;
       }
     </style>
 
@@ -30,13 +30,12 @@
                     rows="{{rows}}"></google-sheets>
 
     <template is="dom-repeat" items="[[rows]]" as="row">
-      <windhappers-volunteer class$="{{_computeNarrowClass(narrow)}}"
-                             name="{{row.gsx$name.$t}}"
-                             function="{{row.gsx$function.$t}}"
-                             email="{{row.gsx$email.$t}}"
-                             email-personal="{{row.gsx$emailpersonal.$t}}"
-                             phone="{{row.gsx$phone.$t}}"
-                             narrow="{{narrow}}"> </windhappers-volunteer>      
+      <windhappers-volunteer  narrow$="{{narrow}}"
+                              name="{{row.gsx$name.$t}}"
+                              function="{{row.gsx$function.$t}}"
+                              email="{{row.gsx$email.$t}}"
+                              email-personal="{{row.gsx$emailpersonal.$t}}"
+                              phone="{{row.gsx$phone.$t}}"></windhappers-volunteer>      
     </template>
   </template>
   <script>
@@ -44,15 +43,8 @@
       'use strict';
       Polymer({
         is: 'windhappers-page-contact',
-
         properties: {
           narrow: Boolean
-        },
-
-        _computeNarrowClass: function() {
-          if (this.narrow) {
-            return 'narrow';
-          }
         }
       });
     })();

@@ -2,14 +2,28 @@
   <template>
     <style>
       :host {
-        @apply(--layout-vertical);
+        @apply(--layout-horizontal);
+        @apply(--layout-justified);
+        @apply(--layout-wrap);
         padding-top: 1%;
-        padding-bottom: 1%;
         padding-left: 1%;
+        padding-right: 1%;
       }
 
+      windhappers-volunteer {
+        margin-bottom: 1%;
+      }
+
+      windhappers-volunteer[narrow] {
+        width: 100%;
+      }
+
+      windhappers-volunteer:not([narrow]) {
+        width: 32.66%;
+      }      
+
       paper-card.cost {
-        margin-right: 1%;
+        width: 100%;
         margin-bottom: 1%;
       }
 
@@ -31,21 +45,6 @@
       tr:nth-child(even) {
         background-color: #f2f2f2
       }
-
-      .volunteer-container {
-        @apply(--layout-horizontal);
-        @apply(--layout-wrap);
-      }
-
-      windhappers-volunteer {
-        @apply(--layout-flex);
-        margin-bottom: 1%;
-        margin-right: 1%;
-      }
-
-      windhappers-volunteer:not(.narrow) {
-        min-width: 32%;
-      }
     </style>
 
     <google-sheets  id="sheetVolunteers" 
@@ -60,77 +59,69 @@
                     published 
                     rows="{{rowsCosts}}"></google-sheets>
 
-    <div class="volunteer-container">
-      <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
-        <windhappers-volunteer class$="{{_computeNarrowClass(narrow)}}"
-                               name="{{row.gsx$name.$t}}"
-                               function="{{row.gsx$function.$t}}"
-                               email="{{row.gsx$email.$t}}"
-                               email-personal="{{row.gsx$emailpersonal.$t}}"
-                               phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
-      </template>                    
-    </div>
+    <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
+      <windhappers-volunteer narrow$="[[narrow]]"
+                             name="{{row.gsx$name.$t}}"
+                             function="{{row.gsx$function.$t}}"
+                             email="{{row.gsx$email.$t}}"
+                             email-personal="{{row.gsx$emailpersonal.$t}}"
+                             phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
+    </template>                    
 
     <paper-card class="cost" heading="Contributie">
-      <div class="cost-content">
-        <div class="card-content">
-          <table>
+      <div class="card-content">
+        <table>
+          <tr>
+            <th>Omschrijving</th>
+            <th>{{_period1}}</th>
+            <th>{{_period2}}</th>
+          </tr>
+          <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isContributionCost">
             <tr>
-              <th>Omschrijving</th>
-              <th>{{_period1}}</th>
-              <th>{{_period2}}</th>
+              <td>{{row.gsx$description.$t}}</td>
+              <td>{{row.gsx$period1.$t}}</td>
+              <td>{{row.gsx$period2.$t}}</td>
             </tr>
-            <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isContributionCost">
-              <tr>
-                <td>{{row.gsx$description.$t}}</td>
-                <td>{{row.gsx$period1.$t}}</td>
-                <td>{{row.gsx$period2.$t}}</td>
-              </tr>
-            </template>
-          </table>
-        </div>
+          </template>
+        </table>
       </div>
     </paper-card>
 
     <paper-card class="cost" heading="Stalling">
-      <div class="cost-content">
-        <div class="card-content">
-          <table>
+      <div class="card-content">
+        <table>
+          <tr>
+            <th>Omschrijving</th>
+            <th>{{_period1}}</th>
+            <th>{{_period2}}</th>
+          </tr>
+          <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isStorageCost">
             <tr>
-              <th>Omschrijving</th>
-              <th>{{_period1}}</th>
-              <th>{{_period2}}</th>
+              <td>{{row.gsx$description.$t}}</td>
+              <td>{{row.gsx$period1.$t}}</td>
+              <td>{{row.gsx$period2.$t}}</td>
             </tr>
-            <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isStorageCost">
-              <tr>
-                <td>{{row.gsx$description.$t}}</td>
-                <td>{{row.gsx$period1.$t}}</td>
-                <td>{{row.gsx$period2.$t}}</td>
-              </tr>
-            </template>
-          </table>
-        </div>
+          </template>
+        </table>
       </div>
     </paper-card>
 
     <paper-card class="cost" heading="Overige">
-      <div class="cost-content">
-        <div class="card-content">
-          <table>
+      <div class="card-content">
+        <table>
+          <tr>
+            <th>Omschrijving</th>
+            <th>{{_period1}}</th>
+            <th>{{_period2}}</th>
+          </tr>
+          <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isOtherCost">
             <tr>
-              <th>Omschrijving</th>
-              <th>{{_period1}}</th>
-              <th>{{_period2}}</th>
+              <td>{{row.gsx$description.$t}}</td>
+              <td>{{row.gsx$period1.$t}}</td>
+              <td>{{row.gsx$period2.$t}}</td>
             </tr>
-            <template is="dom-repeat" items="[[rowsCosts]]" as="row" filter="_isOtherCost">
-              <tr>
-                <td>{{row.gsx$description.$t}}</td>
-                <td>{{row.gsx$period1.$t}}</td>
-                <td>{{row.gsx$period2.$t}}</td>
-              </tr>
-            </template>
-          </table>
-        </div>
+          </template>
+        </table>
       </div>
     </paper-card>  
   </template>
@@ -149,12 +140,6 @@
         observers: [
           '_computePeriods(rowsCosts)'
         ],
-
-        _computeNarrowClass: function() {
-          if (this.narrow) {
-            return 'narrow';
-          }
-        },
 
         _computePeriods: function() {
           var rows = this.$.sheetCosts.rows;

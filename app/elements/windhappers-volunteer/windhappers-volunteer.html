@@ -7,7 +7,7 @@
         @apply(--layout-horizontal);
       }
 
-      paper-card.volunteer {
+      .volunteer {
         @apply(--layout-flex);
         @apply(--layout-horizontal);
       }
@@ -28,12 +28,16 @@
         color: var(--secondary-text-color);
       }
 
-      a {
+      :host:not([narrow]) .card-actions {
+        @apply(--layout-vertical);
+      }
+
+      .card-actions > a {
         text-decoration: none;
         color: inherit;
       }
     </style>
-    <paper-card class$="volunteer {{_computeNarrowClass(narrow)}}">
+    <paper-card class="volunteer">
       <iron-image class="volunteer-gravatar"
                   sizing="cover"
                   src="{{image}}"></iron-image>
@@ -47,7 +51,6 @@
             <iron-icon icon="communication:email"></iron-icon>
             <span hidden$="{{narrow}}">{{email}}</span>
           </a>
-          <br hidden$="{{narrow}}"/>
           <a hidden$="{{!phone}}" href="tel:{{phone}}">
             <iron-icon icon="communication:phone"></iron-icon>
             <span hidden$="{{narrow}}">{{phone}}</span>
@@ -76,12 +79,6 @@
           _hiddenActions: {
             type: Boolean,
             computed: '_computeHiddenActions(email, phone)'
-          }
-        },
-
-        _computeNarrowClass: function() {
-          if (this.narrow) {
-            return 'narrow';
           }
         },
 

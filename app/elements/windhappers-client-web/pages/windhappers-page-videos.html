@@ -3,24 +3,42 @@
 <dom-module id="windhappers-page-videos">
   <template>
     <style>
+      :host {
+        @apply(--layout-vertical);
+        padding-left: 1%;
+        padding-right: 1%;
+      }
+
       #videoPlayerCard {
         padding: 1%;
       }
     </style>
 
-    <xsystems-youtube-videos selected="{{_selectedVideo}}"></xsystems-youtube-videos>
+    <app-route  route="{{route}}"
+                pattern="/:videoId"
+                data="{{videoData}}"
+                tail="{{videoTail}}"></app-route>
+
+    <paper-input id="queryInput" label="Welke video zoek je?" value="{{query}}">
+      <paper-icon-button suffix icon="search"></paper-icon-button>
+    </paper-input>
+
+    <xsystems-youtube-videos  narrow$="[[narrow]]"
+                              key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+                              query="[[query]]"
+                              channel="UCnUYZLuoy1rq1aVMwx4aTzw"
+                              selected="{{_selectedVideo}}"></xsystems-youtube-videos>
 
     <xsystems-overlay id="videoOverlay"
                       on-iron-overlay-closed="_deselectVideo">
       <paper-card id="videoPlayerCard"
                   elevation="5">
         <google-youtube id="videoPlayer"
+                        video-id="[[videoData.videoId]]"
                         rel="0"
                         showinfo="0"
                         iv_load_policy="3"
-                        modestbranding="1"
-                        width="854px"
-                        height="480px">
+                        modestbranding="1">
         </google-youtube>
       </paper-card>  
     </xsystems-overlay>    
@@ -33,6 +51,7 @@
         is: 'windhappers-page-videos',
 
         properties: {
+          route: Object,
           narrow: Boolean,
           _selectedVideo: {
             type: Object,
@@ -40,23 +59,51 @@
           }
         },
 
+        observers: [
+          '_resetLayout(narrow, isAttached)',
+          '_handleVideoId(videoData.videoId)'
+        ],
+
         _computeNarrowClass: function() {
           if (this.narrow) {
             return 'narrow';
           }
         },
 
-        _handleSelectedVideo: function(newVideo, oldVideo) {
-          if (newVideo != null) {
-            this.$.videoPlayer.videoId = newVideo.id.videoId;
+        _resetLayout: function() {
+          this.debounce('_resetLayout', function() {
+            if (!this.isAttached) {
+              return;
+            }
+
+            if (this.narrow) {
+              this.$.videoPlayer.width = "100%";
+              this.$.videoPlayer.height = "55%";
+            } else {
+              this.$.videoPlayer.width = "854px";
+              this.$.videoPlayer.height = "480px";
+            }
+          });        
+        },
+
+        _handleVideoId: function(videoId) {
+          if (videoId != null) {
             this.$.videoPlayer.play();
             this.$.videoOverlay.open();
           }
         },
 
+        _handleSelectedVideo: function(newVideo, oldVideo) {
+          if (newVideo != null) {
+            this.set('route.path', newVideo.id.videoId);
+          } else {
+            this.set('route.path', '');
+          }
+        },
+
         _deselectVideo: function(event) {
-          this._selectedVideo = null;
           this.$.videoPlayer.pause();
+          this._selectedVideo = null;
         }
       });
     })();

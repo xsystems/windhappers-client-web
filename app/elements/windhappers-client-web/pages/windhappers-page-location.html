@@ -1,6 +1,10 @@
 <dom-module id="windhappers-page-location">
   <template>
     <style>
+      :host {
+        @apply(--layout-flex)        
+      }
+
       #addressInput {
         position: absolute;
         z-index: 1;
@@ -37,14 +41,27 @@
     <paper-input id="addressInput" label="Waar kom je vandaan?" value="{{startAddress}}">
       <paper-icon-button suffix icon="icons:search" on-tap="calculateDirections"></paper-icon-button>
     </paper-input>
-    <google-map map="{{map}}" disable-default-ui latitude="52.079124" longitude="4.236238" on-google-map-ready="showMarkers">
-      <google-map-marker id="windhapperMarker" animation="DROP" latitude="52.039119" longitude="4.236241">
+    <google-map id="map"
+                api-key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g" 
+                map="{{map}}"
+                disable-default-ui
+                latitude="52.079124" 
+                longitude="4.236238">
+      <google-map-marker  id="markerWindhappers"
+                          open
+                          title="Kanovereniging De Windhappers"
+                          animation="DROP"
+                          latitude="52.039119"
+                          longitude="4.236241">
         <b>Kanovereniging De Windhappers</b><br/>
         Nieuweweg 75, 2544NG Den Haag<br/>
         <i>52.039124, 4.236238</i>
       </google-map-marker>
     </google-map>
-    <google-map-directions id="directionsService" map="{{map}}" end-address="52.038249, 4.237861"></google-map-directions>
+    <google-map-directions  id="directionsService"
+                            api-key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+                            map="{{map}}"
+                            end-address="52.038249, 4.237861"></google-map-directions>
   </template>
 
   <script>
@@ -60,12 +77,6 @@
               return this.$.addressInput;
             }
           }
-        },
-
-        showMarkers: function() {
-          this.async(function() {
-            this.$.windhapperMarker.open = true;
-          }, 2000);
         },
 
         calculateDirections: function() {

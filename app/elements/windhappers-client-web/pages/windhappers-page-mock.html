@@ -1,5 +1,13 @@
-<dom-module id="windhappers-page-home">
+<dom-module id="windhappers-page-mock">
   <template>
+    <style>
+      :host {
+        @apply(--layout-horizontal);
+        @apply(--layout-start-justified);
+        @apply(--layout-wrap);
+        padding: 1%;
+      }
+    </style>
     <div id="lipsum">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel eros eu lorem egestas ullamcorper non quis mi. Mauris mauris lectus, convallis sit amet fermentum non, auctor egestas mauris. Aliquam eu libero metus. Sed tempor sem vel laoreet convallis. Etiam vel luctus elit. Curabitur quis volutpat nunc, euismod malesuada nibh. Cras fermentum elit nulla, non scelerisque arcu pharetra id. Ut a facilisis lectus. Cras a facilisis nisi. Nullam sodales sem justo, at placerat diam eleifend vitae. Etiam viverra ex eget turpis aliquet, vitae iaculis purus porttitor. Proin magna ligula, accumsan in porta sit amet, venenatis vestibulum nisi. Duis tellus odio, interdum in condimentum ut, blandit sit amet dui.
@@ -59,7 +67,7 @@
     (function() {
       'use strict';
       Polymer({
-        is: 'windhappers-page-home'
+        is: 'windhappers-page-mock'
       });
     })();
   </script>

@@ -1,5 +1,4 @@
-<link rel="import" href="pages/windhappers-page-home.html">
-<link rel="import" href="pages/windhappers-page-disciplines.html">
+<link rel="import" href="pages/windhappers-page-mock.html">
 <link rel="import" href="pages/windhappers-page-contact.html">
 <link rel="import" href="pages/windhappers-page-costs.html">
 <link rel="import" href="pages/windhappers-page-location.html">
@@ -42,19 +41,19 @@
         };
       }
 
-      app-toolbar.primary {
+      app-toolbar[sticky] {
         height: var(--toolbar-height-primary);
       }
               
-      app-toolbar.secondary {
+      app-toolbar:not([sticky]) {
         height: var(--toolbar-height-secondary);
       }
 
-      [title] {
+      [main-title] {
         font-weight: lighter;
         margin: 0;
         position: absolute;
-        left: 108px;
+        left: 80px;
         bottom: 30%;
       }  
 
@@ -93,13 +92,15 @@
         height: var(--page-height);
       }
 
+      neon-animatable {
+        @apply(--layout-vertical);
+      }
+
       #facebook {
         --iron-icon-width: 16px;
         --iron-icon-height: 16px;
       }
     </style>
-
-    <iron-media-query query="(max-width: 640px)" query-matches="{{narrow}}"></iron-media-query>
 
     <app-location route="{{route}}"></app-location>
 
@@ -108,54 +109,49 @@
                   data="{{pageData}}"
                   tail="{{pageTail}}"></app-route>
 
-    <app-drawer-layout>
+    <app-drawer-layout  narrow="{{narrow}}"
+                        responsive-width="768px">
       <app-drawer id="drawer" swipe-open>
-        <paper-menu id="menu" on-iron-select="closeDrawer" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-          <paper-item data-page="home">Home</paper-item>
-          <paper-item data-page="calendar">Kalender</paper-item>
-          <paper-submenu>
-            <paper-item class="menu-trigger">Disciplines</paper-item>
-            <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-              <paper-item data-page="touring">Toervaren</paper-item>
-              <paper-item data-page="canoepolo">Kanopolo</paper-item>
-              <paper-item data-page="seafaring">Zeevaren</paper-item>
-              <paper-item data-page="surffaring">Brandingvaren</paper-item>
-              <paper-item data-page="whitewaterfaring">Wildwatervaren</paper-item>
-            </paper-menu>
-          </paper-submenu>
-          <paper-submenu>
-            <paper-item class="menu-trigger">Media</paper-item>
-            <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-              <paper-item data-page="photos">Foto's</paper-item>
-              <paper-item data-page="videos">Video's</paper-item>
-              <paper-item data-page="blogs">Blogs</paper-item>
-            </paper-menu>
-          </paper-submenu>
-          <paper-item data-page="canoeroutes">Kanoroutes</paper-item>
-          <paper-submenu>
-            <paper-item class="menu-trigger">Veiligheid</paper-item>
-            <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-              <paper-item data-page="waterquality">Waterkwaliteit</paper-item>
-              <paper-item data-page="knrm">KNRM</paper-item>
-            </paper-menu>
-          </paper-submenu>
-          <paper-item data-page="meteorology">Meteorologie</paper-item>
-          <paper-submenu>
-            <paper-item class="menu-trigger">Over ons</paper-item>
-            <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-              <paper-item data-page="contact">Contact</paper-item>
-              <paper-item data-page="location">Locatie</paper-item>
-              <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
-              <paper-item data-page="sponsors">Sponsoren</paper-item>
-            </paper-menu>
-          </paper-submenu>
-        </paper-menu>
+        <div id="menu">
+          <paper-menu selectable="paper-item" 
+                      selected='{{pageData.page}}' 
+                      attr-for-selected="data-page">
+            <paper-item data-page="home">Home</paper-item>
+            <paper-item data-page="calendar">Kalender</paper-item>
+            <paper-item data-page="disciplines">Disciplines</paper-item>
+            <paper-submenu>
+              <paper-item class="menu-trigger">Media</paper-item>
+              <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
+                <paper-item data-page="photos">Foto's</paper-item>
+                <paper-item data-page="videos">Video's</paper-item>
+                <paper-item data-page="blogs">Blogs</paper-item>
+              </paper-menu>
+            </paper-submenu>
+            <paper-item data-page="canoeroutes">Kanoroutes</paper-item>
+            <paper-submenu id="menuSafety">
+              <paper-item class="menu-trigger">Veiligheid</paper-item>
+              <paper-menu class="menu-content">
+                <paper-item on-tap="_showPageWaterQuality">Waterkwaliteit</paper-item>
+                <paper-item on-tap="_showPageKNRM">KNRM App</paper-item>
+              </paper-menu>
+            </paper-submenu>
+            <paper-submenu>
+              <paper-item class="menu-trigger">Over ons</paper-item>
+              <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
+                <paper-item data-page="contact">Contact</paper-item>
+                <paper-item data-page="location">Locatie</paper-item>
+                <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
+                <paper-item data-page="sponsors">Sponsoren</paper-item>
+              </paper-menu>
+            </paper-submenu>
+          </paper-menu>
+        </div>
       </app-drawer>
       <app-header-layout>
         <app-header fixed condenses effects="material">
-          <app-toolbar class="primary">
+          <app-toolbar sticky>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <h4 condensed-title="">De Windhappers</h4>
+            <h4 condensed-title>De Windhappers</h4>
             <a href="https://twitter.com/DeWindhappers" target="_blank">
               <iron-icon src="../../../images/social/twitter.png"></iron-icon>
             </a>
@@ -164,34 +160,62 @@
             </a>
           </app-toolbar>
           <app-toolbar class="secondary">
-            <h1 title="">De Windhappers</h1>
+            <h1 main-title>De Windhappers</h1>
           </app-toolbar>
         </app-header>
 
-        <neon-animated-pages selected="{{pageData.page}}"
+        <neon-animated-pages selected="[[pageData.page]]"
                      attr-for-selected="data-page"
                      entry-animation="slide-from-left-animation"
-                     exit-animation="slide-right-animation">
+                     exit-animation="slide-right-animation"
+                     on-iron-resize="closeDrawer">
           <neon-animatable data-page="home">
-            <windhappers-page-home></windhappers-page-home>
+            <windhappers-page-mock></windhappers-page-mock>
           </neon-animatable>
-          <neon-animatable data-page="touring">
-            <windhappers-page-disciplines></windhappers-page-disciplines>
-          </neon-animatable>
-          <neon-animatable data-page="contact">
-            <windhappers-page-contact narrow="[[narrow]]"></windhappers-page-contact>
-          </neon-animatable>          
-          <neon-animatable data-page="location">
-            <windhappers-page-location></windhappers-page-location>
-          </neon-animatable>
-          <neon-animatable data-page="costs">
-            <windhappers-page-costs narrow="[[narrow]]"></windhappers-page-costs>
-          </neon-animatable>
+          
           <neon-animatable data-page="calendar">
             <windhappers-page-calendar narrow="[[narrow]]"></windhappers-page-calendar>
           </neon-animatable>
+          
+          <neon-animatable data-page="disciplines">
+            <windhappers-page-mock  narrow
+                                    route="{{pageTail}}"></windhappers-page-mock>
+          </neon-animatable>
+
+          <neon-animatable data-page="photos">
+            <windhappers-page-mock  narrow="[[narrow]]"
+                                    route="{{pageTail}}"></windhappers-page-mock>
+          </neon-animatable>
+
           <neon-animatable data-page="videos">
-            <windhappers-page-videos narrow="[[narrow]]"></windhappers-page-videos>
+            <windhappers-page-videos  narrow="[[narrow]]"
+                                      route="{{pageTail}}"></windhappers-page-videos>
+          </neon-animatable>
+
+          <neon-animatable data-page="blogs">
+            <windhappers-page-mock  narrow="[[narrow]]"
+                                    route="{{pageTail}}"></windhappers-page-mock>
+          </neon-animatable>
+
+          <neon-animatable data-page="canoeroutes">
+            <windhappers-page-mock  narrow="[[narrow]]"
+                                    route="{{pageTail}}"></windhappers-page-mock>
+          </neon-animatable>
+
+          <neon-animatable data-page="contact">
+            <windhappers-page-contact narrow="[[narrow]]"></windhappers-page-contact>
+          </neon-animatable>
+
+          <neon-animatable data-page="location">
+            <windhappers-page-location></windhappers-page-location>
+          </neon-animatable>
+          
+          <neon-animatable data-page="costs">
+            <windhappers-page-costs narrow="[[narrow]]"></windhappers-page-costs>
+          </neon-animatable>
+
+          <neon-animatable data-page="sponsors">
+            <windhappers-page-mock narrow="[[narrow]]"></windhappers-page-mock>
           </neon-animatable>
         </neon-animated-pages>
       </app-header-layout>
@@ -214,7 +238,8 @@
         },
 
         observers: [
-          '_resetLayout(narrow, isAttached)'
+          '_resetLayout(narrow, isAttached)',
+          '_updateMenus(pageData.page)'
         ],
 
         attached: function() {
@@ -236,7 +261,7 @@
               this.customStyle['--toolbar-height-secondary'] = '32px';
             } else {
               this.customStyle['--toolbar-height-primary'] = '64px';
-              this.customStyle['--toolbar-height-secondary'] = '148px';
+              this.customStyle['--toolbar-height-secondary'] = '96px';
             }
 
             this.customStyle['--page-height'] = 'calc(100vh - var(--toolbar-height-primary) - var(--toolbar-height-secondary))';
@@ -249,6 +274,24 @@
         closeDrawer: function() {
           if (this.narrow) {
             this.$.drawer.close();
+          }
+        },
+
+        _showPageHome: function() {
+          this.set("pageData.page", "home");
+        },
+
+        _showPageWaterQuality: function() {
+          window.open("http://zwemwater.nl/", "_blank");
+        },
+
+        _showPageKNRM: function() {
+          window.open("https://www.knrm.nl/wat-doet-de-knrm/veiligheid-voor-pleziervaart/knrm-helpt-app/", "_blank");
+        }, 
+
+        _updateMenus: function(page) {
+          if (this.$.menuSafety.opened) {
+            this.$.menuSafety.close();
           }
         }
       })

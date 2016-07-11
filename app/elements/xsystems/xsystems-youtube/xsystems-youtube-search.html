@@ -4,8 +4,7 @@
 
     </style>
 
-    <iron-ajax  auto
-                id="youtubeSearch"
+    <iron-ajax  id="youtubeSearch"
                 url="https://www.googleapis.com/youtube/v3/search"
                 params="{{_requestParams}}"
                 last-response="{{_response}}"></iron-ajax>
@@ -19,11 +18,15 @@
 
         properties: {
           key: String,
-          query: String,
+          query: {
+            type: String,
+            observer: '_handleQuery'
+          },
           channel: String,
           pageToken: {
             type: String,
-            observer: '_fetchNextPage'
+            observer: '_fetchNextPage',
+            notify: true
           },
           resultsPerPage: {
             type: Number,
@@ -64,8 +67,8 @@
         },
 
         observers: [
-          '_computeRequestParams(key, query, type)',
-          '_computeRequestParams(key, query, type, channel)'
+          '_computeRequestParams(key, query, type, channel)',
+          '_computeRequestParams(key, query, type)'
         ],
 
         _computeRequestParams: function(key, query, type, channel) {
@@ -89,6 +92,7 @@
           }
 
           this._requestParams = requestParams;
+          this.$.youtubeSearch.generateRequest();
         },
 
         _processResponse: function() {
@@ -96,6 +100,10 @@
           this._setPageTokenPrev(this._response.prevPageToken);
           this._setResultsTotal(this._response.pageInfo.totalResults);
           this._setItems(this._response.items);
+        },
+
+        _handleQuery: function() {
+          this.pageToken = null;
         },
 
         _fetchNextPage: function() {
