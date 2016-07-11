@@ -39,7 +39,8 @@
                               channel="[[channel]]"
                               type="video"
                               results-per-page="9"
-                              page-token="{{_pageToken}}"
+                              debounce-duration="[[debounceDuration]]"
+                              page-token="[[_pageToken]]"
                               items="{{_items}}"
                               page-token-next="{{_pageTokenNext}}">
     </xsystems-youtube-search>
@@ -75,6 +76,10 @@
           key: String,
           query: String,
           channel: String,
+          debounceDuration: {
+            type: Number,
+            value: 500
+          },
           selected: {
             type: Object,
             notify: true

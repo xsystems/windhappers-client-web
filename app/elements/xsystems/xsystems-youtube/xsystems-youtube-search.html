@@ -4,9 +4,10 @@
 
     </style>
 
-    <iron-ajax  id="youtubeSearch"
+    <iron-ajax  auto
                 url="https://www.googleapis.com/youtube/v3/search"
-                params="{{_requestParams}}"
+                params="[[_requestParams]]"
+                debounce-duration="[[debounceDuration]]"
                 last-response="{{_response}}"></iron-ajax>
 
   </template>
@@ -37,6 +38,7 @@
             value: 'video,channel,playlist'
           },
           params: Object,
+          debounceDuration: Number,
           
           pageTokenNext: {
             type: String,
@@ -92,7 +94,6 @@
           }
 
           this._requestParams = requestParams;
-          this.$.youtubeSearch.generateRequest();
         },
 
         _processResponse: function() {
