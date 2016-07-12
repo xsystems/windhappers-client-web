@@ -40,21 +40,24 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-var DIST = 'dist';
+var TARGET = 'target';
+var target = function(subpath) {
+  return !subpath ? TARGET : path.join(TARGET, subpath);
+};
+
+var DIST = target('dist');
+var dist = function(subpath) {
+  return !subpath ? DIST : path.join(DIST, subpath);
+};
 
 process.env.IMAGE="windhappers-client-web"
-process.env.PUSH="1"
 new GulpDocker(gulp, {
   "windhappers-client-web": {
-    dockerfile: ".",
+    dockerfile: target(),
     repo: "xsystems/windhappers-client-web",
     tags: ["latest"]
   }
 });
-
-var dist = function(subpath) {
-  return !subpath ? DIST : path.join(DIST, subpath);
-};
 
 var styleTask = function(stylesPath, srcs) {
   return gulp.src(srcs.map(function(src) {
@@ -151,7 +154,11 @@ gulp.task('copy', function() {
     'app/bower_components/{webcomponentsjs,platinum-sw,sw-toolbox,promise-polyfill}/**/*'
   ]).pipe(gulp.dest(dist('bower_components')));
 
-  return merge(app, bower)
+  var docker = gulp.src([
+    'docker/*'
+  ]).pipe(gulp.dest(target()));
+
+  return merge(app, bower, docker)
     .pipe($.size({
       title: 'copy'
     }));
@@ -222,7 +229,7 @@ gulp.task('cache-config', function(callback) {
 
 // Clean output directory
 gulp.task('clean', function() {
-  return del(['.tmp', dist()]);
+  return del(['.tmp', target()]);
 });
 
 // Watch files for changes & reload
@@ -309,8 +316,17 @@ gulp.task('deploy-gh-pages', function() {
     }), $.ghPages()));
 });
 
-// Build production files, and deploy to the Docker repository
+// Build production files, and deploy to the local Docker repository
+gulp.task('install', function() {
+  process.env.PUSH="0";
+  runSequence(
+    'default',
+    'docker:image');
+});
+
+// Build production files, and deploy to the remote Docker repository
 gulp.task('deploy', function() {
+  process.env.PUSH="1";
   runSequence(
     'default',
     'docker:image');
