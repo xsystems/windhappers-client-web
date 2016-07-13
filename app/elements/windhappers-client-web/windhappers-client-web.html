@@ -245,7 +245,7 @@
         attached: function() {
           this.async(function() {
             if (!this.route.path || this.route.path == '/') {
-              this.set('route.path', 'home');
+              this.set('route.path', '/home');
             }
           });
         },
@@ -278,7 +278,7 @@
         },
 
         _showPageHome: function() {
-          this.set("pageData.page", "home");
+          this.set("pageData.page", "/home");
         },
 
         _showPageWaterQuality: function() {
