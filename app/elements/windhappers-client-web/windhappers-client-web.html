@@ -83,8 +83,13 @@
         padding-left: 10%;
       }
 
-      #menu {
+      #drawerContent {
+        @apply(--layout-vertical);
         height: 100%;
+      }
+
+      #menu {
+        @apply(--layout-flex);
         overflow: auto;
       }
 
@@ -100,6 +105,10 @@
         --iron-icon-width: 16px;
         --iron-icon-height: 16px;
       }
+
+      xsystems-weather {
+        margin: 6%;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -112,39 +121,46 @@
     <app-drawer-layout  narrow="{{narrow}}"
                         responsive-width="768px">
       <app-drawer id="drawer" swipe-open>
-        <div id="menu">
-          <paper-menu selectable="paper-item" 
-                      selected='{{pageData.page}}' 
-                      attr-for-selected="data-page">
-            <paper-item data-page="home">Home</paper-item>
-            <paper-item data-page="calendar">Kalender</paper-item>
-            <paper-item data-page="disciplines">Disciplines</paper-item>
-            <paper-submenu>
-              <paper-item class="menu-trigger">Media</paper-item>
-              <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-                <paper-item data-page="photos">Foto's</paper-item>
-                <paper-item data-page="videos">Video's</paper-item>
-                <paper-item data-page="blogs">Blogs</paper-item>
-              </paper-menu>
-            </paper-submenu>
-            <paper-item data-page="canoeroutes">Kanoroutes</paper-item>
-            <paper-submenu id="menuSafety">
-              <paper-item class="menu-trigger">Veiligheid</paper-item>
-              <paper-menu class="menu-content">
-                <paper-item on-tap="_showPageWaterQuality">Waterkwaliteit</paper-item>
-                <paper-item on-tap="_showPageKNRM">KNRM App</paper-item>
-              </paper-menu>
-            </paper-submenu>
-            <paper-submenu>
-              <paper-item class="menu-trigger">Over ons</paper-item>
-              <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
-                <paper-item data-page="contact">Contact</paper-item>
-                <paper-item data-page="location">Locatie</paper-item>
-                <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
-                <paper-item data-page="sponsors">Sponsoren</paper-item>
-              </paper-menu>
-            </paper-submenu>
-          </paper-menu>
+        <div id="drawerContent">
+          <div id="menu">
+            <paper-menu selectable="paper-item" 
+                        selected='{{pageData.page}}' 
+                        attr-for-selected="data-page">
+              <paper-item data-page="home">Home</paper-item>
+              <paper-item data-page="calendar">Kalender</paper-item>
+              <paper-item data-page="disciplines">Disciplines</paper-item>
+              <paper-submenu>
+                <paper-item class="menu-trigger">Media</paper-item>
+                <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
+                  <paper-item data-page="photos">Foto's</paper-item>
+                  <paper-item data-page="videos">Video's</paper-item>
+                  <paper-item data-page="blogs">Blogs</paper-item>
+                </paper-menu>
+              </paper-submenu>
+              <paper-item data-page="canoeroutes">Kanoroutes</paper-item>
+              <paper-submenu id="menuSafety">
+                <paper-item class="menu-trigger">Veiligheid</paper-item>
+                <paper-menu class="menu-content">
+                  <paper-item on-tap="_showPageWaterQuality">Waterkwaliteit</paper-item>
+                  <paper-item on-tap="_showPageKNRM">KNRM App</paper-item>
+                </paper-menu>
+              </paper-submenu>
+              <paper-submenu>
+                <paper-item class="menu-trigger">Over ons</paper-item>
+                <paper-menu class="menu-content" selectable="paper-item" selected='{{pageData.page}}' attr-for-selected="data-page">
+                  <paper-item data-page="contact">Contact</paper-item>
+                  <paper-item data-page="location">Locatie</paper-item>
+                  <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
+                  <paper-item data-page="sponsors">Sponsoren</paper-item>
+                </paper-menu>
+              </paper-submenu>
+            </paper-menu>
+          </div>
+
+          <xsystems-weather-service-wunderground  key="d543a18b79ebf11a"
+                                                  query="Netherlands/The_Hague"
+                                                  data="{{forecast}}"></xsystems-weather-service-wunderground>
+          <xsystems-weather data="[[forecast]]"></xsystems-weather>
         </div>
       </app-drawer>
       <app-header-layout>
