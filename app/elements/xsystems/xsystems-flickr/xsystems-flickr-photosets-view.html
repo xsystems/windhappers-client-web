@@ -1,0 +1,133 @@
+<dom-module id="xsystems-flickr-photosets-view">
+  <template>
+    <style>
+      :host {     
+        @apply(--layout-horizontal);
+        @apply(--layout-justified);
+        @apply(--layout-wrap);          
+        padding-bottom: 1%;
+      }
+
+      .photoset {
+        margin-top: 1%;
+      }
+
+      :host:not([narrow]) > .photoset {
+        width: 32.66%;
+      }
+
+      :host[narrow] > .photoset {
+        width: 100%;
+      }
+
+      .photoset-title {
+        margin-top: 0;
+      }
+
+      .photoset-thumbnail {
+        width: 100%;
+        padding-bottom: 55%;
+      }
+
+      xsystems-youtube-search, iron-scroll-threshold, array-selector {
+        display: none;
+      }
+    </style>
+
+    <xsystems-flickr-photosets  key="[[key]]"
+                                user-id="[[userId]]"
+                                per-page="9"
+                                page="{{_page}}"
+                                pages="{{_pages}}"
+                                debounce-duration="[[debounceDuration]]"
+                                items="{{_items}}">
+    </xsystems-flickr-photosets>
+
+    <template is="dom-repeat" items="[[_photosets]]" as="photoset">
+      <xsystems-flickr-photo  key="[[key]]"
+                              photo-id="[[photoset.primary]]"
+                              size="Small 320"
+                              url="{{photoset.url}}"></xsystems-flickr-photo>
+
+      <paper-card class="photoset">
+        <iron-image class="photoset-thumbnail"
+                    on-tap="_selectPhotoset"
+                    sizing="cover"
+                    src="[[photoset.url]]"></iron-image>
+        <div class="card-content">
+          <h2 class="photoset-title">[[photoset.title._content]]</h2>
+          [[photoset.description._content]]
+        </div>
+      </paper-card>
+    </template>
+
+    <div id="filler"></div>
+
+    <array-selector id="photosetSelector" items="{{_photosets}}" selected="{{selected}}"></array-selector>
+
+    <iron-scroll-threshold  id="scrollThreshold"
+                            scroll-target="document"
+                            on-lower-threshold="_loadMorePhotosets"> 
+    </iron-scroll-threshold>    
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'xsystems-flickr-photosets-view',
+
+        properties: {
+          key: String,
+          userId: String,
+          debounceDuration: {
+            type: Number,
+            value: 500
+          },
+          narrow: Boolean,
+          selected: {
+            type: Object,
+            notify: true
+          }
+        },
+
+        observers: [
+          '_handleSearchResult(_items)'
+        ],
+
+        _loadMorePhotosets: function(e) {
+          if (this._page < this._pages) {
+            this._page += 1;
+          } else {
+            this.$.scrollThreshold.clearTriggers();
+          }
+        },
+
+        _handleSearchResult: function(items) {
+          if (this._page != 1) {
+            for (var i = 0; i < items.length; i++) {
+              this.push('_photosets', items[i]);
+            }
+          } else {
+            this._photosets = items;
+          }
+
+          var numberOfItemsToFillRow = 3 - (this._photosets.length % 3);
+          if (numberOfItemsToFillRow < 3) {
+            this.$.filler.style.width = numberOfItemsToFillRow * 32.66 + '%';
+            this.$.filler.style.display = '';
+          } else {
+            this.$.filler.style.display = 'none';
+          }
+
+          this.$.scrollThreshold.clearTriggers();
+        },        
+
+        _selectPhotoset: function(event) {
+          var photoset = event.model.photoset;
+          this.$.photosetSelector.select(photoset);
+        }
+      });
+    })();
+  </script>
+</dom-module>

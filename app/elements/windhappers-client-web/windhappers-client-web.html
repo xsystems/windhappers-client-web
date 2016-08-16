@@ -4,6 +4,7 @@
 <link rel="import" href="pages/windhappers-page-location.html">
 <link rel="import" href="pages/windhappers-page-calendar.html">
 <link rel="import" href="pages/windhappers-page-videos.html">
+<link rel="import" href="pages/windhappers-page-photos.html">
 
 <dom-module id="windhappers-client-web">
   <template>
@@ -190,7 +191,7 @@
           </neon-animatable>
           
           <neon-animatable data-page="calendar">
-            <windhappers-page-calendar narrow="[[narrow]]"></windhappers-page-calendar>
+            <windhappers-page-calendar narrow$="[[narrow]]"></windhappers-page-calendar>
           </neon-animatable>
           
           <neon-animatable data-page="disciplines">
@@ -199,12 +200,12 @@
           </neon-animatable>
 
           <neon-animatable data-page="photos">
-            <windhappers-page-mock  narrow="[[narrow]]"
-                                    route="{{pageTail}}"></windhappers-page-mock>
+            <windhappers-page-photos  narrow$="[[narrow]]"
+                                      route="{{pageTail}}"></windhappers-page-photos>
           </neon-animatable>
 
           <neon-animatable data-page="videos">
-            <windhappers-page-videos  narrow="[[narrow]]"
+            <windhappers-page-videos  narrow$="[[narrow]]"
                                       route="{{pageTail}}"></windhappers-page-videos>
           </neon-animatable>
 
@@ -250,7 +251,10 @@
         ],        
 
         properties: {
-          narrow: Boolean
+          narrow: {
+            type: Boolean,
+            value: false
+          }
         },
 
         observers: [

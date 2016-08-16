@@ -47,27 +47,6 @@
       }
     </style>
 
-    <google-sheets  id="sheetVolunteers" 
-                    key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
-                    tab-id="1"
-                    published 
-                    rows="{{rowsVolunteers}}"></google-sheets>
-
-    <google-sheets  id="sheetCosts" 
-                    key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
-                    tab-id="2"
-                    published 
-                    rows="{{rowsCosts}}"></google-sheets>
-
-    <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
-      <windhappers-volunteer narrow$="[[narrow]]"
-                             name="{{row.gsx$name.$t}}"
-                             function="{{row.gsx$function.$t}}"
-                             email="{{row.gsx$email.$t}}"
-                             email-personal="{{row.gsx$emailpersonal.$t}}"
-                             phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
-    </template>                    
-
     <paper-card class="cost" heading="Contributie">
       <div class="card-content">
         <table>
@@ -124,6 +103,28 @@
         </table>
       </div>
     </paper-card>  
+
+    <google-sheets  id="sheetVolunteers" 
+                    key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                    tab-id="1"
+                    published 
+                    rows="{{rowsVolunteers}}"></google-sheets>
+
+    <google-sheets  id="sheetCosts" 
+                    key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                    tab-id="2"
+                    published 
+                    rows="{{rowsCosts}}"></google-sheets>
+
+    <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
+      <windhappers-volunteer narrow$="[[narrow]]"
+                             name="{{row.gsx$name.$t}}"
+                             function="{{row.gsx$function.$t}}"
+                             email="{{row.gsx$email.$t}}"
+                             email-personal="{{row.gsx$emailpersonal.$t}}"
+                             phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
+    </template>
+
   </template>
   <script>
     (function() {
@@ -164,7 +165,7 @@
         },
 
         _isRelatedVolunteer: function(row) {
-          return row.gsx$function.$t == 'Ledenadministratie' || row.gsx$function.$t == 'Beheer boten en materieel' || row.gsx$function.$t == 'Introductiecursus';
+          return row.gsx$function.$t == 'Ledenadministratie' || row.gsx$function.$t == 'Beheer boten en materieel' || row.gsx$function.$t == 'Introductiecursus' || row.gsx$function.$t == 'Penningmeester';
         }
       });
     })();

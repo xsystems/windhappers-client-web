@@ -5,32 +5,42 @@
         @apply(--layout-vertical);
         height: 100%;
         padding-top: 1%;
-        padding-bottom: 1%;
         padding-left: 1%;
+        padding-right: 1%;
       }
 
       #calendar {
-        @apply(--layout-flex);
         @apply(--shadow-elevation-2dp);
-        border: none;
-        margin-right: 1%;
+        @apply(--layout-flex);
+        margin-bottom: 1%;
+        min-height: 98%;
       }
 
       .volunteer-container {
         @apply(--layout-horizontal);
+        @apply(--layout-justified);
         @apply(--layout-wrap);
       }
 
       windhappers-volunteer {
-        @apply(--layout-flex);
         margin-bottom: 1%;
-        margin-right: 1%;
       }
 
-      windhappers-volunteer:not(.narrow) {
-        min-width: 32%;
-      }      
+      :host[narrow] windhappers-volunteer {
+        width: 100%;
+      }
+
+      :host:not([narrow]) windhappers-volunteer {
+        width: 32.66%;
+      }
     </style>
+
+    <xsystems-calendar-google id="calendar"
+                              narrow$="[[narrow]]"
+                              calendars="[[_calendars]]"
+                              time-zone="Europe/Amsterdam"
+                              language="nl">
+    </xsystems-calendar-google>
 
     <google-sheets  id="sheetVolunteers" 
                 key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
@@ -40,16 +50,16 @@
 
     <div class="volunteer-container">
       <template is="dom-repeat" items="[[rows]]" as="row" filter="_isRelatedVolunteer">
-        <windhappers-volunteer class$="{{_computeNarrowClass(narrow)}}"
-                               name="{{row.gsx$name.$t}}"
+        <windhappers-volunteer name="{{row.gsx$name.$t}}"
                                function="{{row.gsx$function.$t}}"
                                email="{{row.gsx$email.$t}}"
                                email-personal="{{row.gsx$emailpersonal.$t}}"
-                               phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
-      </template>                    
-    </div>                
+                               phone="{{row.gsx$phone.$t}}">
+        </windhappers-volunteer>      
+      </template>
 
-    <iframe id="calendar" xmlns="http://www.w3.org/1999/xhtml" src="https://www.google.com/calendar/embed?showTitle=0&amp;wkst=2&amp;hl=nl&amp;bgcolor=%23FFFFFF&amp;src=dewindhappers%40gmail.com&amp;color=%232952A3&amp;src=nl.dutch%23holiday%40group.v.calendar.google.com&amp;color=%232F6309&amp;ctz=Europe%2FAmsterdam">Windhapper Calendar</iframe>
+      <div id="filler"></div>
+    </div>
   </template>
   <script>
     (function() {
@@ -58,17 +68,39 @@
         is: 'windhappers-page-calendar',
 
         properties: {
-          narrow: Boolean
-        },
-
-        _computeNarrowClass: function() {
-          if (this.narrow) {
-            return 'narrow';
+          narrow: Boolean,
+          _calendars: {
+            type: Array,
+            value: function() {
+              return ['dewindhappers@gmail.com', 'nl.dutch#holiday@group.v.calendar.google.com'];
+            }
           }
         },
+
+        observers: [
+          '_handleRows(rows)'
+        ],
         
         _isRelatedVolunteer: function(row) {
-          return row.gsx$function.$t == 'Winteractiviteiten';
+          return ['Winteractiviteiten', 'Kanopolo', 'Toervaren', 'Zeevaren', 'Branding en wildwarevaren', 'Jeugd'].indexOf(row.gsx$function.$t) > -1;
+        },
+
+        _handleRows: function(rows) {
+          var numberOfRelatedVolunteers = 0;
+
+          for (var i = 0; i < rows.length; i++) {
+            if (this._isRelatedVolunteer(rows[i])) {
+              numberOfRelatedVolunteers++;
+            }
+          }
+
+          var numberOfItemsToFillRow = 3 - numberOfRelatedVolunteers % 3;
+          if (numberOfItemsToFillRow < 3) {
+            this.$.filler.style.width = numberOfItemsToFillRow * 32.66 + '%';
+            this.$.filler.style.display = '';
+          } else {
+            this.$.filler.style.display = 'none';
+          }
         }
       });
     })();

@@ -4,9 +4,8 @@
 
     </style>
 
-    <iron-ajax  auto
+    <iron-ajax  id="youtubeAjax"
                 url="https://www.googleapis.com/youtube/v3/search"
-                params="[[_requestParams]]"
                 debounce-duration="[[debounceDuration]]"
                 last-response="{{_response}}"></iron-ajax>
 
@@ -19,14 +18,10 @@
 
         properties: {
           key: String,
-          query: {
-            type: String,
-            observer: '_handleQuery'
-          },
+          query: String,
           channel: String,
           pageToken: {
             type: String,
-            observer: '_fetchNextPage',
             notify: true
           },
           resultsPerPage: {
@@ -59,18 +54,15 @@
             type: Object,
             readOnly: true,
             notify: true
-          },
-
-          _requestParams: Object,
-          _response: {
-            type: Object,
-            observer: '_processResponse'
           }
         },
 
         observers: [
           '_computeRequestParams(key, query, type, channel)',
-          '_computeRequestParams(key, query, type)'
+          '_computeRequestParams(key, query, type)',
+          '_processResponse(_response)',
+          '_handleQuery(query)',
+          '_fetchPage(pageToken)'
         ],
 
         _computeRequestParams: function(key, query, type, channel) {
@@ -93,7 +85,8 @@
             requestParams[param] = this.params[param];
           }
 
-          this._requestParams = requestParams;
+          this.$.youtubeAjax.params = requestParams;
+          this.$.youtubeAjax.generateRequest();
         },
 
         _processResponse: function() {
@@ -107,7 +100,7 @@
           this.pageToken = null;
         },
 
-        _fetchNextPage: function() {
+        _fetchPage: function() {
           this._computeRequestParams(this.key, this.query, this.type, this.channel);
         }
       });

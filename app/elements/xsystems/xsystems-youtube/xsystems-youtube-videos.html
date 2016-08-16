@@ -40,7 +40,7 @@
                               type="video"
                               results-per-page="9"
                               debounce-duration="[[debounceDuration]]"
-                              page-token="[[_pageToken]]"
+                              page-token="{{_pageToken}}"
                               items="{{_items}}"
                               page-token-next="{{_pageTokenNext}}">
     </xsystems-youtube-search>
@@ -63,6 +63,8 @@
       </paper-card>
     </template>
 
+    <div id="filler"></div>
+
     <array-selector id="videoSelector" items="{{_videos}}" selected="{{selected}}"></array-selector>
 
   </template>
@@ -83,11 +85,7 @@
           selected: {
             type: Object,
             notify: true
-          },
-          _items: Array,
-          _videos: Array,
-          _pageToken: String,
-          _pageTokenNext: String
+          }
         },
 
         observers: [
@@ -110,6 +108,15 @@
           } else {
             this._videos = items;
           }
+
+          var numberOfItemsToFillRow = 3 - (this._videos.length % 3);
+          if (numberOfItemsToFillRow < 3) {
+            this.$.filler.style.width = numberOfItemsToFillRow * 32.66 + '%';
+            this.$.filler.style.display = '';
+          } else {
+            this.$.filler.style.display = 'none';
+          }
+
           this.$.scrollThreshold.clearTriggers();
         },
 
