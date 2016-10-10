@@ -11,6 +11,7 @@
     "google-map": "GoogleWebComponents/google-map#1.1.10",
     "google-sheets": "GoogleWebComponents/google-sheets#1.0.5",
     "google-youtube": "GoogleWebComponents/google-youtube#1.2.1",
+    "xsystems-elements": "xsystems/xsystems-elements#^0.5.0",
     "js-md5": "md5#^0.4.1"
   },
   "devDependencies": {

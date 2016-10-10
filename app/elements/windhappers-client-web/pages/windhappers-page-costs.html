@@ -1,3 +1,8 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/google-sheets/google-sheets.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../windhappers-volunteer/windhappers-volunteer.html">
+
 <dom-module id="windhappers-page-costs">
   <template>
     <style>
@@ -20,7 +25,7 @@
 
       windhappers-volunteer:not([narrow]) {
         width: 32.66%;
-      }      
+      }
 
       paper-card.cost {
         width: 100%;
@@ -102,18 +107,18 @@
           </template>
         </table>
       </div>
-    </paper-card>  
+    </paper-card>
 
-    <google-sheets  id="sheetVolunteers" 
+    <google-sheets  id="sheetVolunteers"
                     key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
                     tab-id="1"
-                    published 
+                    published
                     rows="{{rowsVolunteers}}"></google-sheets>
 
-    <google-sheets  id="sheetCosts" 
+    <google-sheets  id="sheetCosts"
                     key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
                     tab-id="2"
-                    published 
+                    published
                     rows="{{rowsCosts}}"></google-sheets>
 
     <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
@@ -122,7 +127,7 @@
                              function="{{row.gsx$function.$t}}"
                              email="{{row.gsx$email.$t}}"
                              email-personal="{{row.gsx$emailpersonal.$t}}"
-                             phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>      
+                             phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>
     </template>
 
   </template>

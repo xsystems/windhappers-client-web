@@ -1,8 +1,20 @@
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/google-youtube/google-youtube.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/xsystems-youtube/xsystems-youtube.html">
+<link rel="import" href="../../windhappers-overlay/windhappers-overlay.html">
+
 <dom-module id="windhappers-page-videos">
   <template>
     <style>
       :host {
         @apply(--layout-vertical);
+        @apply(--layout-flex);
         padding-left: 1%;
         padding-right: 1%;
       }
@@ -41,10 +53,11 @@
                               key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
                               query="[[query]]"
                               channel="UCnUYZLuoy1rq1aVMwx4aTzw"
-                              selected="{{video}}"></xsystems-youtube-videos>
+                              selected="{{video}}">
+    </xsystems-youtube-videos>
 
-    <xsystems-overlay id="videoOverlay"
-                      on-iron-overlay-closed="_deselectVideo">
+    <windhappers-overlay  id="videoOverlay"
+                          on-iron-overlay-closed="_deselectVideo">
       <paper-card id="videoPlayerCard"
                   elevation="5">
         <google-youtube id="videoPlayer"
@@ -56,8 +69,8 @@
                         iv_load_policy="3"
                         modestbranding="1">
         </google-youtube>
-      </paper-card>  
-    </xsystems-overlay>    
+      </paper-card>
+    </windhappers-overlay>
 
   </template>
   <script>

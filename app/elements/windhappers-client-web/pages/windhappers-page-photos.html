@@ -1,3 +1,12 @@
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/xsystems-flickr/xsystems-flickr.html">
+<link rel="import" href="../../windhappers-overlay/windhappers-overlay.html">
+
 <dom-module id="windhappers-page-photos">
   <template>
     <style>
@@ -59,7 +68,7 @@
                                         selected="{{photoset}}">
         </xsystems-flickr-photosets-view>
 
-      </neon-animatable>      
+      </neon-animatable>
       <neon-animatable data-page="photos">
 
         <xsystems-flickr-photoset-view  narrow$="[[narrow]]"
@@ -74,7 +83,7 @@
                                 url="{{url}}">
         </xsystems-flickr-photo>
 
-        <xsystems-overlay id="photoOverlay"
+        <windhappers-overlay id="photoOverlay"
                           on-iron-overlay-closed="_deselectPhoto">
           <paper-card id="photoCard"
                       elevation="5">
@@ -86,9 +95,9 @@
                           src="[[url]]">
               </iron-image>
             </a>
-          </paper-card>  
-        </xsystems-overlay>            
-        
+          </paper-card>
+        </windhappers-overlay>
+
       </neon-animatable>
     </neon-animated-pages>
 
