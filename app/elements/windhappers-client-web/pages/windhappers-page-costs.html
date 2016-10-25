@@ -17,14 +17,14 @@
         padding-right: 1%;
       }
 
-      windhappers-volunteer {
-        margin-bottom: 1%;
+      @-moz-document url-prefix() {
+        :host {
+          height: 100%;
+        }
       }
 
-      @-moz-document url-prefix() {
-        windhappers-volunteer {
-          margin-bottom: 0.8em;
-        }
+      windhappers-volunteer {
+        margin-bottom: 1%;
       }
 
       windhappers-volunteer[narrow] {
@@ -42,12 +42,6 @@
       paper-card, windhappers-notification {
         width: 100%;
         margin-bottom: 1%;
-      }
-
-      @-moz-document url-prefix() {
-        paper-card, windhappers-notification {
-          margin-bottom: 0.8em;
-        }
       }
 
       table {
