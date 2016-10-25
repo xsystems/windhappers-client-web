@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
@@ -13,8 +14,8 @@
       }
 
       .volunteer {
-        @apply(--layout-flex);
         @apply(--layout-horizontal);
+        width: 100%;
       }
 
       .volunteer-gravatar {
@@ -40,6 +41,7 @@
       .card-actions > a {
         text-decoration: none;
         color: inherit;
+        word-break: break-all;
       }
     </style>
     <paper-card class="volunteer">

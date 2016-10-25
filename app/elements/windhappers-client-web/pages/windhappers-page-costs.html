@@ -2,10 +2,12 @@
 <link rel="import" href="../../../bower_components/google-sheets/google-sheets.html">
 <link rel="import" href="../../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../windhappers-volunteer/windhappers-volunteer.html">
+<link rel="import" href="../../windhappers-notification/windhappers-notification.html">
+<link rel="import" href="../../../styles/shared-styles.html">
 
 <dom-module id="windhappers-page-costs">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         @apply(--layout-horizontal);
         @apply(--layout-justified);
@@ -19,6 +21,12 @@
         margin-bottom: 1%;
       }
 
+      @-moz-document url-prefix() {
+        windhappers-volunteer {
+          margin-bottom: 0.8em;
+        }
+      }
+
       windhappers-volunteer[narrow] {
         width: 100%;
       }
@@ -27,9 +35,19 @@
         width: 32.66%;
       }
 
-      paper-card.cost {
+      windhappers-notification {
+        background-color: white;
+      }
+
+      paper-card, windhappers-notification {
         width: 100%;
         margin-bottom: 1%;
+      }
+
+      @-moz-document url-prefix() {
+        paper-card, windhappers-notification {
+          margin-bottom: 0.8em;
+        }
       }
 
       table {
@@ -52,7 +70,29 @@
       }
     </style>
 
-    <paper-card class="cost" heading="Contributie">
+    <paper-card>
+      <div class="card-content">
+        <article>
+          <header>
+            <span class="headline">Inschrijven<span>
+            <p>
+              Wil je iets aan je conditie doen? Denk dan eens aan de kanosport in plaats van aan de sportschool. Kanovaren is niet aan leeftijd gebonden en je bent lekker in de buitenlucht. Bij de Windhappers hebben we leden van 8 tot 80 jaar en ook ruimte voor nieuwe leden.
+            </p>
+          </header>
+          <p>
+            Elke woensdagavond is onze clubavond, kom gerust eens langs voor informatie of maak een afspraak voor een proefvaart met een clubboot. Onze leden helpen u graag op weg. Of kom eens kijken op onze Open Dag.
+          </p>
+          <p>
+            Heb je geen eigen kano? Geen probleem! Wij beschikken over een aantal clubboten, deze boten zijn beschikbaar voor leden die (nog) geen eigen boot bezitten.
+          </p>
+          <p>
+            Elk jaar worden regelmatig basiscursussen voor nieuwe leden georganiseerd. Hierbij worden de grondbeginselen van het kanovaren aangeleerd. Elk nieuw lid volgt deze basiscursus waar, naast zaken als techniek en veiligheid, ook materiaalkennis, keuze van kano of kajak aan bod komen.
+          </p>
+        </article>
+      </div>
+    </paper-card>
+
+    <paper-card heading="Contributie">
       <div class="card-content">
         <table>
           <tr>
@@ -71,7 +111,14 @@
       </div>
     </paper-card>
 
-    <paper-card class="cost" heading="Stalling">
+    <windhappers-notification type="info">
+      Het lidmaatschap van het Watersportverbond is in deze contributie begrepen.
+    </windhappers-notification>
+    <windhappers-notification type="info">
+      Indien meerdere personen uit één samenlevingsverband (wonende op hetzelfde adres) lid zijn, betalen het 4e en volgende lid geen contributie.
+    </windhappers-notification>
+
+    <paper-card heading="Stalling">
       <div class="card-content">
         <table>
           <tr>
@@ -90,7 +137,7 @@
       </div>
     </paper-card>
 
-    <paper-card class="cost" heading="Overige">
+    <paper-card heading="Overige">
       <div class="card-content">
         <table>
           <tr>
@@ -108,6 +155,10 @@
         </table>
       </div>
     </paper-card>
+
+    <windhappers-notification type="warning">
+      Een <em>opzegging</em> voor het volgende kalenderjaar, dient voor 31 December bekend te zijn bij de <a href="/contact">ledenadministrateur</a>.
+    </windhappers-notification>
 
     <google-sheets  id="sheetVolunteers"
                     key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
