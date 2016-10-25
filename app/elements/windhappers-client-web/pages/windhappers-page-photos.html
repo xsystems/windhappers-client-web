@@ -12,8 +12,12 @@
     <style>
       :host {
         @apply(--layout-vertical);
-        padding-left: 1%;
-        padding-right: 1%;
+        @apply(--layout-flex);
+      }
+
+      neon-animated-pages, neon-animatable {
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
       }
 
       #photoCard {
