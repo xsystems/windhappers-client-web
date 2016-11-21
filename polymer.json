@@ -1,0 +1,14 @@
+{
+    "entrypoint": "index.html",
+    "shell": "src/windhappers-client-web.html",
+    "fragments": [],
+    "sources": [
+        "src/**/*",
+        "images/**/*",
+        "bower.json",
+        "manifest.json"
+    ],
+    "includeDependencies": [
+        "bower_components/webcomponentsjs/webcomponents.min.js"
+    ]
+}

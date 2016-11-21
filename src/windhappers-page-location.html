@@ -1,0 +1,124 @@
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/google-map/google-map-directions.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-swipeable-container/iron-swipeable-container.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="windhappers-notification.html">
+
+<dom-module id="windhappers-page-location">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
+
+      #map {
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+      }
+
+      #addressInput {
+        --paper-input-container-input: {
+          font-weight: bolder;
+        };
+        --paper-input-container-label: {
+          font-weight: bolder;
+        };
+        --paper-input-container-underline: {
+          height: 2px;
+        };
+      }
+
+      :host[narrow] #addressInput {
+        padding-left: 5%;
+        width: 90%;
+      }
+
+      :host:not([narrow]) #addressInput {
+        padding-left: 1%;
+        width: 30%;
+      }
+
+      #notifications {
+        @apply(--layout-vertical);
+        @apply(--layout-self-end);
+        padding: 1%;
+        overflow: hidden;
+      }
+
+      windhappers-notification {
+        background-color: white;
+        margin-top: 1%;
+      }
+
+      @-moz-document url-prefix() {
+        windhappers-notification {
+          margin-top: 0.8em;
+        }
+      }
+    </style>
+
+    <iron-a11y-keys id="a11y" target="[[_targetAddressInput]]" keys="enter" on-keys-pressed="calculateDirections"></iron-a11y-keys>
+
+    <google-map id="map"
+                api-key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+                map="{{map}}"
+                disable-default-ui
+                latitude="52.079124"
+                longitude="4.236238">
+      <paper-input id="addressInput" label="Waar kom je vandaan?" value="{{startAddress}}">
+        <paper-icon-button suffix icon="icons:search" on-tap="calculateDirections"></paper-icon-button>
+      </paper-input>
+      <google-map-marker  id="markerWindhappers"
+                          open
+                          title="Kanovereniging De Windhappers"
+                          animation="DROP"
+                          latitude="52.039119"
+                          longitude="4.236241">
+        <b>Kanovereniging De Windhappers</b><br/>
+        Nieuweweg 75, 2544NG Den Haag<br/>
+        <i>52.039124, 4.236238</i>
+      </google-map-marker>
+      <iron-swipeable-container id="notifications">
+        <windhappers-notification type="info" removable$="[[!narrow]]">
+          De Windhappers is een Haagse kanovereniging die zich bevindt achter de bekende Haagse Kunstijsbaan "De Uithof". Ons botenhuis met stalling en kantine is herkenbaar aan ons logo. Het water waar het botenhuis aan ligt heet De Wennetjessloot.
+        </windhappers-notification>
+        <windhappers-notification type="warning" removable$="[[!narrow]]">
+          Houd rekening met de volgende aanrijroute: Vanaf de Lozerlaan neem de afslag Uithof en Jaap Edenweg, deze weg afrijden tot het achterste deel van de parkeerplaats. Loop vanaf hier naar het verenigings-gebouw.
+        </windhappers-notification>
+      </iron-swipeable-container>
+    </google-map>
+    <google-map-directions  id="directionsService"
+                            api-key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+                            map="{{map}}"
+                            end-address="52.038249, 4.237861">
+    </google-map-directions>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-location',
+
+        properties: {
+          narrow: Boolean,
+          _targetAddressInput: {
+            type: Object,
+            value: function() {
+              return this.$.addressInput;
+            }
+          }
+        },
+
+        calculateDirections: function() {
+          this.$.directionsService.startAddress = this.$.addressInput.value;
+          this.$.addressInput.$.input.blur();
+        }
+      });
+    })();
+  </script>
+</dom-module>

@@ -1,0 +1,112 @@
+<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/xsystems-calendar/xsystems-calendar-google.html">
+<link rel="import" href="windhappers-styles.html">
+
+<dom-module id="windhappers-page-home">
+  <template>
+    <style include="windhappers-styles">
+      :host {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex);
+        padding: 1%;
+      }
+
+      #main {
+        @apply(--layout-vertical);
+        @apply(--layout-flex-4);
+        margin-right: 1%;
+        background-color: white;
+      }
+
+      article {
+        margin: 2%;
+      }
+
+      #calendar {
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+      }
+
+      #scrollThreshold {
+        height: 100%;
+      }
+
+      .videoContainer {
+        width: 70%;
+        margin: auto;
+      }
+    </style>
+    <paper-material id="main" elevation="1">
+      <iron-scroll-threshold id="scrollThreshold">
+        <article>
+          <header>
+            <h1>Wie zijn wij</h1>
+            <p>
+              Kanovereniging De Windhappers is een Haagse kanovereniging die is opgericht in februari 1958 en is aangesloten bij het Watersportverbond.
+            </p>
+          </header>
+          <section>
+            <p>
+              Wij zijn een enthousiaste en actieve kanoclub met ongeveer 200 leden. Onze leden doen mee aan <a href="/disciplines" title="Disciplines">(bijna) alle vormen van kanosport</a>, toervaren (zowel in kajak als Canadese kano), kanopolo, zeevaren, brandingvaren, en wildwatervaren.
+            </p>
+            <p>
+              We verzorgen leuke cursussen in kajak- en kanovaren voor beginners, eskimoteren en zeevaren voor beginners.
+            </p>
+            <p>
+              We organiseren een groot aantal <a href="/calendar" title="Kalendar">activiteiten</a> zoals toertochten op vlakwater en zee, kanokampeerweekenden, kanopolocompetitie, wildwatervaren in het buitenland. In de winter zijn er winteractiviteiten met interessante lezingen, nordic-walking of wandeltochten.
+            </p>
+            <paper-material class="videoContainer" elevation="1">
+              <google-youtube fluid="true"
+                              video-id="IrEgMeSyn-E"
+                              rel="0"
+                              showinfo="0"
+                              iv_load_policy="3"
+                              modestbranding="1">
+              </google-youtube>
+            </paper-material>
+            <p>
+              Bijna het gehele jaar wordt er op woensdagavond, op vrijdag en zondag gevaren vanaf het clubgebouw in het uitgebreide stelsel van <a href="/canoeroutes" title="Kanoroutes">kanoroutes</a> in regio Den Haag, het Westland, en (Midden) Delfland.
+            </p>
+            <p>
+              Ons goed onderhouden gebouw heeft een gezellige kantine met bar en is voorzien van kleedruimtes, warme douches en toiletten. In de botenloods is plaats voor kajaks en Canadees kano’s. We hebben een groot aantal verenigingsboten, die door leden gebruikt kunnen worden, en een botentrailer. Ons topstuk is een 10 persoons canadese kano die stamt uit de jaren dertig.
+            </p>
+            <p>
+              Ben je geïnteresseerd om lid te worden? Dan vind je meer uitgebreide informatie onder Nieuwe Leden. Kom naar onze open dag of loop op woensdagavond een keer binnen.
+            </p>
+          </section>
+        </article>
+      </iron-scroll-threshold>
+    </paper-material>
+
+    <paper-material id="calendar"
+                    hidden$="[[narrow]]"
+                    elevation="1">
+        <xsystems-calendar-google narrow
+                                  calendars="[[_calendars]]"
+                                  time-zone="Europe/Amsterdam"
+                                  language="nl">
+      </xsystems-calendar-google>
+    </paper-material>
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-home',
+
+        properties: {
+          narrow: Boolean,
+          _calendars: {
+            type: Array,
+            value: function() {
+              return ['dewindhappers@gmail.com', 'nl.dutch#holiday@group.v.calendar.google.com'];
+            }
+          }
+        }
+      });
+    })();
+  </script>
+</dom-module>

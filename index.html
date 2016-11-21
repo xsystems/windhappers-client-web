@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>De Windhappers</title>
+
+    <link rel="manifest" href="/manifest.json">
+
+    <script>
+      window.Polymer = {
+        dom: 'shady',
+        lazyRegister: true
+      };
+      (function() {
+        'use strict';
+        var isWebComponentsSupported = (
+          'registerElement' in document
+          && 'import' in document.createElement('link')
+          && 'content' in document.createElement('template')
+        );
+        if (!isWebComponentsSupported) {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = '/bower_components/webcomponentsjs/webcomponents.min.js';
+          document.head.appendChild(script);
+        }
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js');
+        }
+      })();
+    </script>
+
+    <link rel="import" href="/src/windhappers-styles.html">
+    <link rel="import" href="/src/windhappers-client-web.html">
+
+    <style is="custom-style" include="windhappers-styles"></style>
+  </head>
+  <body>
+    <windhappers-client-web></windhappers-client-web>
+  </body>
+</html>

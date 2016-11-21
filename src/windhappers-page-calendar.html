@@ -1,0 +1,129 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/xsystems-calendar/xsystems-calendar-google.html">
+<link rel="import" href="../bower_components/google-sheets/google-sheets.html">
+<link rel="import" href="windhappers-volunteer.html">
+<link rel="import" href="windhappers-notification.html">
+
+<dom-module id="windhappers-page-calendar">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-vertical);
+        height: 100%;
+        padding-top: 1%;
+        padding-left: 1%;
+        padding-right: 1%;
+      }
+
+      #calendar {
+        @apply(--shadow-elevation-2dp);
+        @apply(--layout-flex);
+        margin-bottom: 1%;
+        min-height: 98%;
+      }
+
+      .volunteer-container {
+        @apply(--layout-horizontal);
+        @apply(--layout-justified);
+        @apply(--layout-wrap);
+      }
+
+      windhappers-volunteer {
+        margin-bottom: 1%;
+      }
+
+      @-moz-document url-prefix() {
+        windhappers-volunteer {
+          margin-bottom: 0.8em;
+        }
+      }
+
+      :host[narrow] windhappers-volunteer {
+        width: 100%;
+      }
+
+      :host:not([narrow]) windhappers-volunteer {
+        width: 32.66%;
+      }
+
+      windhappers-notification {
+        margin-bottom: 1%;
+        background-color: white;
+      }
+    </style>
+
+    <xsystems-calendar-google id="calendar"
+                              narrow$="[[narrow]]"
+                              calendars="[[_calendars]]"
+                              time-zone="Europe/Amsterdam"
+                              language="nl">
+    </xsystems-calendar-google>
+
+    <windhappers-notification type="info">
+      Het is mogelijk evenementen aan uw eigen Google Calendar toe te voegen. Klik hiervoor op een evenement en vervolgens op kopieren naar mijn agenda. Wilt u graag alle evenementen naar uw eigen Google Calendar importeren, klik dan de "+ Google Agenda" knop, rechts onderaan de kalender, en volg de stappen op uw scherm.
+    </windhappers-notification>
+
+    <google-sheets  id="sheetVolunteers"
+                key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                tab-id="1"
+                published
+                rows="{{rows}}"></google-sheets>
+
+    <div class="volunteer-container">
+      <template is="dom-repeat" items="[[rows]]" as="row" filter="_isRelatedVolunteer">
+        <windhappers-volunteer name="{{row.gsx$name.$t}}"
+                               function="{{row.gsx$function.$t}}"
+                               email="{{row.gsx$email.$t}}"
+                               email-personal="{{row.gsx$emailpersonal.$t}}"
+                               phone="{{row.gsx$phone.$t}}">
+        </windhappers-volunteer>
+      </template>
+
+      <div id="filler"></div>
+    </div>
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-calendar',
+
+        properties: {
+          narrow: Boolean,
+          _calendars: {
+            type: Array,
+            value: function() {
+              return ['dewindhappers@gmail.com', 'nl.dutch#holiday@group.v.calendar.google.com'];
+            }
+          }
+        },
+
+        observers: [
+          '_handleRows(rows)'
+        ],
+
+        _isRelatedVolunteer: function(row) {
+          return ['Winteractiviteiten', 'Kanopolo', 'Toervaren', 'Zeevaren', 'Branding en wildwarevaren', 'Jeugd'].indexOf(row.gsx$function.$t) > -1;
+        },
+
+        _handleRows: function(rows) {
+          var numberOfRelatedVolunteers = 0;
+
+          for (var i = 0; i < rows.length; i++) {
+            if (this._isRelatedVolunteer(rows[i])) {
+              numberOfRelatedVolunteers++;
+            }
+          }
+
+          var numberOfItemsToFillRow = 3 - numberOfRelatedVolunteers % 3;
+          if (numberOfItemsToFillRow < 3) {
+            this.$.filler.style.width = numberOfItemsToFillRow * 32.66 + '%';
+            this.$.filler.style.display = '';
+          } else {
+            this.$.filler.style.display = 'none';
+          }
+        }
+      });
+    })();
+  </script>
+</dom-module>
