@@ -2,9 +2,10 @@
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animatable.html">
 <link rel="import" href="../bower_components/neon-animation/animations/slide-from-left-animation.html">
@@ -45,12 +46,14 @@
         };
       }
 
-      app-toolbar[sticky] {
+      app-toolbar {
         height: 56px;
       }
 
-      app-toolbar:not([sticky]) {
-        height: 56px;
+      #windhappers-icon {
+        height: 112px;
+        width: 100%;
+        cursor: pointer;
       }
 
       [main-title] {
@@ -74,6 +77,10 @@
 
       paper-submenu paper-menu {
         padding-left: 10%;
+      }
+
+      #drawer {
+        --app-drawer-width: 200px;
       }
 
       #drawerContent {
@@ -108,6 +115,12 @@
                         responsive-width="768px">
       <app-drawer id="drawer" swipe-open>
         <div id="drawerContent">
+          <iron-image id="windhappers-icon"
+                      on-tap="_showPageHome"
+                      sizing="contain"
+                      src="../images/windhappers-icon_1024x1024.png">
+          </iron-image>
+
           <div id="menu">
             <paper-menu selectable="paper-item"
                         selected="{{pageData.page}}"
@@ -233,7 +246,7 @@
         attached: function() {
           this.async(function() {
             if (!this.route.path || this.route.path == '/') {
-              this.set('route.path', '/home');
+              this._showPageHome();
             }
           });
         },
@@ -242,6 +255,10 @@
           if (this.narrow) {
             this.$.drawer.close();
           }
+        },
+
+        _showPageHome: function() {
+          this.set('route.path', '/home');
         },
 
         _showPageWaterQuality: function() {
