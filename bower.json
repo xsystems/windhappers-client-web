@@ -2,7 +2,7 @@
   "name": "windhappers-client-web",
   "private": true,
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0",
+    "polymer": "Polymer/polymer#^1.7.0",
     "app-elements": "PolymerElements/app-elements#^0.10.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",

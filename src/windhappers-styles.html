@@ -7,7 +7,7 @@
 <dom-module id="windhappers-styles">
   <template>
     <style>
-      :root {
+      :host > * {
         /* Application theme */
 
         /*
@@ -100,25 +100,17 @@
         };
       }
 
-      body {
-        @apply(--layout-fullbleed);
-        @apply(--layout-vertical);
-        background: #fafafa;
-        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        color: #333;
-      }
-
       .space {
-        @apply(--layout-flex);
+        @apply --layout-flex;
       }
 
       dt {
-        @apply(-subheading);
+        @apply --subheading;
         font-weight: bold;
       }
 
       p, dd {
-        @apply(--body1);
+        @apply --body1;
         text-align: justify;
       }
 
@@ -131,11 +123,11 @@
       }
 
       .title{
-        @apply(--title);
+        @apply --title;
       }
 
       .headline {
-        @apply(--headline);
+        @apply --headline;
       }
     </style>
   </template>

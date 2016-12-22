@@ -1,3 +1,4 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
@@ -118,7 +119,8 @@
           <iron-image id="windhappers-icon"
                       on-tap="_showPageHome"
                       sizing="contain"
-                      src="../images/windhappers-icon_1024x1024.png">
+                      src="../images/windhappers-icon_1024x1024.png"
+                      alt="De Windhappers">
           </iron-image>
 
           <div id="menu">
@@ -172,10 +174,10 @@
           <app-toolbar sticky>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             <span condensed-title>De Windhappers</span>
-            <a href="https://twitter.com/DeWindhappers" target="_blank">
+            <a href="https://twitter.com/DeWindhappers" target="_blank" rel="noopener">
               <iron-icon src="../images/twitter.png"></iron-icon>
             </a>
-            <a href="http://www.facebook.com/pages/Kanovereniging-De-Windhappers/546877148674699" target="_blank">
+            <a href="http://www.facebook.com/pages/Kanovereniging-De-Windhappers/546877148674699" target="_blank" rel="noopener">
               <iron-icon id="facebook" src="../images/facebook.png"></iron-icon>
             </a>
           </app-toolbar>
@@ -225,6 +227,8 @@
   </template>
 
   <script>
+    window.performance && performance.mark && performance.mark('windhappers-client-web: before register');
+
     (function() {
       'use strict';
       Polymer({
@@ -242,6 +246,11 @@
         observers: [
           '_updateMenus(pageData.page)'
         ],
+
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-client-web: created');
+          this.removeAttribute('unresolved');
+        },
 
         attached: function() {
           this.async(function() {
