@@ -91,6 +91,11 @@
           '_handleActive(videoActive)'
         ],
 
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-videos: created');
+          this.removeAttribute('unresolved');
+        },
+
         _handleVideoId: function(videoId) {
           if (videoId != null) {
             this.$.videoOverlay.open();

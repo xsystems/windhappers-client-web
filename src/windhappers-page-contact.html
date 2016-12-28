@@ -56,6 +56,11 @@
         is: 'windhappers-page-contact',
         properties: {
           narrow: Boolean
+        },
+
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-contact: created');
+          this.removeAttribute('unresolved');
         }
       });
     })();

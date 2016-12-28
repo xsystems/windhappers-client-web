@@ -13,28 +13,26 @@
     <meta name="theme-color" content="#64dd17">
 
     <link async rel="import" href="/src/windhappers-client-web.html">
-
-    <custom-style>
-      <style is="custom-style">
-        body {
-          background: #fafafa;
-          font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-          color: #333;
-        }
-
-        windhappers-client-web[unresolved] {
-          display: block;
-          padding-top: 45vh;
-          text-align: center;
-          font-size: 16px;
-          font-weight: 600;
-          letter-spacing: 0.2em;
-        }
-      </style>
-    </custom-style>
   </head>
   <body>
     <windhappers-client-web unresolved>De Windhappers</windhappers-client-web>
+
+    <style>
+      body {
+        background: #fafafa;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #333;
+      }
+
+      windhappers-client-web[unresolved] {
+        display: block;
+        padding-top: 45vh;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+      }
+    </style>
 
     <script>
       window.performance && performance.mark && performance.mark('index.html');
@@ -53,7 +51,7 @@
         );
         if (!isWebComponentsSupported) {
           var script = document.createElement('script');
-          script.async = true;
+          script.defer = true;
           script.src = '/bower_components/webcomponentsjs/webcomponents.min.js';
           document.head.appendChild(script);
         }

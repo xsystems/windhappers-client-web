@@ -193,6 +193,11 @@
           '_computePeriods(rowsCosts)'
         ],
 
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-costs: created');
+          this.removeAttribute('unresolved');
+        },
+
         _computePeriods: function() {
           var rows = this.$.sheetCosts.rows;
           rows.forEach(function(row) {

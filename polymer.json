@@ -1,7 +1,16 @@
 {
     "entrypoint": "index.html",
     "shell": "src/windhappers-client-web.html",
-    "fragments": [],
+    "fragments": [
+      "src/windhappers-page-calendar.html",
+      "src/windhappers-page-contact.html",
+      "src/windhappers-page-costs.html",
+      "src/windhappers-page-disciplines.html",
+      "src/windhappers-page-home.html",
+      "src/windhappers-page-location.html",
+      "src/windhappers-page-photos.html",
+      "src/windhappers-page-videos.html"
+    ],
     "sources": [
         "src/**/*",
         "images/**/*",

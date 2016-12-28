@@ -103,6 +103,11 @@
           '_handleRows(rows)'
         ],
 
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-calendar: created');
+          this.removeAttribute('unresolved');
+        },
+
         _isRelatedVolunteer: function(row) {
           return ['Winteractiviteiten', 'Kanopolo', 'Toervaren', 'Zeevaren', 'Branding en wildwarevaren', 'Jeugd'].indexOf(row.gsx$function.$t) > -1;
         },

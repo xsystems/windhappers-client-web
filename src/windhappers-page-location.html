@@ -115,6 +115,11 @@
           }
         },
 
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-location: created');
+          this.removeAttribute('unresolved');
+        },
+
         calculateDirections: function() {
           this.$.directionsService.startAddress = this.$.addressInput.value;
           this.$.addressInput.$.input.blur();

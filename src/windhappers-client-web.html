@@ -1,39 +1,39 @@
+<link rel="preload" as="image" href="../images/header_default2.jpg">
+
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-image/iron-image.html">
-<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
-<link rel="import" href="../bower_components/neon-animation/neon-animatable.html">
-<link rel="import" href="../bower_components/neon-animation/animations/slide-from-left-animation.html">
-<link rel="import" href="../bower_components/neon-animation/animations/slide-right-animation.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-menu/paper-submenu.html">
-<link rel="import" href="../bower_components/xsystems-weather/xsystems-weather.html">
-<link rel="import" href="../bower_components/xsystems-weather/xsystems-weather-service-wunderground.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 
-<link rel="import" href="windhappers-page-home.html">
-<link rel="import" href="windhappers-page-disciplines.html">
-<link rel="import" href="windhappers-page-contact.html">
-<link rel="import" href="windhappers-page-costs.html">
-<link rel="import" href="windhappers-page-location.html">
-<link rel="import" href="windhappers-page-calendar.html">
-<link rel="import" href="windhappers-page-videos.html">
-<link rel="import" href="windhappers-page-photos.html">
 <link rel="import" href="windhappers-styles.html">
+
+<link async rel="import" href="../bower_components/xsystems-weather/xsystems-weather.html">
+<link async rel="import" href="../bower_components/xsystems-weather/xsystems-weather-service-wunderground.html">
+<link async rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link async rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link async rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link async rel="import" href="../bower_components/iron-image/iron-image.html">
 
 <dom-module id="windhappers-client-web">
   <template>
     <style include="windhappers-styles">
-      neon-animated-pages, neon-animatable {
-        @apply(--layout-vertical);
-        @apply(--layout-flex);
+      :host [unresolved] {
+        @apply --layout-vertical;
+        @apply --layout-flex;
+        @apply --layout-center;
+        @apply --layout-center-justified;
+      }
+
+      iron-pages {
+        @apply --layout-vertical;
+        @apply --layout-flex;
       }
 
       app-header {
@@ -59,11 +59,11 @@
 
       [main-title] {
         padding-left: 10%;
-        @apply(--display1);
+        @apply --display1;
       }
 
       [condensed-title] {
-        @apply(--headline);
+        @apply --headline;
       }
 
       paper-menu {
@@ -85,12 +85,12 @@
       }
 
       #drawerContent {
-        @apply(--layout-vertical);
+        @apply --layout-vertical;
         height: 100%;
       }
 
       #menu {
-        @apply(--layout-flex);
+        @apply --layout-flex;
         overflow: auto;
       }
 
@@ -186,41 +186,41 @@
           </app-toolbar>
         </app-header>
 
-        <neon-animated-pages selected="[[pageData.page]]"
+        <iron-pages selected="[[page]]"
                              attr-for-selected="data-page"
-                             on-iron-resize="closeDrawer">
-          <neon-animatable data-page="home">
-            <windhappers-page-home narrow$="[[narrow]]"></windhappers-page-home>
-          </neon-animatable>
+                             selected-attribute="active">
+          <windhappers-page-home unresolved data-page="home" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading home page" active></paper-spinner>
+          </windhappers-page-home>
 
-          <neon-animatable data-page="calendar">
-            <windhappers-page-calendar narrow$="[[narrow]]"></windhappers-page-calendar>
-          </neon-animatable>
+          <windhappers-page-calendar unresolved data-page="calendar" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading calendar page" active></paper-spinner>
+          </windhappers-page-calendar>
 
-          <neon-animatable data-page="disciplines">
-            <windhappers-page-disciplines narrow$="[[narrow]]" pattern="/disciplines" route="{{pageTail}}"></windhappers-page-disciplines>
-          </neon-animatable>
+          <windhappers-page-disciplines unresolved data-page="disciplines" narrow$="[[narrow]]" route="{{pageTail}}">
+            <paper-spinner alt="Loading disciplines page" active></paper-spinner>
+          </windhappers-page-disciplines>
 
-          <neon-animatable data-page="photos">
-            <windhappers-page-photos narrow$="[[narrow]]" route="{{pageTail}}"></windhappers-page-photos>
-          </neon-animatable>
+          <windhappers-page-photos unresolved data-page="photos" narrow$="[[narrow]]" route="{{pageTail}}">
+            <paper-spinner alt="Loading photos page" active></paper-spinner>
+          </windhappers-page-photos>
 
-          <neon-animatable data-page="videos">
-            <windhappers-page-videos narrow$="[[narrow]]" route="{{pageTail}}"></windhappers-page-videos>
-          </neon-animatable>
+          <windhappers-page-videos unresolved data-page="videos" narrow$="[[narrow]]" route="{{pageTail}}">
+            <paper-spinner alt="Loading videos page" active></paper-spinner>
+          </windhappers-page-videos>
 
-          <neon-animatable data-page="contact">
-            <windhappers-page-contact narrow$="[[narrow]]"></windhappers-page-contact>
-          </neon-animatable>
+          <windhappers-page-contact unresolved data-page="contact" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading contact page" active></paper-spinner>
+          </windhappers-page-contact>
 
-          <neon-animatable data-page="location">
-            <windhappers-page-location narrow$="[[narrow]]"></windhappers-page-location>
-          </neon-animatable>
+          <windhappers-page-location unresolved data-page="location" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading location page" active></paper-spinner>
+          </windhappers-page-location>
 
-          <neon-animatable data-page="costs">
-            <windhappers-page-costs narrow$="[[narrow]]"></windhappers-page-costs>
-          </neon-animatable>
-        </neon-animated-pages>
+          <windhappers-page-costs unresolved data-page="costs" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading costs page" active></paper-spinner>
+          </windhappers-page-costs>
+        </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
 
@@ -240,11 +240,16 @@
             notify: true,
             reflectToAttribute: true,
             value: false
-          }
+          },
+          page: {
+            type: String,
+            observer: '_pageChanged'
+          },
         },
 
         observers: [
-          '_updateMenus(pageData.page)'
+          '_updateMenus(pageData.page)',
+          '_routePageChanged(pageData.page)'
         ],
 
         created: function() {
@@ -252,18 +257,23 @@
           this.removeAttribute('unresolved');
         },
 
-        attached: function() {
-          this.async(function() {
-            if (!this.route.path || this.route.path == '/') {
-              this._showPageHome();
-            }
-          });
+        _routePageChanged: function(page) {
+          this.page = page || 'home';
+          if (this.narrow) {
+            this.$.drawer.opened = false;
+          }
         },
 
-        closeDrawer: function() {
-          if (this.narrow) {
-            this.$.drawer.close();
+        _pageChanged: function(page, oldPage) {
+          if (page) {
+            this.importHref(
+              this.resolveUrl('windhappers-page-' + page + '.html'),
+              null, this._handleFailedImport, true);
           }
+        },
+
+        _handleFailedImport: function(event) {
+          console.log("Failed to import: " + event.srcElement.href);
         },
 
         _showPageHome: function() {

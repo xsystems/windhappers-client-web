@@ -126,6 +126,11 @@
           '_handleActive(photosetActive, photoActive)'
         ],
 
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-photos: created');
+          this.removeAttribute('unresolved');
+        },
+
         _handlePhotoset: function(photoset){
           this.set('route.path', photoset ? photoset.id : null);
         },

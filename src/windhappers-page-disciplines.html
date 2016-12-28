@@ -232,21 +232,29 @@
         is: 'windhappers-page-disciplines',
 
         properties: {
+          active: {
+            type: Boolean,
+            reflectToAttribute: true
+          },
           narrow: Boolean,
           route: {
             type: Object,
             notify: true
-          },
-          pattern: String
+          }
         },
 
         observers: [
-          '_handleDiscipline(discipline, route.prefix)',
+          '_handleDiscipline(discipline, active, route)',
           '_handleRouteDataDiscipline(routeData.discipline)'
         ],
 
-        _handleDiscipline: function(discipline, routePrefix) {
-          if (routePrefix == this.pattern) {
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-disciplines: created');
+          this.removeAttribute('unresolved');
+        },
+
+        _handleDiscipline: function(discipline, active) {
+          if (active) {
             this.set('route.path', discipline);
           }
         },

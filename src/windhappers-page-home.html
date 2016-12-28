@@ -3,8 +3,9 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../bower_components/xsystems-calendar/xsystems-calendar-google.html">
 <link rel="import" href="windhappers-styles.html">
+
+<link async rel="import" href="../bower_components/xsystems-calendar/xsystems-calendar-google.html">
 
 <dom-module id="windhappers-page-home">
   <template>
@@ -35,7 +36,7 @@
         height: 100%;
       }
 
-      .videoContainer {
+      :host:not([narrow]) .videoContainer {
         width: 70%;
         margin: auto;
       }
@@ -106,6 +107,11 @@
               return ['dewindhappers@gmail.com', 'nl.dutch#holiday@group.v.calendar.google.com'];
             }
           }
+        },
+
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-home: created');
+          this.removeAttribute('unresolved');
         }
       });
     })();
