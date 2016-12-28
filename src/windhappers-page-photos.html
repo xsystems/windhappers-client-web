@@ -80,7 +80,8 @@
                                         key="757b4474c3d5653a8958a33d9cf647a2"
                                         user-id="143394479@N04"
                                         photoset-id="[[photosetData.photosetId]]"
-                                        selected="{{photo}}">
+                                        selected="{{photo}}"
+                                        scroll-target="[[scrollTarget]]">
         </xsystems-flickr-photoset-view>
 
         <xsystems-flickr-photo  key="757b4474c3d5653a8958a33d9cf647a2"
@@ -115,7 +116,8 @@
 
         properties: {
           route: Object,
-          narrow: Boolean
+          narrow: Boolean,
+          scrollTarget: HTMLElement
         },
 
         observers: [

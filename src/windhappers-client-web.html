@@ -51,10 +51,14 @@
         height: 56px;
       }
 
-      #windhappers-icon {
+      :host:not([narrow]) #windhappers-icon {
         height: 112px;
         width: 100%;
         cursor: pointer;
+      }
+
+      :host[narrow] #windhappers-icon {
+        height: 56px;
       }
 
       [main-title] {
@@ -169,8 +173,8 @@
           <xsystems-weather data="[[forecast]]"></xsystems-weather>
         </div>
       </app-drawer>
-      <app-header-layout fullbleed>
-        <app-header fixed condenses effects="material">
+      <app-header-layout fullbleed has-scrolling-region>
+        <app-header id="header" fixed condenses effects="material">
           <app-toolbar sticky>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             <span condensed-title>De Windhappers</span>
@@ -201,11 +205,11 @@
             <paper-spinner alt="Loading disciplines page" active></paper-spinner>
           </windhappers-page-disciplines>
 
-          <windhappers-page-photos unresolved data-page="photos" narrow$="[[narrow]]" route="{{pageTail}}">
+          <windhappers-page-photos unresolved data-page="photos" narrow$="[[narrow]]" route="{{pageTail}}" scroll-target="[[_getScrollTarget()]]">
             <paper-spinner alt="Loading photos page" active></paper-spinner>
           </windhappers-page-photos>
 
-          <windhappers-page-videos unresolved data-page="videos" narrow$="[[narrow]]" route="{{pageTail}}">
+          <windhappers-page-videos unresolved data-page="videos" narrow$="[[narrow]]" route="{{pageTail}}" scroll-target="[[_getScrollTarget()]]">
             <paper-spinner alt="Loading videos page" active></paper-spinner>
           </windhappers-page-videos>
 
@@ -292,6 +296,10 @@
           if (this.$.menuSafety.opened) {
             this.$.menuSafety.close();
           }
+        },
+
+        _getScrollTarget: function() {
+          return this.$.header.scrollTarget;
         }
       })
     })();

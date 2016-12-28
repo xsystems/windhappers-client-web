@@ -54,7 +54,8 @@
                               key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
                               query="[[query]]"
                               channel="UCnUYZLuoy1rq1aVMwx4aTzw"
-                              selected="{{video}}">
+                              selected="{{video}}"
+                              scroll-target="[[scrollTarget]]">
     </xsystems-youtube-videos>
 
     <windhappers-overlay  id="videoOverlay"
@@ -82,7 +83,8 @@
 
         properties: {
           route: Object,
-          narrow: Boolean
+          narrow: Boolean,
+          scrollTarget: HTMLElement
         },
 
         observers: [
