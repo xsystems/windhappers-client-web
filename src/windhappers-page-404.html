@@ -1,0 +1,64 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="windhappers-styles.html">
+
+<dom-module id="windhappers-page-404">
+  <template>
+    <style include="windhappers-styles">
+      :host {
+        @apply --layout-vertical;
+        @apply --layout-flex;
+        @apply --layout-center;
+        @apply --layout-center-justified;
+        @apply --body1;
+      }
+
+      #detailsToggle {
+        @apply --body2;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      :host[narrow] #details {
+        @apply --layout-vertical;
+        @apply --layout-center;
+      }
+    </style>
+
+    <iron-icon icon="warning"></iron-icon>
+    <span id="message">Sorry, we couldn't find that page</span>
+    <span id="detailsToggle" on-tap="_toggleDetails">show details</span>
+    <iron-collapse id="details" no-animation>
+      No such file or directory: <a href="[[url]]" target="_blank" rel="noopener">[[url]]</a>
+    </iron-collapse>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-404',
+
+        properties: {
+          narrow: Boolean,
+          url: String
+        },
+
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-404: created');
+          this.removeAttribute('unresolved');
+        },
+
+        _toggleDetails: function() {
+          this.$.details.opened = !this.$.details.opened;
+        }
+      });
+    })();
+  </script>
+</dom-module>

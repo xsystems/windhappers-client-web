@@ -48,17 +48,17 @@
       }
 
       app-toolbar {
-        height: 56px;
+        height: 50px;
       }
 
       :host:not([narrow]) #windhappers-icon {
-        height: 112px;
+        height: 100px;
         width: 100%;
         cursor: pointer;
       }
 
       :host[narrow] #windhappers-icon {
-        height: 56px;
+        height: 50px;
       }
 
       [main-title] {
@@ -224,6 +224,10 @@
           <windhappers-page-costs unresolved data-page="costs" narrow$="[[narrow]]">
             <paper-spinner alt="Loading costs page" active></paper-spinner>
           </windhappers-page-costs>
+
+          <windhappers-page-404 id="page404" unresolved data-page="404" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading 404 page" active></paper-spinner>
+          </windhappers-page-404>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
@@ -277,7 +281,8 @@
         },
 
         _handleFailedImport: function(event) {
-          console.log("Failed to import: " + event.srcElement.href);
+          this.$.page404.url = event.srcElement.href;
+          this.page = '404';
         },
 
         _showPageHome: function() {

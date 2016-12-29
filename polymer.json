@@ -2,6 +2,7 @@
     "entrypoint": "index.html",
     "shell": "src/windhappers-client-web.html",
     "fragments": [
+      "src/windhappers-page-404.html",
       "src/windhappers-page-calendar.html",
       "src/windhappers-page-contact.html",
       "src/windhappers-page-costs.html",
