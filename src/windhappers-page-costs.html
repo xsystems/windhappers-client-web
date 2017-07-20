@@ -170,7 +170,7 @@
     <template is="dom-repeat" items="[[rowsVolunteers]]" as="row" filter="_isRelatedVolunteer">
       <windhappers-volunteer narrow$="[[narrow]]"
                              name="{{row.gsx$name.$t}}"
-                             function="{{row.gsx$function.$t}}"
+                             role="{{row.gsx$role.$t}}"
                              email="{{row.gsx$email.$t}}"
                              email-personal="{{row.gsx$emailpersonal.$t}}"
                              phone="{{row.gsx$phone.$t}}"> </windhappers-volunteer>
@@ -221,7 +221,7 @@
         },
 
         _isRelatedVolunteer: function(row) {
-          return row.gsx$function.$t == 'Ledenadministratie' || row.gsx$function.$t == 'Beheer boten en materieel' || row.gsx$function.$t == 'Introductiecursus' || row.gsx$function.$t == 'Penningmeester';
+          return row.gsx$role.$t == 'Ledenadministratie' || row.gsx$role.$t == 'Beheer boten en materieel' || row.gsx$role.$t == 'Introductiecursus' || row.gsx$role.$t == 'Penningmeester';
         }
       });
     })();

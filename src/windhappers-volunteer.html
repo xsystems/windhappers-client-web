@@ -31,7 +31,7 @@
         @apply(--paper-font-headline);
       }
 
-      .volunteer-function {
+      .volunteer-role {
         color: var(--secondary-text-color);
       }
 
@@ -52,7 +52,7 @@
       <div class="volunteer-content">
         <div class="card-content">
           <div class="volunteer-header">{{name}}</div>
-          <div class="volunteer-function">{{function}}</div>
+          <div class="volunteer-role">{{role}}</div>
         </div>
         <div hidden$="{{_hiddenActions}}" class="card-actions">
           <a hidden$="{{!email}}" href="mailto:{{email}}">
@@ -75,7 +75,7 @@
 
         properties: {
           name: String,
-          function: String,
+          role: String,
           email: String,
           emailPersonal: String,
           phone: String,

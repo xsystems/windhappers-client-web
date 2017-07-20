@@ -74,7 +74,7 @@
     <div class="volunteer-container">
       <template is="dom-repeat" items="[[rows]]" as="row" filter="_isRelatedVolunteer">
         <windhappers-volunteer name="{{row.gsx$name.$t}}"
-                               function="{{row.gsx$function.$t}}"
+                               role="{{row.gsx$role.$t}}"
                                email="{{row.gsx$email.$t}}"
                                email-personal="{{row.gsx$emailpersonal.$t}}"
                                phone="{{row.gsx$phone.$t}}">
@@ -110,7 +110,7 @@
         },
 
         _isRelatedVolunteer: function(row) {
-          return ['Winteractiviteiten', 'Kanopolo', 'Toervaren', 'Zeevaren', 'Branding en wildwarevaren', 'Jeugd'].indexOf(row.gsx$function.$t) > -1;
+          return ['Winteractiviteiten', 'Kanopolo', 'Toervaren', 'Zeevaren', 'Branding en wildwarevaren', 'Jeugd'].indexOf(row.gsx$role.$t) > -1;
         },
 
         _handleRows: function(rows) {
