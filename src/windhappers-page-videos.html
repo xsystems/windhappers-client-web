@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/google-sheets/google-sheets.html">
 <link rel="import" href="../bower_components/google-youtube/google-youtube.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
@@ -9,6 +10,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/xsystems-youtube/xsystems-youtube.html">
 <link rel="import" href="windhappers-overlay.html">
+<link rel="import" href="windhappers-volunteer.html">
 
 <dom-module id="windhappers-page-videos">
   <template>
@@ -38,6 +40,36 @@
         width: 100%;
         height: 100%;
       }
+
+      #volunteerContainer {
+        @apply(--layout-horizontal);
+        @apply(--layout-justified);
+        @apply(--layout-wrap);
+        display: block;
+        width: 100%;
+      }
+
+      windhappers-volunteer {
+        margin-bottom: 1%;
+      }
+
+      @-moz-document url-prefix() {
+        windhappers-volunteer {
+          margin-bottom: 0.8em;
+        }
+      }
+
+      :host[narrow] windhappers-volunteer {
+        width: 100%;
+      }
+
+      :host:not([narrow]) windhappers-volunteer {
+        width: 32.66%;
+      }
+
+      #filler {
+        @apply(--layout-flex);
+      }
     </style>
 
     <app-route  route="{{route}}"
@@ -53,10 +85,31 @@
     <xsystems-youtube-videos  narrow$="[[narrow]]"
                               key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
                               query="[[query]]"
-                              channel="UCnUYZLuoy1rq1aVMwx4aTzw"
+                              channel="UCWBof-CO7GALxQfbO6z9c8A"
                               selected="{{video}}"
                               scroll-target="[[scrollTarget]]">
     </xsystems-youtube-videos>
+
+    <div id="filler"></div>
+
+    <google-sheets  id="sheetVolunteers"
+                key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                tab-id="1"
+                published
+                rows="{{rows}}"></google-sheets>
+
+    <div id="volunteerContainer">
+      <template is="dom-repeat" items="[[rows]]" as="row" filter="_isRelatedVolunteer">
+        <windhappers-volunteer name="{{row.gsx$name.$t}}"
+                               function="{{row.gsx$function.$t}}"
+                               email="{{row.gsx$email.$t}}"
+                               email-personal="{{row.gsx$emailpersonal.$t}}"
+                               phone="{{row.gsx$phone.$t}}">
+        </windhappers-volunteer>
+      </template>
+
+      <div id="fillerVolunteer"></div>
+    </div>
 
     <windhappers-overlay  id="videoOverlay"
                           on-iron-overlay-closed="_deselectVideo">
@@ -90,7 +143,8 @@
         observers: [
           '_handleVideoId(videoData.videoId)',
           '_handleSelectedVideo(video)',
-          '_handleActive(videoActive)'
+          '_handleActive(videoActive)',
+          '_handleRows(rows)',
         ],
 
         created: function() {
@@ -119,7 +173,29 @@
           if (!videoActive) {
             this._handleVideoId(null);
           }
-        }
+        },
+
+        _isRelatedVolunteer: function(row) {
+          return ['Redacteur video\'s'].indexOf(row.gsx$function.$t) > -1;
+        },
+
+        _handleRows: function(rows) {
+          var numberOfRelatedVolunteers = 0;
+
+          for (var i = 0; i < rows.length; i++) {
+            if (this._isRelatedVolunteer(rows[i])) {
+              numberOfRelatedVolunteers++;
+            }
+          }
+
+          var numberOfItemsToFillRow = 3 - numberOfRelatedVolunteers % 3;
+          if (numberOfItemsToFillRow < 3) {
+            this.$.fillerVolunteer.style.width = numberOfItemsToFillRow * 32.66 + '%';
+            this.$.fillerVolunteer.style.display = '';
+          } else {
+            this.$.fillerVolunteer.style.display = 'none';
+          }
+        },
       });
     })();
   </script>

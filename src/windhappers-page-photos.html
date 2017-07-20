@@ -1,12 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/google-sheets/google-sheets.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
-<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
-<link rel="import" href="../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/xsystems-flickr/xsystems-flickr.html">
 <link rel="import" href="windhappers-overlay.html">
+<link rel="import" href="windhappers-volunteer.html">
 
 <dom-module id="windhappers-page-photos">
   <template>
@@ -14,11 +15,8 @@
       :host {
         @apply(--layout-vertical);
         @apply(--layout-flex);
-      }
-
-      neon-animated-pages, neon-animatable {
-        @apply(--layout-vertical);
-        @apply(--layout-flex);
+        padding-left: 1%;
+        padding-right: 1%;
       }
 
       #photoCard {
@@ -48,6 +46,36 @@
       iron-image {
         background-color: var(--accent-color);
       }
+
+      #volunteerContainer {
+        @apply(--layout-horizontal);
+        @apply(--layout-justified);
+        @apply(--layout-wrap);
+        display: block;
+        width: 100%;
+      }
+
+      windhappers-volunteer {
+        margin-bottom: 1%;
+      }
+
+      @-moz-document url-prefix() {
+        windhappers-volunteer {
+          margin-bottom: 0.8em;
+        }
+      }
+
+      :host[narrow] windhappers-volunteer {
+        width: 100%;
+      }
+
+      :host:not([narrow]) windhappers-volunteer {
+        width: 32.66%;
+      }
+
+      #filler {
+        @apply(--layout-flex);
+      }
     </style>
 
     <app-route  route="{{route}}"
@@ -62,50 +90,65 @@
                 data="{{photoData}}"
                 tail="{{photoTail}}"></app-route>
 
-    <neon-animated-pages  selected="[[selectedPage]]"
-                          attr-for-selected="data-page"
-                          fallback-selection="photosets">
-      <neon-animatable data-page="photosets">
+    <xsystems-flickr-photo  key="757b4474c3d5653a8958a33d9cf647a2"
+                            photo-id="[[photoData.photoId]]"
+                            url="{{url}}">
+    </xsystems-flickr-photo>
 
-        <xsystems-flickr-photosets-view narrow$="[[narrow]]"
-                                        key="757b4474c3d5653a8958a33d9cf647a2"
-                                        user-id="143394479@N04"
-                                        selected="{{photoset}}">
-        </xsystems-flickr-photosets-view>
+    <windhappers-overlay id="photoOverlay"
+                      on-iron-overlay-closed="_deselectPhoto">
+      <paper-card id="photoCard"
+                  elevation="5">
+        <a href="[[url]]" download>
+          <iron-image id="photo"
+                      preload
+                      fade
+                      sizing="cover"
+                      src="[[url]]">
+          </iron-image>
+        </a>
+      </paper-card>
+    </windhappers-overlay>
 
-      </neon-animatable>
-      <neon-animatable data-page="photos">
+    <iron-pages selected="[[selectedPage]]"
+                attr-for-selected="data-page"
+                fallback-selection="photosets">
+      <xsystems-flickr-photosets-view data-page="photosets"
+                                      narrow$="[[narrow]]"
+                                      key="757b4474c3d5653a8958a33d9cf647a2"
+                                      user-id="143394479@N04"
+                                      selected="{{photoset}}">
+      </xsystems-flickr-photosets-view>
+      <xsystems-flickr-photoset-view  data-page="photos"
+                                      narrow$="[[narrow]]"
+                                      key="757b4474c3d5653a8958a33d9cf647a2"
+                                      user-id="143394479@N04"
+                                      photoset-id="[[photosetData.photosetId]]"
+                                      selected="{{photo}}"
+                                      scroll-target="[[scrollTarget]]">
+      </xsystems-flickr-photoset-view>
+    </iron-pages>
 
-        <xsystems-flickr-photoset-view  narrow$="[[narrow]]"
-                                        key="757b4474c3d5653a8958a33d9cf647a2"
-                                        user-id="143394479@N04"
-                                        photoset-id="[[photosetData.photosetId]]"
-                                        selected="{{photo}}"
-                                        scroll-target="[[scrollTarget]]">
-        </xsystems-flickr-photoset-view>
+    <div id="filler"></div>
 
-        <xsystems-flickr-photo  key="757b4474c3d5653a8958a33d9cf647a2"
-                                photo-id="[[photoData.photoId]]"
-                                url="{{url}}">
-        </xsystems-flickr-photo>
+    <google-sheets  id="sheetVolunteers"
+                key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+                tab-id="1"
+                published
+                rows="{{rows}}"></google-sheets>
 
-        <windhappers-overlay id="photoOverlay"
-                          on-iron-overlay-closed="_deselectPhoto">
-          <paper-card id="photoCard"
-                      elevation="5">
-            <a href="[[url]]" download>
-              <iron-image id="photo"
-                          preload
-                          fade
-                          sizing="cover"
-                          src="[[url]]">
-              </iron-image>
-            </a>
-          </paper-card>
-        </windhappers-overlay>
+    <div id="volunteerContainer">
+      <template is="dom-repeat" items="[[rows]]" as="row" filter="_isRelatedVolunteer">
+        <windhappers-volunteer name="{{row.gsx$name.$t}}"
+                               function="{{row.gsx$function.$t}}"
+                               email="{{row.gsx$email.$t}}"
+                               email-personal="{{row.gsx$emailpersonal.$t}}"
+                               phone="{{row.gsx$phone.$t}}">
+        </windhappers-volunteer>
+      </template>
 
-      </neon-animatable>
-    </neon-animated-pages>
+      <div id="fillerVolunteer"></div>
+    </div>
 
   </template>
   <script>
@@ -125,7 +168,8 @@
           '_handlePhotosetId(photosetData.photosetId)',
           '_handlePhoto(photo)',
           '_handlePhotoId(photoData.photoId)',
-          '_handleActive(photosetActive, photoActive)'
+          '_handleActive(photosetActive, photoActive)',
+          '_handleRows(rows)',
         ],
 
         created: function() {
@@ -171,7 +215,29 @@
           if (!photoActive) {
             this._handlePhotoId(null);
           }
-        }
+        },
+
+        _isRelatedVolunteer: function(row) {
+          return ['Redacteur foto\'s'].indexOf(row.gsx$function.$t) > -1;
+        },
+
+        _handleRows: function(rows) {
+          var numberOfRelatedVolunteers = 0;
+
+          for (var i = 0; i < rows.length; i++) {
+            if (this._isRelatedVolunteer(rows[i])) {
+              numberOfRelatedVolunteers++;
+            }
+          }
+
+          var numberOfItemsToFillRow = 3 - numberOfRelatedVolunteers % 3;
+          if (numberOfItemsToFillRow < 3) {
+            this.$.fillerVolunteer.style.width = numberOfItemsToFillRow * 32.66 + '%';
+            this.$.fillerVolunteer.style.display = '';
+          } else {
+            this.$.fillerVolunteer.style.display = 'none';
+          }
+        },
       });
     })();
   </script>

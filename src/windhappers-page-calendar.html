@@ -9,8 +9,8 @@
   <template>
     <style>
       :host {
-        @apply(--layout-vertical);
-        height: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
         padding-top: 1%;
         padding-left: 1%;
         padding-right: 1%;
@@ -18,12 +18,13 @@
 
       #calendar {
         @apply(--shadow-elevation-2dp);
-        @apply(--layout-flex);
+        width: 100%;
+        height: 75vh;
         margin-bottom: 1%;
-        min-height: 98%;
       }
 
       .volunteer-container {
+        width: 100%;
         @apply(--layout-horizontal);
         @apply(--layout-justified);
         @apply(--layout-wrap);
