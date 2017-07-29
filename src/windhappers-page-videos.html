@@ -66,10 +66,6 @@
       :host:not([narrow]) windhappers-volunteer {
         width: 32.66%;
       }
-
-      #filler {
-        @apply(--layout-flex);
-      }
     </style>
 
     <app-route  route="{{route}}"
@@ -89,8 +85,6 @@
                               selected="{{video}}"
                               scroll-target="[[scrollTarget]]">
     </xsystems-youtube-videos>
-
-    <div id="filler"></div>
 
     <google-sheets  id="sheetVolunteers"
                 key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"

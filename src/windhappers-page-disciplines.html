@@ -15,13 +15,22 @@
   <template>
     <style include="windhappers-styles">
       :host {
-        @apply(--layout-vertical);
-        @apply(--layout-flex);
         padding: 1%;
       }
 
+      @supports (-ms-ime-align:auto) {
+        :host {
+          padding: 1em;
+        }
+      }
+
+      @-moz-document url-prefix() {
+        :host {
+          padding: 1em;
+        }
+      }
+
       #main {
-        @apply(--layout-flex);
         background-color: white;
       }
 

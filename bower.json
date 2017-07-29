@@ -11,8 +11,8 @@
     "google-map": "GoogleWebComponents/google-map#1.1.10",
     "google-sheets": "GoogleWebComponents/google-sheets#1.0.5",
     "google-youtube": "GoogleWebComponents/google-youtube#1.2.1",
-    "xsystems-calendar": "xsystems/xsystems-calendar#^0.1.1",
-    "xsystems-flickr": "xsystems/xsystems-flickr#^0.4.0",
+    "xsystems-calendar": "xsystems/xsystems-calendar#^0.2.0",
+    "xsystems-flickr": "xsystems/xsystems-flickr#^0.5.0",
     "xsystems-weather": "xsystems/xsystems-weather#^0.2.0",
     "xsystems-youtube": "xsystems/xsystems-youtube#^0.5.0",
     "js-md5": "md5#^0.4.1"

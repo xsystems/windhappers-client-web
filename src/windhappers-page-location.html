@@ -17,8 +17,8 @@
       }
 
       #map {
-        @apply(--layout-horizontal);
-        @apply(--layout-wrap);
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
       }
 
       #addressInput {
@@ -45,7 +45,6 @@
 
       #notifications {
         @apply(--layout-vertical);
-        @apply(--layout-self-end);
         padding: 1%;
         overflow: hidden;
       }
@@ -55,10 +54,20 @@
         margin-top: 1%;
       }
 
+      @supports (-ms-ime-align:auto) {
+        windhappers-notification {
+          margin-top: 0.8em;
+        }
+      }
+
       @-moz-document url-prefix() {
         windhappers-notification {
           margin-top: 0.8em;
         }
+      }
+
+      .filler {
+        @apply(--layout-flex);
       }
     </style>
 
@@ -83,6 +92,7 @@
         Nieuweweg 75, 2544NG Den Haag<br/>
         <i>52.039124, 4.236238</i>
       </google-map-marker>
+      <div class="filler"></div>
       <iron-swipeable-container id="notifications">
         <windhappers-notification type="info" removable$="[[!narrow]]">
           De Windhappers is een Haagse kanovereniging die zich bevindt achter de bekende Haagse Kunstijsbaan "De Uithof". Ons botenhuis met stalling en kantine is herkenbaar aan ons logo. Het water waar het botenhuis aan ligt heet De Wennetjessloot.

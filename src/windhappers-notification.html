@@ -39,6 +39,26 @@
         padding-left: 15px;
       }
 
+      @supports (-ms-ime-align:auto) {
+        #main {
+          padding: 0.8em;
+        }
+        #content {
+          margin-left: 0.8em;
+          margin-right: 0.8em;
+        }
+      }
+
+      @-moz-document url-prefix() {
+        #main {
+          padding: 0.8em;
+        }
+        #content {
+          margin-left: 0.8em;
+          margin-right: 0.8em;
+        }
+      }
+
       :host[type="info"] #bar {
         background-color: var(--paper-blue-500);
       }

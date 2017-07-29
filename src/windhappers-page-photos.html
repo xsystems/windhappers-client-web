@@ -14,7 +14,8 @@
     <style>
       :host {
         @apply(--layout-vertical);
-        @apply(--layout-flex);
+        display: block;
+        padding-top: 1%;
         padding-left: 1%;
         padding-right: 1%;
       }
@@ -59,9 +60,23 @@
         margin-bottom: 1%;
       }
 
-      @-moz-document url-prefix() {
+      @supports (-ms-ime-align:auto) {
+        :host {
+          padding-top: 1em;
+        }
+
         windhappers-volunteer {
-          margin-bottom: 0.8em;
+          margin-bottom: 1em;
+        }
+      }
+
+      @-moz-document url-prefix() {
+        :host {
+          padding-top: 1em;
+        }
+
+        windhappers-volunteer {
+          margin-bottom: 1em;
         }
       }
 
@@ -71,10 +86,6 @@
 
       :host:not([narrow]) windhappers-volunteer {
         width: 32.66%;
-      }
-
-      #filler {
-        @apply(--layout-flex);
       }
     </style>
 
@@ -128,8 +139,6 @@
                                       scroll-target="[[scrollTarget]]">
       </xsystems-flickr-photoset-view>
     </iron-pages>
-
-    <div id="filler"></div>
 
     <google-sheets  id="sheetVolunteers"
                 key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
