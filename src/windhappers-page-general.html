@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel="import" href="windhappers-styles.html">
+
+<dom-module id="windhappers-page-general">
+  <template>
+    <style include="windhappers-styles">
+      :host {
+        @apply(--layout-vertical);
+        padding: 1%;
+      }
+
+      paper-listbox {
+        --paper-listbox-background-color: transparent;
+      }
+
+      paper-icon-item {
+        background-color: white;
+        margin-bottom: 1%;
+      }
+
+      a {
+        text-decoration: inherit;
+        color: inherit;
+      }
+    </style>
+
+    <paper-listbox>
+      <a href="https://drive.google.com/file/d/1jO0utdOYWf0Bm61VyDfsbcuYY79Waf-8/view?usp=sharing" target="_blank">
+        <paper-icon-item>
+          <iron-icon icon="description" item-icon></iron-icon>
+          <paper-item-body two-line>
+            <div>Huishoudelijk reglement</div>
+            <div secondary>Huishoudelijk reglement van kanovereniging "De Windhappers"</div>
+          </paper-item-body>
+        </paper-icon-item>
+      </a>
+      <a href="https://drive.google.com/file/d/1t1ycO9OnVf_JblrvbR3IhdCR7oinJEIE/view?usp=sharing" target="_blank">
+        <paper-icon-item>
+          <iron-icon icon="description" item-icon></iron-icon>
+          <paper-item-body two-line>
+            <div>Beleidsplan</div>
+            <div secondary>Beleidsplan van kanovereniging "De Windhappers"</div>
+          </paper-item-body>
+        </paper-icon-item>
+      </a>
+    </paper-listbox>
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-general',
+
+        properties: {
+          narrow: Boolean
+        },
+
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-general: created');
+          this.removeAttribute('unresolved');
+        }
+      });
+    })();
+  </script>
+</dom-module>

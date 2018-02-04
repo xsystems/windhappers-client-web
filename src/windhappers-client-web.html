@@ -162,6 +162,7 @@
                   <paper-item data-page="contact">Contact</paper-item>
                   <paper-item data-page="location">Locatie</paper-item>
                   <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
+                  <paper-item data-page="general">Algemeen</paper-item>
                 </paper-menu>
               </paper-submenu>
             </paper-menu>
@@ -224,6 +225,10 @@
           <windhappers-page-costs unresolved data-page="costs" narrow$="[[narrow]]">
             <paper-spinner alt="Loading costs page" active></paper-spinner>
           </windhappers-page-costs>
+
+          <windhappers-page-general unresolved data-page="general" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading general page" active></paper-spinner>
+          </windhappers-page-general>
 
           <windhappers-page-404 id="page404" unresolved data-page="404" narrow$="[[narrow]]">
             <paper-spinner alt="Loading 404 page" active></paper-spinner>
