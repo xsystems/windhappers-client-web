@@ -20,7 +20,11 @@
       }
 
       .volunteer-gravatar {
+        height: 100px;
         width: 100px;
+        border-radius: 10px;
+        margin: 2%;
+        align-self: center;
       }
 
       .volunteer-content {
@@ -101,7 +105,7 @@
             var value = email.toLowerCase();
           }
           var hash = md5(value);
-          return 'https://secure.gravatar.com/avatar/' + hash + '?size=100&default=identicon'
+          return 'https://secure.gravatar.com/avatar/' + hash + '?size=100&default=mm'
         }
       });
     })();

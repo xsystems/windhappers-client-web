@@ -59,6 +59,7 @@
 
       :host[narrow] #windhappers-icon {
         height: 50px;
+        width: 100%;
       }
 
       [main-title] {
@@ -89,12 +90,7 @@
       }
 
       #drawerContent {
-        @apply --layout-vertical;
         height: 100%;
-      }
-
-      #menu {
-        @apply --layout-flex;
         overflow: auto;
       }
 
@@ -127,46 +123,45 @@
                       alt="De Windhappers">
           </iron-image>
 
-          <div id="menu">
-            <paper-menu selectable="paper-item"
-                        selected="{{pageData.page}}"
-                        attr-for-selected="data-page">
-              <paper-item data-page="home">Home</paper-item>
-              <paper-item data-page="calendar">Kalender</paper-item>
-              <paper-item data-page="disciplines">Disciplines</paper-item>
-              <paper-submenu>
-                <paper-item class="menu-trigger">Media</paper-item>
-                <paper-menu class="menu-content"
-                            selectable="paper-item"
-                            selected="{{pageData.page}}"
-                            attr-for-selected="data-page">
-                  <paper-item data-page="photos">Foto's</paper-item>
-                  <paper-item data-page="videos">Video's</paper-item>
-                  <!-- <paper-item data-page="blogs">Blogs</paper-item> -->
-                </paper-menu>
-              </paper-submenu>
-              <!-- <paper-item data-page="canoeroutes">Kanoroutes</paper-item> -->
-              <paper-submenu id="menuSafety">
-                <paper-item class="menu-trigger">Veiligheid</paper-item>
-                <paper-menu class="menu-content">
-                  <paper-item on-tap="_showPageWaterQuality">Waterkwaliteit</paper-item>
-                  <paper-item on-tap="_showPageKNRM">KNRM App</paper-item>
-                </paper-menu>
-              </paper-submenu>
-              <paper-submenu>
-                <paper-item class="menu-trigger">Over ons</paper-item>
-                <paper-menu class="menu-content"
-                            selectable="paper-item"
-                            selected="{{pageData.page}}"
-                            attr-for-selected="data-page">
-                  <paper-item data-page="contact">Contact</paper-item>
-                  <paper-item data-page="location">Locatie</paper-item>
-                  <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
-                  <paper-item data-page="general">Algemeen</paper-item>
-                </paper-menu>
-              </paper-submenu>
-            </paper-menu>
-          </div>
+          <paper-menu selectable="paper-item"
+                      selected="{{pageData.page}}"
+                      attr-for-selected="data-page">
+            <paper-item data-page="home">Home</paper-item>
+            <paper-item data-page="calendar">Kalender</paper-item>
+            <paper-item data-page="disciplines">Disciplines</paper-item>
+            <paper-submenu>
+              <paper-item class="menu-trigger">Media</paper-item>
+              <paper-menu class="menu-content"
+                          selectable="paper-item"
+                          selected="{{pageData.page}}"
+                          attr-for-selected="data-page">
+                <paper-item data-page="photos">Foto's</paper-item>
+                <paper-item data-page="videos">Video's</paper-item>
+                <!-- <paper-item data-page="blogs">Blogs</paper-item> -->
+              </paper-menu>
+            </paper-submenu>
+            <!-- <paper-item data-page="canoeroutes">Kanoroutes</paper-item> -->
+            <paper-submenu id="menuSafety">
+              <paper-item class="menu-trigger">Veiligheid</paper-item>
+              <paper-menu class="menu-content">
+                <paper-item on-tap="_showPageWaterQuality">Waterkwaliteit</paper-item>
+                <paper-item on-tap="_showPageKNRM">KNRM App</paper-item>
+              </paper-menu>
+            </paper-submenu>
+            <paper-item data-page="costs">Kosten &amp; Inschrijven</paper-item>
+            <paper-submenu>
+              <paper-item class="menu-trigger">Over ons</paper-item>
+              <paper-menu class="menu-content"
+                          selectable="paper-item"
+                          selected="{{pageData.page}}"
+                          attr-for-selected="data-page">
+                <paper-item data-page="contact">Contact</paper-item>
+                <paper-item data-page="location">Locatie</paper-item>
+                <paper-item data-page="general">Algemeen</paper-item>
+              </paper-menu>
+            </paper-submenu>
+            <paper-item data-page="tournament2018">Windhappers Toernooi</paper-item>
+          </paper-menu>
 
           <xsystems-weather-service-wunderground  key="d543a18b79ebf11a"
                                                   query="Netherlands/The_Hague"
@@ -182,7 +177,7 @@
             <a href="https://twitter.com/DeWindhappers" target="_blank" rel="noopener">
               <iron-icon src="../images/twitter.png"></iron-icon>
             </a>
-            <a href="http://www.facebook.com/pages/Kanovereniging-De-Windhappers/546877148674699" target="_blank" rel="noopener">
+            <a href="https://www.facebook.com/Windhappers-227735227966870" target="_blank" rel="noopener">
               <iron-icon id="facebook" src="../images/facebook.png"></iron-icon>
             </a>
           </app-toolbar>
@@ -233,6 +228,10 @@
           <windhappers-page-404 id="page404" unresolved data-page="404" narrow$="[[narrow]]">
             <paper-spinner alt="Loading 404 page" active></paper-spinner>
           </windhappers-page-404>
+
+          <windhappers-page-tournament2018 unresolved data-page="tournament2018">
+            <paper-spinner alt="Loading Windhappers tournament 2018 page" active></paper-spinner>
+          </windhappers-page-tournament2018>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
