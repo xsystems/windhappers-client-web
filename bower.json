@@ -15,7 +15,7 @@
     "xsystems-flickr": "xsystems/xsystems-flickr#^0.5.0",
     "xsystems-weather": "xsystems/xsystems-weather#^0.2.0",
     "xsystems-youtube": "xsystems/xsystems-youtube#^0.5.0",
-    "js-md5": "md5#^0.4.1"
+    "js-md5": "md5#^0.7.3"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
