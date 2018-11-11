@@ -157,10 +157,9 @@
                           attr-for-selected="data-page">
                 <paper-item data-page="contact">Contact</paper-item>
                 <paper-item data-page="location">Locatie</paper-item>
-                <paper-item data-page="general">Algemeen</paper-item>
               </paper-menu>
             </paper-submenu>
-            <paper-item data-page="tournament2018">Windhappers Toernooi</paper-item>
+            <paper-item data-page="documents">Documenten</paper-item>
           </paper-menu>
 
           <xsystems-weather-service-wunderground  key="d543a18b79ebf11a"
@@ -221,17 +220,13 @@
             <paper-spinner alt="Loading costs page" active></paper-spinner>
           </windhappers-page-costs>
 
-          <windhappers-page-general unresolved data-page="general" narrow$="[[narrow]]">
-            <paper-spinner alt="Loading general page" active></paper-spinner>
-          </windhappers-page-general>
-
           <windhappers-page-404 id="page404" unresolved data-page="404" narrow$="[[narrow]]">
             <paper-spinner alt="Loading 404 page" active></paper-spinner>
           </windhappers-page-404>
 
-          <windhappers-page-tournament2018 unresolved data-page="tournament2018">
-            <paper-spinner alt="Loading Windhappers tournament 2018 page" active></paper-spinner>
-          </windhappers-page-tournament2018>
+          <windhappers-page-documents unresolved data-page="documents" narrow$="[[narrow]]">
+            <paper-spinner alt="Loading Windhappers documents page" active></paper-spinner>
+          </windhappers-page-documents>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>

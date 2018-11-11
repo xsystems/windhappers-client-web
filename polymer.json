@@ -7,11 +7,11 @@
       "src/windhappers-page-contact.html",
       "src/windhappers-page-costs.html",
       "src/windhappers-page-disciplines.html",
+      "src/windhappers-page-documents.html",
       "src/windhappers-page-home.html",
       "src/windhappers-page-location.html",
       "src/windhappers-page-photos.html",
-      "src/windhappers-page-videos.html",
-      "src/windhappers-page-general.html"
+      "src/windhappers-page-videos.html"
     ],
     "sources": [
         "src/**/*",

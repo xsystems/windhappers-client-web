@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="components/xsystems-gcp-bucket.html">
+<link rel="import" href="windhappers-styles.html">
+
+<dom-module id="windhappers-page-documents">
+  <template>
+    <style include="windhappers-styles">
+      :host {
+        display: grid;
+        grid-gap: 1vh;
+        padding: 1vh;
+      }
+
+      :host:not([narrow]) {
+        grid-template-columns: auto auto;
+      }
+
+      paper-material {
+        background-color: white;
+        padding: 2vh;
+      }
+    </style>
+
+    <paper-material elevation="1">
+        <h2>Verenigingsdocumenten</h2>
+        <xsystems-gcp-bucket bucket='windhappers-site' prefix='association_documents/' desc></xsystems-gcp-bucket>
+    </paper-material>
+
+    <paper-material elevation="1">
+      <h2>Handleidingen</h2>
+      <xsystems-gcp-bucket bucket='windhappers-site' prefix='manuals/'></xsystems-gcp-bucket>
+    </paper-material>
+
+    <paper-material elevation="1">
+        <h2>Windvlagen</h2>
+        Nieuwsbrieven die op regelmatige basis uitkomen.
+        <xsystems-gcp-bucket bucket='windhappers-site' prefix='newsletters/' desc></xsystems-gcp-bucket>
+    </paper-material>    
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'windhappers-page-documents',
+        
+        properties: {
+          narrow: Boolean
+        },
+
+        created: function() {
+          window.performance && performance.mark && performance.mark('windhappers-page-documents: created');
+          this.removeAttribute('unresolved');
+        }
+      });
+    })();
+  </script>
+</dom-module>

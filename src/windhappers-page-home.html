@@ -21,12 +21,35 @@
         margin-right: 1%;
       }
 
-      #main {
+      #main > * {
+        margin-bottom: 1%;
+      }
+
+      paper-material {
         @apply(--layout-vertical);
         background-color: white;
       }
 
-      article {
+      :host:not([narrow]) #hero a {
+        grid-template-columns: 55% auto;
+      }
+
+      #hero a {
+        display: grid;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      #hero a > div {
+        padding-left: 2%;
+        padding-right: 2%;
+      }
+
+      #hero a > img {
+        max-width: 100%;
+      }
+
+      #who {
         margin: 2%;
       }
 
@@ -45,45 +68,67 @@
         margin: auto;
       }
     </style>
-    <paper-material id="main" elevation="1">
-      <article>
-        <header>
-          <h1>Wie zijn wij</h1>
-          <p>
-            Kanovereniging De Windhappers is een Haagse kanovereniging die is opgericht in februari 1958 en is aangesloten bij het Watersportverbond.
-          </p>
-        </header>
-        <section>
-          <p>
-            Wij zijn een enthousiaste en actieve kanoclub met ongeveer 200 leden. Onze leden doen mee aan <a href="/disciplines" title="Disciplines">(bijna) alle vormen van kanosport</a>, toervaren (zowel in kajak als Canadese kano), kanopolo, zeevaren, brandingvaren, en wildwatervaren.
-          </p>
-          <p>
-            We verzorgen leuke cursussen in kajak- en kanovaren voor beginners, eskimoteren en zeevaren voor beginners.
-          </p>
-          <p>
-            We organiseren een groot aantal <a href="/calendar" title="Kalendar">activiteiten</a> zoals toertochten op vlakwater en zee, kanokampeerweekenden, kanopolocompetitie, wildwatervaren in het buitenland. In de winter zijn er winteractiviteiten met interessante lezingen, nordic-walking of wandeltochten.
-          </p>
-          <paper-material class="videoContainer" elevation="1">
-            <google-youtube fluid="true"
-                            video-id="IrEgMeSyn-E"
-                            rel="0"
-                            showinfo="0"
-                            iv_load_policy="3"
-                            modestbranding="1">
-            </google-youtube>
-          </paper-material>
-          <p>
-            Bijna het gehele jaar wordt er op woensdagavond, op vrijdag en zondag gevaren vanaf het clubgebouw in het uitgebreide stelsel van <a href="/canoeroutes" title="Kanoroutes">kanoroutes</a> in regio Den Haag, het Westland, en (Midden) Delfland.
-          </p>
-          <p>
-            Ons goed onderhouden gebouw heeft een gezellige kantine met bar en is voorzien van kleedruimtes, warme douches en toiletten. In de botenloods is plaats voor kajaks en Canadees kano’s. We hebben een groot aantal verenigingsboten, die door leden gebruikt kunnen worden, en een botentrailer. Ons topstuk is een 10 persoons canadese kano die stamt uit de jaren dertig.
-          </p>
-          <p>
-            Ben je geïnteresseerd om lid te worden? Dan vind je <a href="/costs">hier</a> meer informatie. Kom naar onze open dag of loop op woensdagavond een keer binnen.
-          </p>
-        </section>
-      </article>
-    </paper-material>
+    <div id="main">    
+      <paper-material elevation="1">
+        <article id="hero">
+          <a href="https://denhaag.clubheldvanhetjaar.nl/" target="_blank">
+            <div>
+              <h1>Onze clubheld van 2018: Jan Weerdenburg</h1>
+              Klik op deze banner en stem op onze clubheld!
+              <br/>
+              <b>Jan Weerdenburg is onze clubheld omdat hij:</b>
+              <ul>
+                <li>altijd voor iedereen klaar staat</li>
+                <li>helpt bij het onderhoud van en klussen in het clubgebouw</li>
+                <li>al jaren de inkoop voor de kantine verzorgt</li>
+                <li>zorgt voor de botentrailer en deze rijdt bij toertochten</li>
+                <li>al jaren de trekker is van de zondagmorgen kanotochtjes</li>
+              </ul>
+            </div>            
+            <img src="/images/clubheld.jpg" alt="Stem ook op jouw clubheld">
+          </a>
+        </article>
+      </paper-material>
+      <paper-material elevation="1">
+        <article id="who">
+          <header>
+            <h1>Wie zijn wij</h1>
+            <p>
+              Kanovereniging De Windhappers is een Haagse kanovereniging die is opgericht in februari 1958 en is aangesloten bij het Watersportverbond.
+            </p>
+          </header>
+          <section>
+            <p>
+              Wij zijn een enthousiaste en actieve kanoclub met ongeveer 200 leden. Onze leden doen mee aan <a href="/disciplines" title="Disciplines">(bijna) alle vormen van kanosport</a>, toervaren (zowel in kajak als Canadese kano), kanopolo, zeevaren, brandingvaren, en wildwatervaren.
+            </p>
+            <p>
+              We verzorgen leuke cursussen in kajak- en kanovaren voor beginners, eskimoteren en zeevaren voor beginners.
+            </p>
+            <p>
+              We organiseren een groot aantal <a href="/calendar" title="Kalendar">activiteiten</a> zoals toertochten op vlakwater en zee, kanokampeerweekenden, kanopolocompetitie, wildwatervaren in het buitenland. In de winter zijn er winteractiviteiten met interessante lezingen, nordic-walking of wandeltochten.
+            </p>
+            <paper-material class="videoContainer" elevation="1">
+              <google-youtube fluid="true"
+                              video-id="IrEgMeSyn-E"
+                              rel="0"
+                              showinfo="0"
+                              iv_load_policy="3"
+                              modestbranding="1">
+              </google-youtube>
+            </paper-material>
+            <p>
+              Bijna het gehele jaar wordt er op woensdagavond, op vrijdag en zondag gevaren vanaf het clubgebouw in het uitgebreide stelsel van <a href="/canoeroutes" title="Kanoroutes">kanoroutes</a> in regio Den Haag, het Westland, en (Midden) Delfland.
+            </p>
+            <p>
+              Ons goed onderhouden gebouw heeft een gezellige kantine met bar en is voorzien van kleedruimtes, warme douches en toiletten. In de botenloods is plaats voor kajaks en Canadees kano’s. We hebben een groot aantal verenigingsboten, die door leden gebruikt kunnen worden, en een botentrailer. Ons topstuk is een 10 persoons canadese kano die stamt uit de jaren dertig.
+            </p>
+            <p>
+              Ben je geïnteresseerd om lid te worden? Dan vind je <a href="/costs">hier</a> meer informatie. Kom naar onze open dag of loop op woensdagavond een keer binnen.
+            </p>
+          </section>
+        </article>
+      </paper-material>
+    </div>
 
     <paper-material id="calendar"
                     hidden$="[[narrow]]"
