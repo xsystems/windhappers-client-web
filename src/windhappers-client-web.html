@@ -81,6 +81,14 @@
         text-rendering: optimizeLegibility;
       }
 
+      paper-menu, paper-submenu, paper-item {
+        cursor: pointer;
+      }
+
+      paper-submenu:hover, paper-item:hover {
+        background-color: var(--light-accent-color, inherit);
+      }
+
       paper-submenu paper-menu {
         padding-left: 10%;
       }

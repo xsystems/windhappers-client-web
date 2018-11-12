@@ -111,7 +111,7 @@
         },
 
         _sort: function(item1, item2) {
-          return this.desc ^ (item1.name > item2.name);
+          return this.desc != (item1.name > item2.name);
         }
       });
     })();
