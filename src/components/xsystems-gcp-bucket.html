@@ -111,7 +111,13 @@
         },
 
         _sort: function(item1, item2) {
-          return this.desc != (item1.name > item2.name);
+          if (item1.name === item2.name) {
+            return 0;
+          } else if (this.desc != (item1.name > item2.name)) {
+            return 1;
+          } else {
+            return -1;
+          }
         }
       });
     })();
