@@ -11,7 +11,7 @@
   <template>
     <style include="windhappers-styles">
       :host {
-        @apply(--layout-flex);
+        @apply --layout-flex;
         padding: 1%;
       }
 
@@ -26,31 +26,15 @@
       }
 
       paper-material {
-        @apply(--layout-vertical);
+        @apply --layout-vertical;
         background-color: white;
       }
 
-      :host:not([narrow]) #hero a {
-        grid-template-columns: 55% auto;
-      }
-
-      #hero a {
-        display: grid;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      #hero a > div {
-        padding-left: 2%;
-        padding-right: 2%;
-      }
-
-      #hero a > img {
-        max-width: 100%;
-      }
-
-      #who {
-        margin: 2%;
+      #who, #club-magazine {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        margin-left: 2%;
+        margin-right: 2%;
       }
 
       :host[narrow] p {
@@ -71,26 +55,15 @@
         width: 70%;
         margin: auto;
       }
+
+      #windvlaag {
+        color: var(--primary-color, inherit);
+      }
     </style>
     <div id="main">    
       <paper-material elevation="1">
-        <article id="hero">
-          <a href="https://denhaag.clubheldvanhetjaar.nl/" target="_blank">
-            <div>
-              <h1>Onze clubheld van 2018: Jan Weerdenburg</h1>
-              Klik op deze banner en stem op onze clubheld!
-              <br/>
-              <b>Jan Weerdenburg is onze clubheld omdat hij:</b>
-              <ul>
-                <li>altijd voor iedereen klaar staat</li>
-                <li>helpt bij het onderhoud van en klussen in het clubgebouw</li>
-                <li>al jaren de inkoop voor de kantine verzorgt</li>
-                <li>zorgt voor de botentrailer en deze rijdt bij toertochten</li>
-                <li>al jaren de trekker is van de zondagmorgen kanotochtjes</li>
-              </ul>
-            </div>            
-            <img src="/images/clubheld.jpg" alt="Stem ook op jouw clubheld">
-          </a>
+        <article id="club-magazine">
+          <b>Op zoek naar ons clubblad <span id="windvlaag">De Windvlaag</span>? Kijk onder <a href="/documents">Documenten.</a></b>
         </article>
       </paper-material>
       <paper-material elevation="1">
