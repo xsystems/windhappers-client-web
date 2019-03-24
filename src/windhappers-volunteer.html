@@ -11,11 +11,11 @@
   <template>
     <style>
       :host {
-        @apply(--layout-horizontal);
+        @apply --layout-horizontal;
       }
 
       .volunteer {
-        @apply(--layout-horizontal);
+        @apply --layout-horizontal;
         width: 100%;
       }
 
@@ -28,11 +28,11 @@
       }
 
       .volunteer-content {
-        @apply(--layout-flex);
+        @apply --layout-flex;
       }
 
       .volunteer-header {
-        @apply(--paper-font-headline);
+        @apply --paper-font-headline;
       }
 
       .volunteer-role {
@@ -40,7 +40,7 @@
       }
 
       :host:not([narrow]) .card-actions {
-        @apply(--layout-vertical);
+        @apply --layout-vertical;
       }
 
       .card-actions > a {
