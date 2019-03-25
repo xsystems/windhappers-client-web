@@ -15,7 +15,10 @@
     <link async rel="import" href="/src/windhappers-client-web.html">
   </head>
   <body>
-    <windhappers-client-web unresolved>De Windhappers</windhappers-client-web>
+    <windhappers-client-web unresolved>
+      <img src="images/windhappers-icon_128x128.png" alt="Welkom bij">
+      De Windhappers
+    </windhappers-client-web>
 
     <style>
       body {
@@ -25,12 +28,14 @@
       }
 
       windhappers-client-web[unresolved] {
-        display: block;
-        padding-top: 45vh;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         font-size: 16px;
         font-weight: 600;
         letter-spacing: 0.2em;
+        height: 100vh;
       }
     </style>
 

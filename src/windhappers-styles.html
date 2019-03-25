@@ -72,6 +72,7 @@
 
         --headline: {
           @apply(--paper-font-headline);
+          color: var(--primary-color);
         };
 
         --title: {
@@ -109,7 +110,7 @@
         font-weight: bold;
       }
 
-      p, dd {
+      p, dd, ul {
         @apply --body1;
         text-align: justify;
       }
@@ -128,6 +129,10 @@
 
       .headline {
         @apply --headline;
+      }
+
+      h1 {
+        color: var(--primary-color);
       }
     </style>
   </template>

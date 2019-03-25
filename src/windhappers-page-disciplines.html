@@ -40,7 +40,7 @@
       }
 
       article {
-        @apply(--layout-vertical);
+        @apply --layout-vertical;
         padding: 4%;
         max-width: 768px;
         margin-left: auto;
@@ -54,7 +54,7 @@
 
       :host:not([narrow]) .photoCard {
         width: 66%;
-        @apply(--layout-self-center)
+        @apply --layout-self-center;
       }
 
       :host[narrow] .photoCard {
@@ -67,7 +67,7 @@
       }
 
       .photoTitle {
-        @apply(--title);
+        @apply --title;
       }
 
       iron-image {

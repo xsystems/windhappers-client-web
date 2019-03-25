@@ -1,8 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/google-youtube/google-youtube.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
-<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-styles/shadow.html">
 <link rel="import" href="windhappers-styles.html">
 
 <link async rel="import" href="../bower_components/xsystems-calendar/xsystems-calendar-google.html">
@@ -10,112 +9,139 @@
 <dom-module id="windhappers-page-home">
   <template>
     <style include="windhappers-styles">
-      :host {
-        @apply --layout-flex;
-        padding: 1%;
+      :host[narrow] {
+        display: grid;
+        grid-template-columns: auto;
+        grid-gap: 1vh;
+        padding: 1vh;
       }
 
-      :host:not([narrow]) #main {
-        float: left;
-        width: 79%;
-        margin-right: 1%;
+      :host:not([narrow]) {
+        display: grid;
+        grid-template-rows: max-content auto; 
+        grid-template-columns: 44% 30% auto;
+        grid-auto-flow: column;
+        grid-gap: 3vh;
+        padding: 3vh;
       }
 
-      #main > * {
-        margin-bottom: 1%;
+      #who {
+        grid-row: span 2;
       }
 
-      paper-material {
-        @apply --layout-vertical;
+      article {
         background-color: white;
+        padding: 2vh;
+        @apply --shadow-elevation-4dp;
       }
 
-      #who, #club-magazine {
-        margin-top: 1%;
-        margin-bottom: 1%;
-        margin-left: 2%;
-        margin-right: 2%;
+      img {
+        max-width: 100%;
+        @apply --shadow-elevation-4dp;
       }
 
       :host[narrow] p {
         text-align: left;
       }
 
-      #calendar {
-        float: right;
-        width: 20%;
-        height: 100%;
-      }
-
       xsystems-calendar-google {
-        height: 100%;
+        grid-row: span 2;
+        @apply --shadow-elevation-4dp;
       }
 
-      :host:not([narrow]) .videoContainer {
-        width: 70%;
+      :host:not([narrow]) google-youtube {
+        width: 80%;
         margin: auto;
+        @apply --shadow-elevation-4dp
       }
 
       #windvlaag {
         color: var(--primary-color, inherit);
       }
     </style>
-    <div id="main">    
-      <paper-material elevation="1">
-        <article id="club-magazine">
-          <b>Op zoek naar ons clubblad <span id="windvlaag">De Windvlaag</span>? Kijk onder <a href="/documents">Documenten.</a></b>
-        </article>
-      </paper-material>
-      <paper-material elevation="1">
-        <article id="who">
-          <header>
-            <h1>Wie zijn wij</h1>
-            <p>
-              Kanovereniging De Windhappers is een enthousiaste en actieve Haagse kanovereniging.
-            </p>
-          </header>
-          <section>
-            <p>
-              Wij bieden (bijna) alle <a href="/disciplines" title="Disciplines">vormen van kanosport</a> en verzorgen leuke cursussen in kajak- en kanovaren, eskimoteren en zeevaren.
-            </p>
-            <p>
-              Tijdens het vaarseizoen organiseren we een groot aantal <a href="/calendar" title="Kalendar">activiteiten</a> zoals toertochten op vlakwater en zee, kanokampeerweekenden, kanopolocompetitie, wildwatervaren in het buitenland.
-              Gedurende de winter zijn er interessante lezingen, nordic-walking, of wandeltochten.
-            </p>
-            <paper-material class="videoContainer" elevation="1">
-              <google-youtube fluid="true"
-                              video-id="IrEgMeSyn-E"
-                              rel="0"
-                              showinfo="0"
-                              iv_load_policy="3"
-                              modestbranding="1">
-              </google-youtube>
-            </paper-material>
-            <p>
-              Bijna het gehele jaar wordt er op woensdagavond, vrijdag en zondag gevaren vanaf het verenigingsgebouw over het uitgebreide stelsel van kanoroutes in regio Den Haag, het Westland, en (Midden) Delfland.
-            </p>
-            <p>
-              Ons goed onderhouden gebouw heeft een gezellige kantine met bar en is voorzien van de nodige faciliteiten. 
-              Er is een botenloods voor kajaks en Canadees kano’s.
-              We hebben een groot aantal verenigingsboten, die door leden gebruikt kunnen worden. Ons topstuk is een 10 persoons canadese kano die stamt uit de jaren dertig.
-            </p>
-            <p>
-              Ben je geïnteresseerd om lid te worden? Dan vind je <a href="/costs">hier</a> meer informatie. Kom naar onze open dag of loop op woensdagavond een keer binnen.
-            </p>
-          </section>
-        </article>
-      </paper-material>
-    </div>
 
-    <paper-material id="calendar"
-                    hidden$="[[narrow]]"
-                    elevation="1">
-        <xsystems-calendar-google narrow
-                                  calendars="[[_calendars]]"
-                                  time-zone="Europe/Amsterdam"
-                                  language="nl">
-      </xsystems-calendar-google>
-    </paper-material>
+    <article id="who">
+      <header>
+        <h1>Welkom!</h1>
+        <p>
+          Kanovereniging De Windhappers is dé Haagse kanovereniging, gelegen in het recreatiegebied De Uithof in Den Haag. 
+        </p>
+      </header>
+      <section>
+        <p>
+          Wij zijn een actieve kanovereniging met ongeveer 200 leden, van jong tot oud. We beschikken over een
+          prachtig verenigingsgebouw voorzien van een gezellige kantine, een scala aan faciliteiten, een eigen haven,
+          en botenloodsen. Onze leden doen aan (bijna) alle <a href="/disciplines" title="Disciplines">vormen van kanosport</a>: 
+          toervaren (zowel in kajak als Canadese kano); kanopolo; zeevaren; brandingvaren; en wildwatervaren.           
+        </p>
+
+        <p>
+          Elke woensdagavond is onze clubavond, kom gerust eens langs voor <a href="/costs">informatie</a> of maak een afspraak
+          voor een proefvaart met een clubboot, geheel gratis en vrijblijvend.
+        </p>
+
+        <p>
+          We verzorgen cursussen in kajakvaren, kanovaren, kanopolo, en zeevaren. Ook geven we lessen in
+          eskimoteren in een verwarmd zwembad. 
+        </p>
+
+        <p>
+          We organiseren regelmatig, uitdagende en gezellige <a href="/calendar" title="Kalendar">activiteiten</a>, 
+          toertochten op vlakwater en op zee; kano kampeerweekenden; kanopolo competitie; en wildwatervaren in het buitenland. 
+        </p>
+
+        <google-youtube fluid="true"
+                        video-id="IrEgMeSyn-E"
+                        rel="0"
+                        showinfo="0"
+                        iv_load_policy="3"
+                        modestbranding="1">
+        </google-youtube>
+      </section>
+    </article>
+
+    <article id="club-magazine">
+      <b>Op zoek naar ons clubblad <span id="windvlaag">De Windvlaag</span>? Kijk onder <a href="/documents">Documenten.</a></b>
+    </article>
+
+    <article>
+      <header>
+        <h1>Windhapper toernooi 2019</h1>
+        <p>Het is weer tijd voor de 3e editie van het Windhapper kanopolo toernooi!</p>
+      </header>
+      <p> 
+        Zondag 22 september, twee weken na het laatste NK weekend, 
+        organiseren De Windhappers een super leuk toernooi voor de jeugd en 3e klasse.
+        Daarmee is het een goede afsluiting van het kanopolo seizoen.
+
+        <ul>
+          <li>Datum: zondag 22 September</li>
+          <li>Klasse: jeugd en 3e klasse</li>
+          <li>Waar: Kanovereniging De Windhappers in Den Haag</li>
+          <li>Inschrijfkosten: €30 per team</li>
+          <li>Velden: 2 (3 als er genoeg inschrijvingen zijn)</li>
+          <li>Aantal wedstrijden: minimaal 4 per team</li>
+        </ul>
+      </p>
+      <img src="../images/canoe-polo.jpg" alt="Canoe Polo">
+      <p>
+        Dit jaar hebben we voor de inschrijving besloten om de toernooien software van kayakers.nl te gebruiken.
+        Klik op de volgende link om jouw team in te schrijven: <a href="https://cpt.kayakers.nl/View/WH2019" target="_blank">https://cpt.kayakers.nl/View/WH2019</a>
+      </p>
+      <p>
+        Voor meer info en vragen kan je altijd mailen naar: <a href="mailto:windhappertoernooi@gmail.com">windhappertoernooi@gmail.com</a>
+      </p>
+      <p>
+        Als je hebt ingeschreven kan er €30 over worden gemaakt naar <b>NL93 INGB 0000 2439 50</b> t.a.v. <b>Kanovereniging De Windhappers</b> (vergeet niet je team naam te melden).
+      </p>
+    </article>
+
+    <xsystems-calendar-google narrow
+                              hidden$="[[narrow]]"
+                              calendars="[[_calendars]]"
+                              time-zone="Europe/Amsterdam"
+                              language="nl">
+    </xsystems-calendar-google>
   </template>
   <script>
     (function() {
