@@ -86,7 +86,7 @@ export class WindhappersHome extends LitElement {
   render() {
     return html`
       <windhappers-notification id="covid19" type="warning">
-        Naar aanleiding van de recente ontwikkelingen rond <b>COVID-19</b> (het corona virus) worden tot <b>6 april</b> geen verenigingsactiviteiten georganiseerd conform de richtlijnen van het RIVM.
+        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>28 april</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
       </windhappers-notification>
 
       <article id="who">

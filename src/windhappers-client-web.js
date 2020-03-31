@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { cache } from 'lit-html/directives/cache';
 import { windhappersStyles } from './windhappers-styles';
 
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout'
@@ -7,11 +8,10 @@ import '@polymer/app-layout/app-header-layout/app-header-layout'
 import '@polymer/app-layout/app-header/app-header'
 import '@polymer/app-layout/app-toolbar/app-toolbar'
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects';
+import '@polymer/app-route/app-location.js';
+import '@polymer/app-route/app-route.js';
 import '@material/mwc-icon-button'
 import '@material/mwc-icon'
-
-import './windhappers-home'
-import './windhappers-contact'
 
 export class WindhappersClientWeb extends LitElement {
   static get styles() {
@@ -62,6 +62,23 @@ export class WindhappersClientWeb extends LitElement {
           height: 100%;
           overflow: auto;
         }
+
+        nav > a {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+          padding: 1vh 2vh 1vh 2vh;
+          font-weight: bold;
+        }
+
+        nav > a:hover {
+          background-color: var(--primary-color, red);
+          color: white;
+        }
+
+        [hidden] {
+          display: none;
+        }
       `
     ];
   }
@@ -71,12 +88,30 @@ export class WindhappersClientWeb extends LitElement {
       narrow: {
         type: Boolean,
         reflect: true
+      },
+      route: {
+        type: Object
+      },
+      page: {
+        type: String
       }
     };
   }
 
+  constructor() {
+    super();
+    this.page = 'home';
+  }
+
   render() {
     return html`
+      <app-location @route-changed="${event => this.route = event.detail.value}"></app-location>
+      <app-route  .route="${this.route}"
+                  pattern="/:page"
+                  @data-changed="${event => this.page = event.detail.value.page}"
+                  @tail-changed="${event => console.log(event.detail)}">
+      </app-route>
+
       <main>
         <app-drawer-layout  fullbleed
                             @narrow-changed=${this._handleNarrow}
@@ -87,6 +122,10 @@ export class WindhappersClientWeb extends LitElement {
                     on-tap="_showPageHome"
                     src="../images/windhappers-icon_1024x1024.png"
                     alt="De Windhappers">
+              <nav>
+                <a href="home">Home</a>
+                <a href="contact">Contact</a>
+              </nav>
             </div>
           </app-drawer>
           <app-header-layout fullbleed has-scrolling-region>
@@ -111,12 +150,23 @@ export class WindhappersClientWeb extends LitElement {
               </app-toolbar>
             </app-header>
 
-            <!-- <windhappers-home ?narrow=${this.narrow}></windhappers-home> -->
-            <windhappers-contact ?narrow=${this.narrow}></windhappers-contact>
+            ${cache(this._pages(this.page))}
           </app-header-layout>
         </app-drawer-layout>
       </main>
     `;
+  }
+
+  _pages(page) {
+    switch (page) {
+      case 'contact':
+        import('./windhappers-contact');
+        return html`<windhappers-contact ?narrow=${this.narrow}></windhappers-contact>`;
+      case 'home':
+      default:
+        import('./windhappers-home');
+        return html`<windhappers-home ?narrow=${this.narrow}></windhappers-home>`;
+    }
   }
 
   _handleNarrow(event) {
