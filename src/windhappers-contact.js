@@ -1,9 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
 import { windhappersStyles } from './windhappers-styles';
 
-import './windhappers-volunteer'
-
 import './components/xsystems-google-sheets'
+import './windhappers-volunteer'
 
 export class WindhappersContact extends LitElement {
   static get styles() {

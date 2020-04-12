@@ -45,11 +45,13 @@
     "@google-web-components/google-youtube": "^3.0.1",
     "@material/mwc-icon": "^0.14.0",
     "@material/mwc-icon-button": "^0.14.0",
+    "@material/mwc-textfield": "^0.14.1",
     "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
     "crypto-es": "^1.2.2",
     "lit-element": "^2.0.1",
-    "lit-html": "^1.0.0"
+    "lit-html": "^1.0.0",
+    "throttle-debounce": "^2.1.0"
   }
 }

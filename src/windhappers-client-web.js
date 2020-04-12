@@ -2,16 +2,16 @@ import { LitElement, html, css } from 'lit-element';
 import { cache } from 'lit-html/directives/cache';
 import { windhappersStyles } from './windhappers-styles';
 
-import '@polymer/app-layout/app-drawer-layout/app-drawer-layout'
-import '@polymer/app-layout/app-drawer/app-drawer'
-import '@polymer/app-layout/app-header-layout/app-header-layout'
-import '@polymer/app-layout/app-header/app-header'
-import '@polymer/app-layout/app-toolbar/app-toolbar'
+import '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
+import '@polymer/app-layout/app-drawer/app-drawer';
+import '@polymer/app-layout/app-header-layout/app-header-layout';
+import '@polymer/app-layout/app-header/app-header';
+import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/app-layout/app-scroll-effects/app-scroll-effects';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
-import '@material/mwc-icon-button'
-import '@material/mwc-icon'
+import '@material/mwc-icon-button';
+import '@material/mwc-icon';
 
 export class WindhappersClientWeb extends LitElement {
   static get styles() {
@@ -89,11 +89,17 @@ export class WindhappersClientWeb extends LitElement {
         type: Boolean,
         reflect: true
       },
-      route: {
+      _route: {
         type: Object
       },
       page: {
         type: String
+      },
+      scrollThreshold: {
+        type: Number
+      },
+      _scrollThresholdTriggered: {
+        type: Boolean
       }
     };
   }
@@ -101,15 +107,23 @@ export class WindhappersClientWeb extends LitElement {
   constructor() {
     super();
     this.page = 'home';
+    this.scrollThreshold = 200;
+  }
+
+  firstUpdated() {
+    let header = this.shadowRoot.querySelector('#header');
+    header._scrollHandler = () => {
+      this._handleScroll(header.scrollTarget.scrollHeight - header._scrollTargetHeight - header._scrollTop);
+      header._scrollStateChanged();
+    };
   }
 
   render() {
     return html`
-      <app-location @route-changed="${event => this.route = event.detail.value}"></app-location>
-      <app-route  .route="${this.route}"
+      <app-location @route-changed="${event => this._route = event.detail.value}"></app-location>
+      <app-route  .route="${this._route}"
                   pattern="/:page"
-                  @data-changed="${event => this.page = event.detail.value.page}"
-                  @tail-changed="${event => console.log(event.detail)}">
+                  @data-changed="${event => this.page = event.detail.value.page}">
       </app-route>
 
       <main>
@@ -124,6 +138,7 @@ export class WindhappersClientWeb extends LitElement {
                     alt="De Windhappers">
               <nav>
                 <a href="home">Home</a>
+                <a href="videos">Videos</a>
                 <a href="contact">Contact</a>
               </nav>
             </div>
@@ -162,6 +177,9 @@ export class WindhappersClientWeb extends LitElement {
       case 'contact':
         import('./windhappers-contact');
         return html`<windhappers-contact ?narrow=${this.narrow}></windhappers-contact>`;
+      case 'videos':
+        import('./windhappers-videos');
+        return html`<windhappers-videos ?narrow=${this.narrow} route-prefix="/videos"></windhappers-videos>`;
       case 'home':
       default:
         import('./windhappers-home');
@@ -171,6 +189,22 @@ export class WindhappersClientWeb extends LitElement {
 
   _handleNarrow(event) {
     this.narrow = event.detail.value;
+  }
+
+  _handleScroll(distanceFromBottom) {
+    if (distanceFromBottom < this.scrollThreshold && !this._scrollThresholdTriggered) {
+      this._scrollThresholdTriggered = true;
+      this._loadMore();
+    } else if (distanceFromBottom >= this.scrollThreshold && this._scrollThresholdTriggered) {
+      this._scrollThresholdTriggered = false;
+    }
+  }
+
+  _loadMore() {
+    let videoPage = this.shadowRoot.querySelector('windhappers-videos');
+    if (videoPage) {
+      videoPage.loadMore();
+    }
   }
 }
 
