@@ -1,5 +1,5 @@
 import { LitElement } from 'lit-element';
-
+import { debounce } from 'throttle-debounce';
 
 export class XsystemsYoutubeSearch extends LitElement {
   static get properties() {
@@ -56,24 +56,6 @@ export class XsystemsYoutubeSearch extends LitElement {
       debounceDuration: {
         type: Number,
         attribute: 'debounce-duration'
-      },
-      /**
-       * The total number of results in the result set.
-       * Please note that the value is an approximation and may not represent an exact value.
-       * In addition, the maximum value is 1,000,000.
-       *
-       * You should not use this value to create pagination links.
-       * Instead, use the `pageTokenNext` and `pageTokenPrev` property values to determine whether to show pagination links.
-       */
-      resultsTotal: {
-        type: Number,
-        attribute: 'results-total'
-      },
-      /**
-       * List of results that match the search criteria.
-       */
-      items: {
-        type: Object
       }
     };
   }
@@ -86,21 +68,26 @@ export class XsystemsYoutubeSearch extends LitElement {
   }
 
   updated(changedProperties) {
+    if (changedProperties.has('debounceDuration') 
+        && this.debounceDuration !== changedProperties.debounceDuration) {
+      this._performRequest = this.debounceDuration ? debounce(this.debounceDuration, this._performRequestImpl) : this._performRequestImpl;
+    }
+
     if (this.pageToken && this.pageToken === changedProperties.pageToken) {
       return;
     }
 
     if (this.key && (typeof this.query === 'string') && this.type && this.channel) {
-      this._performRequest(this.key, this.query, this.type, this.channel, this.pageToken, this.params);
+      this._performRequest(this.key, this.query, this.type, this.channel, this.pageToken, this.resultsPerPage, this.params);
     }
   }
 
-  _performRequest(key, query, type, channel, pageToken, params) {
-    let queryParams = {};
+  _performRequestImpl(key, query, type, channel, pageToken, resultsPerPage, params) {
+    const queryParams = {};
     queryParams.key = key;
     queryParams.part = 'snippet';
     queryParams.q = query;
-    queryParams.maxResults = this.resultsPerPage;
+    queryParams.maxResults = resultsPerPage;
     queryParams.type = type;
 
     if (channel != null) {
@@ -111,11 +98,11 @@ export class XsystemsYoutubeSearch extends LitElement {
       queryParams.pageToken = pageToken;
     }
 
-    for (let param in params) {
+    for (const param in params) {
       queryParams[param] = params[param];
     }
 
-    let url = new URL('https://www.googleapis.com/youtube/v3/search');
+    const url = new URL('https://www.googleapis.com/youtube/v3/search');
     url.search = new URLSearchParams(queryParams).toString();
 
     fetch(url).then(response => {

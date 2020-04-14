@@ -18,7 +18,7 @@ export class WindhappersVideos extends LitElement {
       windhappersStyles,
       css`
        :host {
-         display: grid;
+          display: grid;
           padding-left: 1vh;
           padding-right: 1vh;
         }
@@ -37,8 +37,8 @@ export class WindhappersVideos extends LitElement {
         }
 
         #queryInput,
-        xsystems-gallery,
-        xsystems-youtube-video {
+        #videoPlayer,
+        #videoGallery {
           margin-bottom: 1vh;
         }
 
@@ -103,7 +103,7 @@ export class WindhappersVideos extends LitElement {
   }
 
   updated(changedProperties) {
-    let videoGallery = this.shadowRoot.querySelector('#videoGallery');
+    const videoGallery = this.shadowRoot.querySelector('#videoGallery');
 
     if (!videoGallery) {
       return;
@@ -114,17 +114,18 @@ export class WindhappersVideos extends LitElement {
       videoGallery.reset();
     }
 
-    if (this._response 
-        && changedProperties.has('_response') 
-        && this._response !== changedProperties._response) {      
-      this._addItems(videoGallery, this._response.items);
-    }
+    if (this._response) {
+      if (changedProperties.has('_response') 
+          && this._response !== changedProperties._response) {      
+        this._addItems(videoGallery, this._response.items);
+      }
 
-    if (videoGallery.isEmpty()
-        && !this._videoId 
-        && changedProperties.has('_videoId') 
-        && this._videoId !== changedProperties._videoId) { 
-      this._addItems(videoGallery, this._response.items);
+      if (videoGallery.isEmpty()
+          && !this._videoId 
+          && changedProperties.has('_videoId') 
+          && this._videoId !== changedProperties._videoId) { 
+        this._addItems(videoGallery, this._response.items);
+      }
     }
   }
 
@@ -134,8 +135,7 @@ export class WindhappersVideos extends LitElement {
       <app-route  .route="${this._route}"
                   pattern="${this.routePrefix}/:videoId"
                   @data-changed="${event => this._videoId = event.detail.value.videoId}"
-                  @active-changed="${event => { if (!event.detail.value) { this._videoId = null; } }}">
-      </app-route>
+                  @active-changed="${event => { if (!event.detail.value) { this._videoId = null; } }}"></app-route>
 
       ${cache(this._pages(this.routePrefix, this._videoId))}
 

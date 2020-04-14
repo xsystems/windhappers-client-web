@@ -111,7 +111,7 @@ export class WindhappersClientWeb extends LitElement {
   }
 
   firstUpdated() {
-    let header = this.shadowRoot.querySelector('#header');
+    const header = this.shadowRoot.querySelector('#header');
     header._scrollHandler = () => {
       this._handleScroll(header.scrollTarget.scrollHeight - header._scrollTargetHeight - header._scrollTop);
       header._scrollStateChanged();
@@ -138,7 +138,8 @@ export class WindhappersClientWeb extends LitElement {
                     alt="De Windhappers">
               <nav>
                 <a href="home">Home</a>
-                <a href="videos">Videos</a>
+                <a href="photos">Foto's</a>
+                <a href="videos">Video's</a>
                 <a href="contact">Contact</a>
               </nav>
             </div>
@@ -177,6 +178,9 @@ export class WindhappersClientWeb extends LitElement {
       case 'contact':
         import('./windhappers-contact');
         return html`<windhappers-contact ?narrow=${this.narrow}></windhappers-contact>`;
+      case 'photos':
+        import('./windhappers-photos');
+        return html`<windhappers-photos ?narrow=${this.narrow} route-prefix="/photos"></windhappers-photos>`;
       case 'videos':
         import('./windhappers-videos');
         return html`<windhappers-videos ?narrow=${this.narrow} route-prefix="/videos"></windhappers-videos>`;
@@ -201,8 +205,12 @@ export class WindhappersClientWeb extends LitElement {
   }
 
   _loadMore() {
-    let videoPage = this.shadowRoot.querySelector('windhappers-videos');
-    if (videoPage) {
+    const photosPage = this.shadowRoot.querySelector('windhappers-photos');
+    const videoPage = this.shadowRoot.querySelector('windhappers-videos');
+
+    if (photosPage) {
+      photosPage.loadMore();
+    } else if (videoPage) {
       videoPage.loadMore();
     }
   }
