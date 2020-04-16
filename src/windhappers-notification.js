@@ -98,12 +98,10 @@ export class WindhappersNotification extends LitElement {
   }
 
   _computeIcon(type) {
-    if (type == "warning") {
-      return "warning";
-    } else if (type == "error") {
-      return "error"
+    if (type == "warning" || type == "error") {
+      return type;
     } else {
-      return "info"
+      return "info";
     }
   }
 }

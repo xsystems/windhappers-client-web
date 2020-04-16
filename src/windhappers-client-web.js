@@ -138,6 +138,7 @@ export class WindhappersClientWeb extends LitElement {
                     alt="De Windhappers">
               <nav>
                 <a href="home">Home</a>
+                <a href="disciplines">Disciplines</a>
                 <a href="photos">Foto's</a>
                 <a href="videos">Video's</a>
                 <a href="contact">Contact</a>
@@ -178,6 +179,9 @@ export class WindhappersClientWeb extends LitElement {
       case 'contact':
         import('./windhappers-contact');
         return html`<windhappers-contact ?narrow=${this.narrow}></windhappers-contact>`;
+      case 'disciplines':
+        import('./windhappers-disciplines');
+        return html`<windhappers-disciplines ?narrow=${this.narrow} route-prefix="/disciplines"></windhappers-disciplines>`;
       case 'photos':
         import('./windhappers-photos');
         return html`<windhappers-photos ?narrow=${this.narrow} route-prefix="/photos"></windhappers-photos>`;
