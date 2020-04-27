@@ -1,0 +1,23 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/windhappers-client-web.js",
+  "sources": [
+    "src/**.js",
+    "images/*",
+    "manifest.json",
+    "package.json",
+    "LICENSE"
+  ],
+  "extraDependencies": [
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js",
+    "node_modules/@webcomponents/webcomponentsjs/bundles/*",
+    "node_modules/@fortawesome/fontawesome-free/**/*"
+  ],
+  "builds": [
+    {
+      "preset": "es6-unbundled",
+      "addServiceWorker": false,
+      "addPushManifest": true
+    }
+  ]
+}

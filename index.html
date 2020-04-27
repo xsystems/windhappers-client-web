@@ -1,11 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="Description" content="Put your description here.">
     <base href="/">
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Currently, not all browsers take the follwing information from the manifest. -->
+    <link rel="icon" type="image/png" href="/images/windhappers-icon_32x32.png"/>
+    <meta name="theme-color" content="#64dd17">
+
+    <link rel="manifest" href="/manifest.json">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
     <link href="node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
 
@@ -18,12 +23,24 @@
         background-color: #ededed;
       }
     </style>
-    <title>windhappers-client-web</title>
+    <title>De Windhappers</title>
+
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>
+    <script type="module">
+      // Take care of cases in which the browser runs this
+      // script before it has finished running 
+      // webcomponents-loader.js (e.g. Firefox script execution order)
+      window.WebComponents = window.WebComponents || { 
+        waitFor(callback){ addEventListener('WebComponentsReady', callback) }
+      }
+  
+      WebComponents.waitFor(async () => { 
+        import('./src/windhappers-client-web.js');
+      });
+    </script>
   </head>
 
   <body>
     <windhappers-client-web></windhappers-client-web>
-
-    <script type="module" src="./src/windhappers-client-web.js"></script>
   </body>
 </html>

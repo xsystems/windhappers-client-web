@@ -49,6 +49,7 @@
     "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
+    "@webcomponents/webcomponentsjs": "^2.4.3",
     "crypto-es": "^1.2.2",
     "lit-element": "^2.0.1",
     "lit-html": "^1.0.0",

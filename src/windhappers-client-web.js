@@ -72,7 +72,7 @@ export class WindhappersClientWeb extends LitElement {
         }
 
         nav > a:hover {
-          background-color: var(--primary-color, red);
+          background-color: var(--primary-color, black);
           color: white;
         }
 
