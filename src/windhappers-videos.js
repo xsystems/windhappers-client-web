@@ -91,6 +91,12 @@ export class WindhappersVideos extends LitElement {
       },
       _videoId: {
         type: String
+      },
+      _params: {
+        type: Object
+      },
+      _pageToken: {
+        type: String
       }
     };
   }
@@ -100,6 +106,9 @@ export class WindhappersVideos extends LitElement {
     this.query = '';
     this.volunteers = [];
     this._setQuery = debounce(300, (query) => this.query = query);
+    this._params = {
+      order: "date"
+    }
   }
 
   updated(changedProperties) {
@@ -112,6 +121,7 @@ export class WindhappersVideos extends LitElement {
     if (changedProperties.has('query') 
         && this.query !== changedProperties.query) {  
       videoGallery.reset();
+      this._pageToken = undefined;
     }
 
     if (this._response) {
@@ -157,7 +167,9 @@ export class WindhappersVideos extends LitElement {
   }
 
   loadMore() {
-    this.shadowRoot.querySelector('#youtubeSearch').pageToken = this._response.nextPageToken;
+    if (this._response.nextPageToken) {
+      this._pageToken = this._response.nextPageToken;
+    }
   }
 
   _pages(routePrefix, videoId) {
@@ -180,8 +192,10 @@ export class WindhappersVideos extends LitElement {
         <xsystems-youtube-search  id="youtubeSearch"
                                   key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
                                   query=${this.query}
-                                  channel="UC_x5XG1OV2P6uZZ5FSM9Ttw"
+                                  channel="UCWBof-CO7GALxQfbO6z9c8A"
                                   type="video"
+                                  .pageToken=${this._pageToken}
+                                  .params=${this._params}
                                   @response="${event => this._response = event.detail}"></xsystems-youtube-search>
 
         <xsystems-gallery id="videoGallery"
