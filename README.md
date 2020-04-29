@@ -1,30 +1,27 @@
 <p align="center">
-  <img width="200" src="https://open-wc.org/hero.png"></img>
+  <img width="144" src="images/windhappers-icon_144x144.png"></img>
 </p>
 
-## Open-wc Starter App
+# \<windhappers-client-web\>
 
-[![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
+Web application for canoe association De Windhappers
 
-## Quickstart
-
-To get started:
+## Build
 
 ```sh
-npm init @open-wc
-# requires node 10 & npm 6 or higher
+./build.sh
 ```
 
-## Scripts
+## Run
 
-- `start` runs your app for development, reloading on file changes
-- `start:build` runs your app after it has been built using the build command
-- `build` builds your app and outputs it in your `dist` directory
-- `test` runs your test suite with Karma
-- `lint` runs the linter for your project
+### Development
 
-## Tooling configs
+```sh
+npm start
+```
 
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
+### Docker
 
-If you customize the configuration a lot, you can consider moving them to individual files.
+```sh
+docker run --rm --interactive --tty --publish 8888:80 xsystems/windhappers-client-web
+```
