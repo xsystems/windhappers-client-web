@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/google-youtube/google-youtube.html">
 <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../bower_components/paper-styles/shadow.html">
+<link rel="import" href="windhappers-notification.html">
 <link rel="import" href="windhappers-styles.html">
 
 <link async rel="import" href="../bower_components/xsystems-calendar/xsystems-calendar-google.html">
@@ -25,12 +26,16 @@
         padding: 3vh;
       }
 
+      :host:not([narrow]) #covid19 {
+        grid-column: span 2;
+      }
+
       #who, #nk {
         grid-row: span 2;
       }
 
       #wht {
-        grid-row: span 4;
+        grid-row: span 3;
       }
 
       article {
@@ -78,6 +83,10 @@
       }
     </style>
 
+    <windhappers-notification id="covid19" type="warning">
+      Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>20 mei</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
+    </windhappers-notification>
+
     <article id="who">
       <header>
         <h1>Welkom!</h1>
@@ -116,15 +125,6 @@
                         modestbranding="1">
         </google-youtube> -->
       </section>
-    </article>
-
-    <article id="std">
-      <header>
-        <h1>Save The Date!!</h1>
-        <table>
-          <tr><th>Opendag</th><td><b>3 mei 2020</b></td></tr>
-          <tr><th>NK Kanopolo</th><td><b>26/27 september 2020</b></td></tr>
-        </table>
     </article>
 
     <article id="nk">
