@@ -61,7 +61,7 @@ export class WindhappersDisciplines extends LitElement {
         }
 
         :host(:not([narrow])) .photo {
-          max-width: 60vw;
+          max-width: 40vw;
           align-self: center;
         }
 
@@ -208,7 +208,6 @@ export class WindhappersDisciplines extends LitElement {
 
           <div class="photo">
             <img src="/images/canoe-polo-1.jpg">
-            <span>Team foto</span>
           </div>
 
           <section>
@@ -250,7 +249,7 @@ export class WindhappersDisciplines extends LitElement {
         id: 2,
         title: 'Zeevaren',
         abstract: 'Varen op zee is het mooiste dat er is, volgens onze zoutwatervaarders. De golven, de branding, het heldere, zoute water en het avontuur maken het de ultieme kano-ervaring.',
-        image: '/images/canoe-polo-1.jpg',
+        image: 'images/sea-kayaking-1.jpg',
         role: 'Secretaris',
         content: html`
           <windhappers-notification type="warning">
@@ -260,7 +259,7 @@ export class WindhappersDisciplines extends LitElement {
             Om op een verantwoorde manier op zee plezierig te kunnen varen, biedt de landelijke commissie NZKV (nederlandse zeekajakvaarders) opleidingen, tochten en clinic’s aan. Zie daarvoor <a href="https://nzkv.nl" target="_blank" rel="noopener">nzkv.nl</a>. Sinds kort hebben we een eigen zeekajak instructeur in ons midden, waardoor alle ondersteuning van het watersportverbond en de NZKV voor activiteiten en kennismakingscursussen mogelijk geworden is.
           </p>
           <div class="photo">
-            <img src="/images/canoe-polo-1.jpg">
+            <img src="images/sea-kayaking-2.jpg">
           </div>
           <p>
             Binnen onze vereniging is een groep zeevaarders actief, die samen met leden van andere verenigingen, tochten organiseert op Haringvliet, Grevelingen en Oosterschelde. Ook wordt er geoefend voor de kust bij Ter Heide en Hoek van Holland (<a href="/calendar">zie kalender</a>).
