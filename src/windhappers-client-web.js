@@ -53,9 +53,13 @@ export class WindhappersClientWeb extends LitElement {
           --mdc-icon-font: 'Font Awesome 5 Brands';
         }
 
-        #windhappers-icon {
+        #windhappers-icon-link {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        #windhappers-icon-link > img {
           width: 100%;
-          cursor: pointer;
         }
 
         #drawerContent {
@@ -132,10 +136,9 @@ export class WindhappersClientWeb extends LitElement {
                             responsive-width="768px">
           <app-drawer id="drawer" slot="drawer" swipe-open>
             <div id="drawerContent">
-              <img  id="windhappers-icon"
-                    on-tap="_showPageHome"
-                    src="../images/windhappers-icon_1024x1024.png"
-                    alt="De Windhappers">
+              <a id="windhappers-icon-link" href="home">
+                <img  src="../images/windhappers-icon_1024x1024.png" alt="De Windhappers">
+              </a>
               <nav>
                 <a href="home">Home</a>
                 <a href="disciplines">Disciplines</a>

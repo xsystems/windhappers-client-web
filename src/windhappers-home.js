@@ -35,7 +35,7 @@ export class WindhappersHome extends LitElement {
           grid-row: span 2;
         }
 
-        #wht2019 {
+        #wht {
           grid-row: span 3;
         }
 
@@ -62,6 +62,26 @@ export class WindhappersHome extends LitElement {
         #windvlaag {
           color: var(--primary-color, inherit);
         }
+
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-bottom: 1em;
+        }
+
+        th {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 1%;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2
+        }
       `
     ]
   }
@@ -86,7 +106,7 @@ export class WindhappersHome extends LitElement {
   render() {
     return html`
       <windhappers-notification id="covid19" type="warning">
-        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>28 april</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
+        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>20 mei</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
       </windhappers-notification>
 
       <article id="who">
@@ -105,7 +125,7 @@ export class WindhappersHome extends LitElement {
           </p>
 
           <p>
-            Elke woensdagavond is onze clubavond, kom gerust eens langs voor <a href="/costs">informatie</a> of maak een afspraak
+            Elke woensdagavond is onze clubavond, kom gerust eens langs voor <a href="/membership">informatie</a> of maak een afspraak
             voor een proefvaart met een clubboot, geheel gratis en vrijblijvend.
           </p>
 
@@ -125,7 +145,7 @@ export class WindhappersHome extends LitElement {
         <header>
           <h1>NK Kanopolo</h1>
           <p>
-            Het Weekend van 7 en 8 september werd er bij Kanovereniging De Windhappers weer het Nederlands Kampioenschap kanopolo gespeeld.
+            Het Weekend van 7 en 8 september 2019 werd er bij Kanovereniging De Windhappers weer het Nederlands Kampioenschap kanopolo gespeeld.
             Nadat eerder in het seizoen al was gespeeld streden tientalle teams, op 4 velden voor het clubgebouw 
             en op de Wen, om de fel begeerde titel van Nederlands kampioen. Het was weer een geslaagd evenement!
           </p>
@@ -154,38 +174,50 @@ export class WindhappersHome extends LitElement {
         <b>Op zoek naar ons clubblad <span id="windvlaag">De Windvlaag</span>? Kijk onder <a href="/documents">Documenten.</a></b>
       </article>
 
-      <article id="wht2019">
+      <article id="wht">
         <header>
-          <h1>Windhapper toernooi 2019</h1>
-          <p>Het is weer tijd voor de 3e editie van het Windhapper kanopolo toernooi!</p>
+          <h1>The Hague Tournament - Canoepolo</h1>
+          <p>
+            Dit jaar is alweer de 4e editie van het Windhapper Toernooi. 
+            Deze keer onder de naam: "The Hague Tournament".
+          </p>
         </header>
         <p>
-            <b>Wedstrijdlijst</b>: 
-            <a href="https://cpt.kayakers.nl/MatchList/WH2019?day=1" target="_blank">https://cpt.kayakers.nl/MatchList/WH2019?day=1</a>
+          Het toernooi zal plaatsvinden op <b>zondag 13 september</b>.
+          Dit valt samen met de laatste speeldag van het WK kanopolo in Rome.
+          Wij zorgen daarom dat er de hele dag een livestream vanuit Rome te zien is in het clubgebouw.
+          Zo kunnen wij in de gezellige tournooisfeer de wedstrijden volgen en het Nederlandse team supporten.
         </p>
         <p> 
-          Zondag 22 september, twee weken na het laatste NK weekend, 
-          organiseren De Windhappers een super leuk toernooi voor de jeugd en 3e klasse.
-          Daarmee is het een goede afsluiting van het kanopolo seizoen.
+          Voor het eerst is het ook mogelijk voor 2e klasse teams om in te schrijven,
+          dit naast de gebruikelijke plekken in de 3e en jeugd klasse.
+          In alle klassen zijn de plekken gelimiteerd, dus schrijf je op tijd in, want VOL = VOL.
         </p>
         <ul>
-          <li>Datum: zondag 22 September</li>
-          <li>Klasse: jeugd en 3e klasse</li>
+          <li>Datum: zondag 13 September</li>
           <li>Waar: Kanovereniging De Windhappers in Den Haag</li>
-          <li>Inschrijfkosten: €30 per team</li>
-          <li>Velden: 2 (3 als er genoeg inschrijvingen zijn)</li>
-          <li>Aantal wedstrijden: minimaal 4 per team</li>
+          <li>Inschrijfkosten: €35 per team</li>
+          <li>Velden: 4</li>
         </ul>
+        <table>
+          <tr><th>Klasse</th><th>Aantal teams</th></tr>
+          <tr><td>Jeugd</td><td>8</td></tr>
+          <tr><td>3e klasse</td><td>10</td></tr>
+          <tr><td>2e klasse</td><td>6</td></tr>
+        </table>
         <img src="../images/canoe-polo-1.jpg" alt="Canoe Polo">
         <p>
-          Dit jaar hebben we voor de inschrijving besloten om de toernooien software van kayakers.nl te gebruiken.
-          Klik op de volgende link om jouw team in te schrijven: <a href="https://cpt.kayakers.nl/View/WH2019" target="_blank">https://cpt.kayakers.nl/View/WH2019</a>
+          Klik op de volgende link om jouw team in te schrijven: <a href="https://cpt.kayakers.nl/View/THT" target="_blank">https://cpt.kayakers.nl/View/THT</a>
         </p>
         <p>
-          Voor meer info en vragen kan je altijd mailen naar: <a href="mailto:windhappertoernooi@gmail.com">windhappertoernooi@gmail.com</a>
+          Als je hebt ingeschreven kan er <b>€35</b> over worden gemaakt naar <b>NL93 INGB 0000 2439 50</b> t.a.v. <b>Kanovereniging De Windhappers</b> (vergeet niet je team naam te melden).
         </p>
         <p>
-          Als je hebt ingeschreven kan er €30 over worden gemaakt naar <b>NL93 INGB 0000 2439 50</b> t.a.v. <b>Kanovereniging De Windhappers</b> (vergeet niet je team naam te melden).
+          De <b>wedstrijdlijst</b> is hier te vinden zodra deze bekent is: 
+          <a href="https://cpt.kayakers.nl/MatchList/THT?day=1" target="_blank">https://cpt.kayakers.nl/MatchList/THT?day=1</a>
+        </p>
+        <p>
+          Voor meer info en vragen kan je altijd mailen naar: <a href="mailto:tournaments@windhappers.nl">tournaments@windhappers.nl</a>. <i><b>Let op:</b> Dit is een ander e-mail adres dan voorgaande jaren!</i>
         </p>
       </article>
 
