@@ -12,7 +12,7 @@ NAME=`git remote get-url origin | cut --delimiter='/' --fields=2 | cut --delimit
 git tag --annotate --message "Release ${VERSION}" ${VERSION} ${COMMIT}
 git push origin ${VERSION}
 
-docker build --tag xsystems/${NAME}:${VERSION} "https://github.com/xsystems/${NAME}.git#${COMMIT}"
+./build.sh
 docker tag xsystems/${NAME}:${VERSION} xsystems/${NAME}:latest
 
 docker push xsystems/${NAME}:${VERSION}
