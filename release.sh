@@ -13,7 +13,6 @@ git tag --annotate --message "Release ${VERSION}" ${VERSION} ${COMMIT}
 git push origin ${VERSION}
 
 ./build.sh
-docker tag xsystems/${NAME}:${VERSION} xsystems/${NAME}:latest
 
 docker push xsystems/${NAME}:${VERSION}
 docker push xsystems/${NAME}:latest

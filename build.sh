@@ -7,3 +7,8 @@ npm install
 polymer build
 cp docker/* build/
 docker build -t xsystems/${NAME}:${VERSION} build
+
+
+if [ "${VERSION}" -ne "latest" ]; then
+  docker tag xsystems/${NAME}:${VERSION} xsystems/${NAME}:latest
+fi
