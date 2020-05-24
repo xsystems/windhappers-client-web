@@ -1,10 +1,9 @@
 import { LitElement, html, css } from 'lit-element';
 import { windhappersStyles } from './windhappers-styles';
 
-import '@google-web-components/google-youtube';
-
 import './windhappers-notification'
 import './components/xsystems-google-calendar'
+import './components/xsystems-youtube-video'
 
 export class WindhappersHome extends LitElement {
   static get styles() {
@@ -45,7 +44,8 @@ export class WindhappersHome extends LitElement {
           box-shadow: var(--shadow-elevation-4dp);
         }
 
-        img, google-youtube {
+        img, 
+        xsystems-youtube-video {
           width: 100%;
           box-shadow: var(--shadow-elevation-4dp);
         }
@@ -59,8 +59,8 @@ export class WindhappersHome extends LitElement {
           box-shadow: var(--shadow-elevation-4dp);
         }
 
-        #windvlaag {
-          color: var(--primary-color, inherit);
+        #club-magazine {
+          background-color: var(--primary-color, inherit);
         }
 
         table {
@@ -71,7 +71,6 @@ export class WindhappersHome extends LitElement {
 
         th {
           background-color: var(--primary-color);
-          color: white;
         }
 
         th, td {
@@ -106,7 +105,7 @@ export class WindhappersHome extends LitElement {
   render() {
     return html`
       <windhappers-notification id="covid19" type="warning">
-        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>20 mei</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
+        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>20 mei</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" rel="noopener" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
       </windhappers-notification>
 
       <article id="who">
@@ -150,28 +149,22 @@ export class WindhappersHome extends LitElement {
             en op de Wen, om de fel begeerde titel van Nederlands kampioen. Het was weer een geslaagd evenement!
           </p>
         </header>
-        <google-youtube video-id="JIRRUBh4hrM" 
-                        fluid="true"
-                        rel="0"
-                        showinfo="0"
-                        iv_load_policy="3"
-                        modestbranding="1"></google-youtube>
+
+        <xsystems-youtube-video video-id="JIRRUBh4hrM"></xsystems-youtube-video>
+
         <p>
-          <a href="https://www.omroepwest.nl/nieuws/amp/3897931/Spetters-vliegen-in-het-rond-tijdens-finaleweekend-NK-Kanopolo-Den-Haag" target="_blank">Zie hier het volledige Omroep West artikel.</a>
+          <a href="https://www.omroepwest.nl/nieuws/amp/3897931/Spetters-vliegen-in-het-rond-tijdens-finaleweekend-NK-Kanopolo-Den-Haag" target="_blank" rel="noopener">Zie hier het volledige Omroep West artikel.</a>
         </p>
-        <google-youtube video-id="g_JLCOqdJ8A" 
-                        fluid="true"
-                        rel="0"
-                        showinfo="0"
-                        iv_load_policy="3"
-                        modestbranding="1"></google-youtube>
+
+        <xsystems-youtube-video video-id="g_JLCOqdJ8A"></xsystems-youtube-video>
+
         <p>
-          <a href="https://www.wos.nl/nk-kanopolo-op-de-wen-heel-fysiek-je-mag-heel-veel/nieuws/item?1142346" target="_blank">Zie hier het volledige WOS artikel.</a>
+          <a href="https://www.wos.nl/nk-kanopolo-op-de-wen-heel-fysiek-je-mag-heel-veel/nieuws/item?1142346" target="_blank" rel="noopener">Zie hier het volledige WOS artikel.</a>
         </p>
       </article>
 
       <article id="club-magazine">
-        <b>Op zoek naar ons clubblad <span id="windvlaag">De Windvlaag</span>? Kijk onder <a href="/documents">Documenten.</a></b>
+        <b>Op zoek naar ons clubblad "De Windvlaag"? Kijk onder <a href="/documents">Documenten.</a></b>
       </article>
 
       <article id="wht">
@@ -207,14 +200,14 @@ export class WindhappersHome extends LitElement {
         </table>
         <img src="../images/canoe-polo-1.jpg" alt="Canoe Polo">
         <p>
-          Klik op de volgende link om jouw team in te schrijven: <a href="https://cpt.kayakers.nl/View/THT" target="_blank">https://cpt.kayakers.nl/View/THT</a>
+          Klik op de volgende link om jouw team in te schrijven: <a href="https://cpt.kayakers.nl/View/THT" target="_blank" rel="noopener">https://cpt.kayakers.nl/View/THT</a>
         </p>
         <p>
           Als je hebt ingeschreven kan er <b>€35</b> over worden gemaakt naar <b>NL93 INGB 0000 2439 50</b> t.a.v. <b>Kanovereniging De Windhappers</b> (vergeet niet je team naam te melden).
         </p>
         <p>
           De <b>wedstrijdlijst</b> is hier te vinden zodra deze bekent is: 
-          <a href="https://cpt.kayakers.nl/MatchList/THT?day=1" target="_blank">https://cpt.kayakers.nl/MatchList/THT?day=1</a>
+          <a href="https://cpt.kayakers.nl/MatchList/THT?day=1" target="_blank" rel="noopener">https://cpt.kayakers.nl/MatchList/THT?day=1</a>
         </p>
         <p>
           Voor meer info en vragen kan je altijd mailen naar: <a href="mailto:tournaments@windhappers.nl">tournaments@windhappers.nl</a>. <i><b>Let op:</b> Dit is een ander e-mail adres dan voorgaande jaren!</i>

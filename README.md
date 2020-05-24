@@ -17,11 +17,11 @@ Web application for canoe association De Windhappers
 ### Development
 
 ```sh
-npm start
+npm run start
 ```
 
 ### Docker
 
 ```sh
-docker run --rm --interactive --tty --publish 8888:80 xsystems/windhappers-client-web
+docker run --rm --interactive --tty --publish 8001:80 xsystems/windhappers-client-web
 ```

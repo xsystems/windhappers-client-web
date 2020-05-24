@@ -3,6 +3,10 @@ import { LitElement, html, css } from 'lit-element';
 export class XsystemsYoutubeVideo extends LitElement {
   static get styles() {
     return css`
+      :host {
+        display: block;
+      }
+
       .aspect-ratio-box {
         width: 100%;
         padding-bottom: 56.25%;
@@ -30,6 +34,7 @@ export class XsystemsYoutubeVideo extends LitElement {
     return html`
       <div class="aspect-ratio-box">
         <iframe id="player"
+                title="YouTube Video"
                 type="text/html"
                 src="https://www.youtube.com/embed/${this.videoId}?modestbranding=1&rel=0&iv_load_policy=3"
                 frameborder="0"

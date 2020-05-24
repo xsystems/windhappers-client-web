@@ -66,7 +66,7 @@ export class WindhappersDocuments extends LitElement {
           <h2>Verenigingsdocumenten</h2>
           <ul>${this._responseAssociationDocuments.filter(item => item.isFile).map(item => html`
             <li>
-              <a href="${item.url}" target="_blank">${item.name}</a>
+              <a href="${item.url}" target="_blank" rel="noopener">${item.name}</a>
             </li>
           `)}</ul>
           <xsystems-gcp-bucket  bucket='windhappers-site'
@@ -79,7 +79,7 @@ export class WindhappersDocuments extends LitElement {
         <h2>Handleidingen</h2>
         <ul>${this._responseManuals.filter(item => item.isFile).map(item => html`
           <li>
-            <a href="${item.url}" target="_blank">${item.name}</a>
+            <a href="${item.url}" target="_blank" rel="noopener">${item.name}</a>
           </li>
         `)}</ul>
         <xsystems-gcp-bucket bucket='windhappers-site'
@@ -91,10 +91,19 @@ export class WindhappersDocuments extends LitElement {
           <h2>Handige links</h2>
           <ul>
             <li>
-              <a href="https://www.zwemwater.nl/" target="_blank">zwemwater.nl</a>
+              <a href="https://tkbn.nl" target="_blank" rel="noopener">Toeristische Kano Bond Nederland</a>
             </li>
             <li>
-              <a href="https://knrm.nl/helpt?a" target="_blank">knrm.nl/helpt</a>
+              <a href="https://nzkv.nl" target="_blank" rel="noopener">Nederlandse Zeekajak Vaarders</a>
+            </li>
+            <li>
+              <a href="https://www.zwemwater.nl/" target="_blank" rel="noopener">zwemwater.nl</a>
+            </li>
+            <li>
+              <a href="https://knrm.nl/helpt?a" target="_blank" rel="noopener">KNRM App</a>
+            </li>
+            <li>
+              <a href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport"  target="_blank" rel="noopener">Richtlijnen van het RIVM</a>
             </li>
           </ul>
       </article>
@@ -104,7 +113,7 @@ export class WindhappersDocuments extends LitElement {
           Nieuwsbrieven die op regelmatige basis uitkomen.
           <ul>${this._responseNewsletters.filter(item => item.isFile).map(item => html`
             <li>
-              <a href="${item.url}" target="_blank">${item.name}</a>
+              <a href="${item.url}" target="_blank" rel="noopener">${item.name}</a>
             </li>
           `)}</ul>
           <xsystems-gcp-bucket  bucket='windhappers-site'

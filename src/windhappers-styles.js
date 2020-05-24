@@ -30,8 +30,4 @@ export const windhappersStyles = css`
   header > p {
     font-style: italic;
   }
-
-  h1 {
-    color: var(--primary-color);
-  }
 `;

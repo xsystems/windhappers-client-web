@@ -6,7 +6,8 @@
     "images/*",
     "manifest.json",
     "package.json",
-    "LICENSE"
+    "LICENSE",
+    "robots.txt"
   ],
   "extraDependencies": [
     "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js",
@@ -16,7 +17,6 @@
   "builds": [
     {
       "preset": "es6-unbundled",
-      "addServiceWorker": false,
       "addPushManifest": true
     }
   ]

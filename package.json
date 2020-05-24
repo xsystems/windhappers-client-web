@@ -42,7 +42,6 @@
   "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@google-web-components/google-youtube": "^3.0.1",
     "@material/mwc-icon": "^0.14.0",
     "@material/mwc-icon-button": "^0.14.0",
     "@material/mwc-textfield": "^0.14.1",

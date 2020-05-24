@@ -137,7 +137,7 @@ export class WindhappersClientWeb extends LitElement {
           <app-drawer id="drawer" slot="drawer" swipe-open>
             <div id="drawerContent">
               <a id="windhappers-icon-link" href="home">
-                <img  src="../images/windhappers-icon_1024x1024.png" alt="De Windhappers">
+                <img  src="../images/windhappers-icon_144x144.png" alt="De Windhappers">
               </a>
               <nav>
                 <a href="home">Home</a>
