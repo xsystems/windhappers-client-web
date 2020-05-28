@@ -105,7 +105,8 @@ export class WindhappersHome extends LitElement {
   render() {
     return html`
       <windhappers-notification id="covid19" type="warning">
-        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>20 mei</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" rel="noopener" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
+        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>1 september</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" rel="noopener" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
+        Ons <b><a href="https://storage.googleapis.com/windhappers-site/association_documents/coronaprotocol_2020-05-12_v4.pdf" title="Coronaprotocol" target="_blank" rel="noopener">coronaprotocol is hier</a></b> te vinden of kijk onder <a href="/documents" title="Documenten">Documenten</a>.
       </windhappers-notification>
 
       <article id="who">
@@ -164,7 +165,7 @@ export class WindhappersHome extends LitElement {
       </article>
 
       <article id="club-magazine">
-        <b>Op zoek naar ons clubblad "De Windvlaag"? Kijk onder <a href="/documents">Documenten.</a></b>
+        <b>Op zoek naar ons clubblad "De Windvlaag"? Kijk onder <a href="/documents" title="Documenten">Documenten</a>.</b>
       </article>
 
       <article id="wht">
