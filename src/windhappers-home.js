@@ -105,7 +105,10 @@ export class WindhappersHome extends LitElement {
   render() {
     return html`
       <windhappers-notification id="covid19" type="warning">
-        Naar aanleiding van de ontwikkelingen rond <b>COVID-19</b> (het coronavirus) worden tot <b>1 september</b> geen verenigingsactiviteiten georganiseerd conform <a target="_blank" rel="noopener" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a>.
+        In verband met de versoepeling van de <b>COVID-19</b> richtlijnen is onze kantine per <b>1 juli</b> weer geopend. 
+        Tevens kan er weer gebruik worden gemaakt van de kleedkamers, douches en toiletten.
+        Neem te allen tijde <a target="_blank" rel="noopener" title="De richtlijnen van het RIVM" href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport">de richtlijnen van het RIVM</a> in acht!
+        
         Ons <b><a href="https://storage.googleapis.com/windhappers-site/association_documents/coronaprotocol_2020-05-12_v4.pdf" title="Coronaprotocol" target="_blank" rel="noopener">coronaprotocol is hier</a></b> te vinden of kijk onder <a href="/documents" title="Documenten">Documenten</a>.
       </windhappers-notification>
 
