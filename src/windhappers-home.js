@@ -19,7 +19,6 @@ export class WindhappersHome extends LitElement {
 
         :host(:not([narrow])) {
           display: grid;
-          grid-template-rows: max-content auto auto; 
           grid-template-columns: 37% 37% auto;
           grid-auto-flow: column;
           grid-gap: 3vh;
@@ -30,11 +29,7 @@ export class WindhappersHome extends LitElement {
           grid-column: span 2;
         }
 
-        #who, #nk {
-          grid-row: span 2;
-        }
-
-        #wht {
+        #nk {
           grid-row: span 3;
         }
 
@@ -55,7 +50,7 @@ export class WindhappersHome extends LitElement {
         }
 
         xsystems-google-calendar {
-          grid-row: span 5;
+          grid-row: span 4;
           box-shadow: var(--shadow-elevation-4dp);
         }
 
@@ -112,6 +107,10 @@ export class WindhappersHome extends LitElement {
         Ons <b><a href="https://storage.googleapis.com/windhappers-site/association_documents/coronaprotocol_2020-05-12_v4.pdf" title="Coronaprotocol" target="_blank" rel="noopener">coronaprotocol is hier</a></b> te vinden of kijk onder <a href="/documents" title="Documenten">Documenten</a>.
       </windhappers-notification>
 
+      <article id="club-magazine">
+        <b>Op zoek naar ons clubblad "De Windvlaag"? Kijk onder <a href="/documents" title="Documenten">Documenten</a>.</b>
+      </article>
+
       <article id="who">
         <header>
           <h1>Welkom!</h1>
@@ -164,57 +163,6 @@ export class WindhappersHome extends LitElement {
 
         <p>
           <a href="https://www.wos.nl/nk-kanopolo-op-de-wen-heel-fysiek-je-mag-heel-veel/nieuws/item?1142346" target="_blank" rel="noopener">Zie hier het volledige WOS artikel.</a>
-        </p>
-      </article>
-
-      <article id="club-magazine">
-        <b>Op zoek naar ons clubblad "De Windvlaag"? Kijk onder <a href="/documents" title="Documenten">Documenten</a>.</b>
-      </article>
-
-      <article id="wht">
-        <header>
-          <h1>The Hague Tournament - Canoepolo</h1>
-          <p>
-            Dit jaar is alweer de 4e editie van het Windhapper Toernooi. 
-            Deze keer onder de naam: "The Hague Tournament".
-          </p>
-        </header>
-        <p>
-          Het toernooi zal plaatsvinden op <b>zondag 13 september</b>.
-          Dit valt samen met de laatste speeldag van het WK kanopolo in Rome.
-          Wij zorgen daarom dat er de hele dag een livestream vanuit Rome te zien is in het clubgebouw.
-          Zo kunnen wij in de gezellige tournooisfeer de wedstrijden volgen en het Nederlandse team supporten.
-        </p>
-        <p> 
-          Voor het eerst is het ook mogelijk voor 2e klasse teams om in te schrijven,
-          dit naast de gebruikelijke plekken in de 3e en jeugd klasse.
-          In alle klassen zijn de plekken gelimiteerd, dus schrijf je op tijd in, want VOL = VOL.
-        </p>
-        <ul>
-          <li>Datum: zondag 13 September</li>
-          <li>Waar: Kanovereniging De Windhappers in Den Haag</li>
-          <li>Inschrijfkosten: €35 per team</li>
-          <li>Velden: 4</li>
-        </ul>
-        <table>
-          <tr><th>Klasse</th><th>Aantal teams</th></tr>
-          <tr><td>Jeugd</td><td>8</td></tr>
-          <tr><td>3e klasse</td><td>10</td></tr>
-          <tr><td>2e klasse</td><td>6</td></tr>
-        </table>
-        <img src="../images/canoe-polo-1.jpg" alt="Canoe Polo">
-        <p>
-          Klik op de volgende link om jouw team in te schrijven: <a href="https://cpt.kayakers.nl/View/THT" target="_blank" rel="noopener">https://cpt.kayakers.nl/View/THT</a>
-        </p>
-        <p>
-          Als je hebt ingeschreven kan er <b>€35</b> over worden gemaakt naar <b>NL93 INGB 0000 2439 50</b> t.a.v. <b>Kanovereniging De Windhappers</b> (vergeet niet je team naam te melden).
-        </p>
-        <p>
-          De <b>wedstrijdlijst</b> is hier te vinden zodra deze bekent is: 
-          <a href="https://cpt.kayakers.nl/MatchList/THT?day=1" target="_blank" rel="noopener">https://cpt.kayakers.nl/MatchList/THT?day=1</a>
-        </p>
-        <p>
-          Voor meer info en vragen kan je altijd mailen naar: <a href="mailto:tournaments@windhappers.nl">tournaments@windhappers.nl</a>. <i><b>Let op:</b> Dit is een ander e-mail adres dan voorgaande jaren!</i>
         </p>
       </article>
 
