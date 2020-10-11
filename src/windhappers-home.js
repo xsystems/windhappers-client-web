@@ -1,81 +1,54 @@
 import { LitElement, html, css } from 'lit-element';
+import { md } from './directives/md.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
+import './windhappers-articles.js';
 import './windhappers-notification.js';
 import './components/xsystems-google-calendar.js';
-import './components/xsystems-youtube-video.js';
 
 export class WindhappersHome extends LitElement {
   static get styles() {
     return [
       windhappersStyles,
       css`
-        :host([narrow]) {
-          display: grid;
-          grid-template-columns: auto;
+        :host {
           grid-gap: 1vh;
           padding: 1vh;
         }
 
+        :host([narrow]) {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-areas: 
+            "notifications"
+            "articles";
+        }
+
         :host(:not([narrow])) {
           display: grid;
-          grid-template-columns: 37% 37% auto;
-          grid-auto-flow: column;
-          grid-gap: 3vh;
-          padding: 3vh;
+          grid-template-columns: 1fr auto;
+          grid-template-areas: 
+            "notifications notifications"
+            "articles      calendar";
         }
 
-        :host(:not([narrow])) #covid19 {
-          grid-column: span 2;
+        #notifications {
+          grid-area: notifications;
         }
 
-        #nk {
-          grid-row: span 3;
+        #notifications > *:not(:last-child) {
+          margin-bottom: 1vh;
         }
 
-        article {
-          background-color: white;
-          padding: 2vh;
-          box-shadow: var(--shadow-elevation-4dp);
-        }
-
-        img,
-        xsystems-youtube-video {
-          width: 100%;
-          box-shadow: var(--shadow-elevation-4dp);
-        }
-
-        :host([narrow]) p {
-          text-align: left;
+        windhappers-articles {
+          grid-area: articles;
+          max-width: 1024px;
+          justify-self: center;
         }
 
         xsystems-google-calendar {
-          grid-row: span 4;
+          grid-area: calendar;
           box-shadow: var(--shadow-elevation-4dp);
-        }
-
-        #club-magazine {
-          background-color: var(--primary-color, inherit);
-        }
-
-        table {
-          border-collapse: collapse;
-          width: 100%;
-          margin-bottom: 1em;
-        }
-
-        th {
-          background-color: var(--primary-color);
-        }
-
-        th,
-        td {
-          text-align: left;
-          padding: 1%;
-        }
-
-        tr:nth-child(even) {
-          background-color: #f2f2f2;
         }
       `,
     ];
@@ -87,9 +60,20 @@ export class WindhappersHome extends LitElement {
         type: Boolean,
         reflect: true,
       },
+      routePrefix: {
+        type: String,
+        attribute: 'route-prefix',
+      },
       _calendars: {
         type: Array,
       },
+      _notifications: {
+        type: Array,
+      },
+      cmsUrl: {
+        type: String,
+        attribute: 'cms-url',
+      }
     };
   }
 
@@ -99,111 +83,34 @@ export class WindhappersHome extends LitElement {
       'windhappers.nl_djorriihnjatt2p3it67t8v2bo@group.calendar.google.com',
       'nl.dutch#holiday@group.v.calendar.google.com',
     ];
+    this._notifications = [];
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('cmsUrl')) {
+      this._fetchNotifications(this.cmsUrl);
+    }
   }
 
   render() {
     return html`
-      <windhappers-notification id="covid19" type="warning">
-        In verband met de aanscherping van de <b>COVID-19</b> richtlijnen zijn de kantine, douches en kleedkamers tot nader order gesloten.
-        De toiletten in de hal blijven via de achterdeur beschikbaar evenals het EHBO materiaal en de lockers.
-        Neem te allen tijde
-        <a
-          target="_blank"
-          rel="noopener"
-          title="De richtlijnen van het RIVM"
-          href="https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/veelgestelde-vragen-per-onderwerp/sport"
-          >de richtlijnen van het RIVM</a
-        >
-        in acht! Ons
-        <b
-          ><a
-            href="https://storage.googleapis.com/windhappers-site/association_documents/coronaprotocol_2020-05-12_v4.pdf"
-            title="Coronaprotocol"
-            target="_blank"
-            rel="noopener"
-            >coronaprotocol is hier</a
-          ></b
-        >
-        te vinden of kijk onder <a href="/documents" title="Documenten">Documenten</a>.
-      </windhappers-notification>
+      <div id="notifications">
+        ${this._notifications.map(
+            notification => html`
+              <windhappers-notification type="${notification.type}" ?removable="${notification.removable}">
+                ${md(notification.content)}
+              </windhappers-notification>
+            `
+        )}
+      </div>
 
-      <article id="club-magazine">
-        <b
-          >Op zoek naar ons clubblad "De Windvlaag"? Kijk onder
-          <a href="/documents" title="Documenten">Documenten</a>.</b
-        >
-      </article>
-
-      <article id="who">
-        <header>
-          <h1>Welkom!</h1>
-          <p>
-            Kanovereniging De Windhappers is dé Haagse kanovereniging, gelegen in het
-            recreatiegebied De Uithof in Den Haag.
-          </p>
-        </header>
-        <section>
-          <p>
-            Wij zijn een actieve kanovereniging met ongeveer 200 leden, van jong tot oud. We
-            beschikken over een prachtig verenigingsgebouw voorzien van een gezellige kantine, een
-            scala aan faciliteiten, een eigen haven, en botenloodsen. Onze leden doen aan (bijna)
-            alle <a href="/disciplines" title="Disciplines">vormen van kanosport</a>: toervaren
-            (zowel in kajak als Canadese kano); kanopolo; zeevaren; brandingvaren; en
-            wildwatervaren.
-          </p>
-
-          <p>
-            Elke woensdagavond is onze clubavond, kom gerust eens langs voor
-            <a href="/membership">informatie</a> of maak een afspraak voor een proefvaart met een
-            clubboot, geheel gratis en vrijblijvend.
-          </p>
-
-          <p>
-            We verzorgen cursussen in kajakvaren, kanovaren, kanopolo, en zeevaren. Ook geven we
-            lessen in eskimoteren in een verwarmd zwembad.
-          </p>
-
-          <p>
-            We organiseren regelmatig, uitdagende en gezellige
-            <a href="/calendar" title="Kalendar">activiteiten</a>, toertochten op vlakwater en op
-            zee; kano kampeerweekenden; kanopolo competitie; en wildwatervaren in het buitenland.
-          </p>
-        </section>
-      </article>
-
-      <article id="nk">
-        <header>
-          <h1>NK Kanopolo</h1>
-          <p>
-            Het Weekend van 7 en 8 september 2019 werd er bij Kanovereniging De Windhappers weer het
-            Nederlands Kampioenschap kanopolo gespeeld. Nadat eerder in het seizoen al was gespeeld
-            streden tientalle teams, op 4 velden voor het clubgebouw en op de Wen, om de fel
-            begeerde titel van Nederlands kampioen. Het was weer een geslaagd evenement!
-          </p>
-        </header>
-
-        <xsystems-youtube-video video-id="JIRRUBh4hrM"></xsystems-youtube-video>
-
-        <p>
-          <a
-            href="https://www.omroepwest.nl/nieuws/amp/3897931/Spetters-vliegen-in-het-rond-tijdens-finaleweekend-NK-Kanopolo-Den-Haag"
-            target="_blank"
-            rel="noopener"
-            >Zie hier het volledige Omroep West artikel.</a
-          >
-        </p>
-
-        <xsystems-youtube-video video-id="g_JLCOqdJ8A"></xsystems-youtube-video>
-
-        <p>
-          <a
-            href="https://www.wos.nl/nk-kanopolo-op-de-wen-heel-fysiek-je-mag-heel-veel/nieuws/item?1142346"
-            target="_blank"
-            rel="noopener"
-            >Zie hier het volledige WOS artikel.</a
-          >
-        </p>
-      </article>
+      <windhappers-articles 
+        ?narrow=${this.narrow}
+        route-prefix="/articles"
+        cms-url="${this.cmsUrl}"
+        pinned
+      >
+      </windhappers-articles>
 
       <xsystems-google-calendar
         narrow
@@ -214,6 +121,20 @@ export class WindhappersHome extends LitElement {
       >
       </xsystems-google-calendar>
     `;
+  }
+
+  async _fetchNotifications(cmsUrl) {
+    fetch(
+      `${cmsUrl}/notifications?hidden=false`
+    ).then(async response => {
+      const notifications = await response.json();
+      if (response.ok) {
+        this._notifications = notifications;
+        this.dispatchEvent(new CustomEvent('loaded'));
+      } else {
+        this.dispatchEvent(new CustomEvent('error'));
+      }
+    });
   }
 }
 

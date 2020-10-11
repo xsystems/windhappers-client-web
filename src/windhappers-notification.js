@@ -57,6 +57,19 @@ export class WindhappersNotification extends LitElement {
         :host([type="error"]) #icon-notification {
           color: var(--paper-red-500);
         }
+
+        mwc-icon-button {
+          --mdc-icon-button-size: 24px;
+          --mdc-icon-size: 24px;
+        }
+
+        ::slotted(p:first-child) {
+          margin-top: 0;
+        }
+
+        ::slotted(p:last-child) {
+          margin-bottom: 0;
+        }
       `
     ]
   }
@@ -86,7 +99,9 @@ export class WindhappersNotification extends LitElement {
           <slot></slot>
         </div>
         ${this.removable
-          ? html`<mwc-icon-button icon="close" @click=${this.remove}></mwc-icon-button>`
+          ? html`
+              <mwc-icon-button icon="close" @click=${this.remove}></mwc-icon-button>
+            `
           : nothing
         }
       </div>

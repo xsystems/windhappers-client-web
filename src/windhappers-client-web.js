@@ -83,6 +83,12 @@ export class WindhappersClientWeb extends LitElement {
         [hidden] {
           display: none;
         }
+
+        windhappers-articles:not([narrow]) {
+          margin: 1vh;
+          max-width: 1024px;
+          align-self: center;
+        }
       `
     ];
   }
@@ -91,20 +97,29 @@ export class WindhappersClientWeb extends LitElement {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       _route: {
-        type: Object
+        type: Object,
       },
       page: {
-        type: String
+        type: String,
       },
       scrollThreshold: {
-        type: Number
+        type: Number,
       },
       _scrollThresholdTriggered: {
-        type: Boolean
-      }
+        type: Boolean,
+      },
+      _environment: {
+        type: String,
+      },
+      _configuration: {
+        type: Object,
+      },
+      _cmsUrl: {
+        type: String,
+      },
     };
   }
 
@@ -120,6 +135,24 @@ export class WindhappersClientWeb extends LitElement {
       this._handleScroll(header.scrollTarget.scrollHeight - header._scrollTargetHeight - header._scrollTop);
       header._scrollStateChanged();
     };
+
+    fetch('environment', {
+      headers: {
+        Accept: 'text/plain',
+      },
+    }).then(response => response.text())
+      .then(environment => {
+        this._environment = environment;
+      });
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('_environment')) {
+      this._loadConfiguration(this._environment);
+    }
+    if (changedProperties.has('_configuration') && this._configuration) {
+      this._computeCmsUrl(this._configuration.cms);
+    }
   }
 
   render() {
@@ -133,7 +166,7 @@ export class WindhappersClientWeb extends LitElement {
       <main>
         <app-drawer-layout  fullbleed
                             @narrow-changed=${this._handleNarrow}
-                            responsive-width="768px">
+                            responsive-width="1024px">
           <app-drawer id="drawer" slot="drawer" swipe-open>
             <div id="drawerContent">
               <a id="windhappers-icon-link" href="home">
@@ -142,6 +175,7 @@ export class WindhappersClientWeb extends LitElement {
               <nav>
                 <a href="home">Home</a>
                 <a href="disciplines">Disciplines</a>
+                <a href="articles">Archief</a>
                 <a href="photos">Foto's</a>
                 <a href="videos">Video's</a>
                 <a href="membership">Lidmaatschap</a>
@@ -207,11 +241,42 @@ export class WindhappersClientWeb extends LitElement {
       case 'location':
         import('./windhappers-location');
         return html`<windhappers-location ?narrow=${this.narrow} route-prefix="/location"></windhappers-location>`;
+      case 'articles':
+        import('./windhappers-articles');
+        return html`
+          <windhappers-articles
+            ?narrow=${this.narrow}
+            route-prefix="/articles"
+            cms-url="${this._cmsUrl}"
+          >
+          </windhappers-articles>
+        `;
       case 'home':
       default:
         import('./windhappers-home');
-        return html`<windhappers-home ?narrow=${this.narrow}></windhappers-home>`;
+        return html`
+          <windhappers-home
+            ?narrow=${this.narrow}
+            route-prefix="/home"
+            cms-url="${this._cmsUrl}"
+          >
+          </windhappers-home>
+        `;
     }
+  }
+
+  _loadConfiguration(environment) {
+    fetch(`configuration/configuration.${environment}.json`)
+      .then(response => response.json())
+      .then(configuration => {
+        this._configuration = configuration;
+      });
+  }
+
+  _computeCmsUrl(cms) {
+    const host = cms.host ? cms.host : window.location.hostname;
+    const port = cms.port ? cms.port : window.location.port;
+    this._cmsUrl = `${window.location.protocol}//${host}:${port}`;
   }
 
   _handleNarrow(event) {
