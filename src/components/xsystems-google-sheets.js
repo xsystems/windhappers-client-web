@@ -1,19 +1,18 @@
 import { LitElement } from 'lit-element';
 
-
 export class XsystemsGoogleSheets extends LitElement {
   static get properties() {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       key: {
-        type: String
+        type: String,
       },
       worksheet: {
-        type: Number
-      }
+        type: Number,
+      },
     };
   }
 
@@ -23,22 +22,25 @@ export class XsystemsGoogleSheets extends LitElement {
   }
 
   updated() {
-    if (!(this.key && this.worksheet)) {
-      return;
-    } else {
-      fetch(`https://spreadsheets.google.com/feeds/list/${this.key}/${this.worksheet}/public/values?alt=json`).then(response => {
-        return response.json();
-      }).then(spreadsheet => {
-        let rows = spreadsheet.feed.entry.map(row => {
-          return Object.fromEntries(
-            Object.entries(row)
-                  .filter(([key]) => key.startsWith('gsx$'))
-                  .map(([key, value]) => [key.slice(4), value.$t]));
+    if (this.key && this.worksheet) {
+      fetch(
+        `https://spreadsheets.google.com/feeds/list/${this.key}/${this.worksheet}/public/values?alt=json`
+      )
+        .then(response => response.json())
+        .then(spreadsheet => {
+          const rows = spreadsheet.feed.entry.map(row => {
+            return Object.fromEntries(
+              Object.entries(row)
+                .filter(([key]) => key.startsWith('gsx$'))
+                .map(([key, value]) => [key.slice(4), value.$t])
+            );
+          });
+          this.dispatchEvent(
+            new CustomEvent('rows', {
+              detail: { rows },
+            })
+          );
         });
-        this.dispatchEvent( new CustomEvent('rows', { 
-          detail: { rows: rows }
-        }));
-      });
     }
   }
 }

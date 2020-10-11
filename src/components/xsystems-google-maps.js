@@ -11,30 +11,30 @@ export class XsystemsGoogleMaps extends LitElement {
         width: 100%;
         height: 100%;
       }
-    `
+    `;
   }
 
   static get properties() {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       key: {
-        type: String
+        type: String,
       },
       latitude: {
-        type: Number
+        type: Number,
       },
       longitude: {
-        type: Number
+        type: Number,
       },
       zoom: {
-        type: Number
+        type: Number,
       },
       markers: {
-        type: Array
-      }
+        type: Array,
+      },
     };
   }
 
@@ -44,37 +44,39 @@ export class XsystemsGoogleMaps extends LitElement {
     this.markers = [];
   }
 
-  firstUpdated(changedProperties) {
-    this._loadScript(`https://maps.googleapis.com/maps/api/js?key=${this.key}`, this._initMap.bind(this));
+  firstUpdated() {
+    XsystemsGoogleMaps._loadScript(
+      `https://maps.googleapis.com/maps/api/js?key=${this.key}`,
+      this._initMap.bind(this)
+    );
   }
 
   render() {
-    return html`
-      <div id="map"></div>
-    `;
+    return html` <div id="map"></div> `;
   }
 
+  /* eslint-disable no-undef */
   _initMap() {
     const map = new google.maps.Map(this.shadowRoot.querySelector('#map'), {
-      center: {lat: this.latitude, lng: this.longitude},
-      zoom: this.zoom
+      center: { lat: this.latitude, lng: this.longitude },
+      zoom: this.zoom,
     });
 
     this.markers.forEach(markerData => {
       const marker = new google.maps.Marker({
-        position: {lat: markerData.latitude, lng: markerData.longitude},
+        position: { lat: markerData.latitude, lng: markerData.longitude },
         title: markerData.title,
-        icon: markerData.icon
+        icon: markerData.icon,
       });
-  
+
       const infowindow = new google.maps.InfoWindow({
-        content: markerData.info.content
+        content: markerData.info.content,
       });
-  
+
       marker.addListener('click', () => {
         infowindow.open(map, marker);
       });
-  
+
       marker.setMap(map);
 
       if (markerData.info.open) {
@@ -83,7 +85,7 @@ export class XsystemsGoogleMaps extends LitElement {
     });
   }
 
-  _loadScript(url, callback) {
+  static _loadScript(url, callback) {
     let script = document.querySelector('#mapsScript');
     if (!script) {
       script = document.createElement('script');

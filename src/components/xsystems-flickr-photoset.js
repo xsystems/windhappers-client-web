@@ -8,7 +8,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
        * Flickr API key.
        */
       key: {
-        type: String
+        type: String,
       },
 
       /**
@@ -18,22 +18,22 @@ export class XsystemsFlickrPhotoset extends LitElement {
        */
       userId: {
         type: String,
-        attribute: 'user-id'
+        attribute: 'user-id',
       },
 
       /**
-      * Id of the photoset for which to get the photos.
-      */
+       * Id of the photoset for which to get the photos.
+       */
       photosetId: {
         type: String,
-        attribute: 'photoset-id'
+        attribute: 'photoset-id',
       },
 
       /**
        * The page of results to return.
        */
       page: {
-        type: Number
+        type: Number,
       },
 
       /**
@@ -41,7 +41,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
        */
       resultsPerPage: {
         type: Number,
-        attribute: 'results-per-page'
+        attribute: 'results-per-page',
       },
 
       /**
@@ -50,7 +50,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
        * See the <a href="https://www.flickr.com/services/api/flickr.photosets.getPhotos.html">Flickr API documentation</a> for the supported fields.
        */
       extras: {
-        type: Array
+        type: Array,
       },
 
       /**
@@ -61,7 +61,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
        */
       privacyFilter: {
         type: Number,
-        attribute: 'privacy-filter'
+        attribute: 'privacy-filter',
       },
 
       /**
@@ -70,7 +70,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
        * Possible values are `all`, `photos` or `videos`.
        */
       media: {
-        type: String
+        type: String,
       },
 
       /**
@@ -78,12 +78,12 @@ export class XsystemsFlickrPhotoset extends LitElement {
        */
       debounceDuration: {
         type: Number,
-        attribute: 'debounce-duration'
+        attribute: 'debounce-duration',
       },
 
       _response: {
-        type: Object
-      }
+        type: Object,
+      },
     };
   }
 
@@ -96,24 +96,51 @@ export class XsystemsFlickrPhotoset extends LitElement {
   }
 
   updated(changedProperties) {
-    if (changedProperties.has('debounceDuration') 
-        && this.debounceDuration !== changedProperties.debounceDuration) {
-      this._performRequest = this.debounceDuration ? debounce(this.debounceDuration, this._performRequestImpl) : this._performRequestImpl;
+    if (
+      changedProperties.has('debounceDuration') &&
+      this.debounceDuration !== changedProperties.debounceDuration
+    ) {
+      this._performRequest = this.debounceDuration
+        ? debounce(this.debounceDuration, this._performRequestImpl)
+        : this._performRequestImpl;
     }
 
-    if (this.key && this.userId && this.photosetId && this.page !== changedProperties.page) {
-      this._performRequest(this.key, this.userId, this.photosetId, this.page, this.resultsPerPage, this.extras, this.privacyFilter, this.media);
+    if (
+      this.key &&
+      this.userId &&
+      this.photosetId &&
+      this.page !== changedProperties.page
+    ) {
+      this._performRequest(
+        this.key,
+        this.userId,
+        this.photosetId,
+        this.page,
+        this.resultsPerPage,
+        this.extras,
+        this.privacyFilter,
+        this.media
+      );
     }
   }
 
-  _performRequestImpl(key, userId, photosetId, page, resultsPerPage, extras, privacyFilter, media) {
+  _performRequestImpl(
+    key,
+    userId,
+    photosetId,
+    page,
+    resultsPerPage,
+    extras,
+    privacyFilter,
+    media
+  ) {
     const queryParams = {};
     queryParams.format = 'json';
     queryParams.nojsoncallback = 1;
     queryParams.method = 'flickr.photosets.getPhotos';
     queryParams.api_key = key;
     queryParams.user_id = userId;
-    queryParams.photoset_id = photosetId
+    queryParams.photoset_id = photosetId;
 
     if (page != null) {
       queryParams.page = page;
@@ -123,7 +150,9 @@ export class XsystemsFlickrPhotoset extends LitElement {
       queryParams.per_page = resultsPerPage;
     }
 
-    queryParams.extras = 'description,' + (Array.isArray(extras) && extras.length > 0 ? extras.join() : '');
+    queryParams.extras = `description,${
+      Array.isArray(extras) && extras.length > 0 ? extras.join() : ''
+    }`;
 
     if (privacyFilter != null) {
       queryParams.privacy_filter = privacyFilter;
@@ -136,13 +165,15 @@ export class XsystemsFlickrPhotoset extends LitElement {
     const url = new URL('https://api.flickr.com/services/rest');
     url.search = new URLSearchParams(queryParams).toString();
 
-    fetch(url).then(response => {
-      return response.json();
-    }).then(responseJson => {
-      this.dispatchEvent( new CustomEvent('response', { 
-        detail: responseJson.photoset
-      }));    
-    });
+    fetch(url)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.dispatchEvent(
+          new CustomEvent('response', {
+            detail: responseJson.photoset,
+          })
+        );
+      });
   }
 }
 

@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 
-import '@material/mwc-icon'; 
-import '@material/mwc-icon-button'; 
+import '@material/mwc-icon';
+import '@material/mwc-icon-button';
 
 export class XsystemsGoogleCalendar extends LitElement {
   static get styles() {
@@ -23,20 +23,20 @@ export class XsystemsGoogleCalendar extends LitElement {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       calendars: {
-        type: Array
+        type: Array,
       },
       timeZone: {
-        type: String
+        type: String,
       },
       language: {
-        type: String
+        type: String,
       },
       backgroundColor: {
-        type: String
-      }
+        type: String,
+      },
     };
   }
 
@@ -47,38 +47,47 @@ export class XsystemsGoogleCalendar extends LitElement {
 
   render() {
     return html`
-      <iframe id="calendar" 
-              xmlns="https://www.w3.org/1999/xhtml" 
-              src="${this._computeUrl(this.calendars, this.narrow, this.timeZone, this.language, this.backgroundColor)}">
+      <iframe
+        id="calendar"
+        xmlns="https://www.w3.org/1999/xhtml"
+        src="${XsystemsGoogleCalendar._computeUrl(
+          this.calendars,
+          this.narrow,
+          this.timeZone,
+          this.language,
+          this.backgroundColor
+        )}"
+      >
       </iframe>
     `;
   }
 
-  _computeUrl(calendars, narrow, timeZone, language, backgroundColor) {
+  static _computeUrl(calendars, narrow, timeZone, language, backgroundColor) {
     if (calendars.length <= 0) {
-      return;
+      return '';
     }
 
-    let calendarUrl = 'https://calendar.google.com/calendar/embed?showTitle=0&wkst=2';
+    let calendarUrl =
+      'https://calendar.google.com/calendar/embed?showTitle=0&wkst=2';
 
     if (narrow) {
       calendarUrl += '&mode=AGENDA&showNav=0&showPrint=0';
     }
 
     if (timeZone) {
-      calendarUrl += '&ctz=' + encodeURIComponent(timeZone);
+      calendarUrl += `&ctz=${encodeURIComponent(timeZone)}`;
     }
 
     if (language) {
-      calendarUrl += '&hl=' + language;
+      calendarUrl += `&hl=${language}`;
     }
 
     if (backgroundColor) {
-      calendarUrl += '&bgcolor=%23' + backgroundColor;
+      calendarUrl += `&bgcolor=%23${backgroundColor}`;
     }
 
-    for (let i = 0; i < calendars.length; i++) {
-      calendarUrl += '&src=' + encodeURIComponent(calendars[i]);
+    for (let i = 0; i < calendars.length; i += 1) {
+      calendarUrl += `&src=${encodeURIComponent(calendars[i])}`;
     }
 
     return calendarUrl;

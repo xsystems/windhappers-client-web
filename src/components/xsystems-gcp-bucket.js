@@ -5,19 +5,19 @@ export class XsystemsGcpBucket extends LitElement {
   static get properties() {
     return {
       bucket: {
-        type: String
+        type: String,
       },
 
       prefix: {
-        type: String
+        type: String,
       },
 
       delimeter: {
-        type: String
+        type: String,
       },
 
       desc: {
-        type: Boolean
+        type: Boolean,
       },
 
       /**
@@ -25,12 +25,12 @@ export class XsystemsGcpBucket extends LitElement {
        */
       debounceDuration: {
         type: Number,
-        attribute: 'debounce-duration'
+        attribute: 'debounce-duration',
       },
 
       _response: {
-        type: Object
-      }
+        type: Object,
+      },
     };
   }
 
@@ -41,9 +41,13 @@ export class XsystemsGcpBucket extends LitElement {
   }
 
   updated(changedProperties) {
-    if (changedProperties.has('debounceDuration') 
-        && this.debounceDuration !== changedProperties.debounceDuration) {
-      this._performRequest = this.debounceDuration ? debounce(this.debounceDuration, this._performRequestImpl) : this._performRequestImpl;
+    if (
+      changedProperties.has('debounceDuration') &&
+      this.debounceDuration !== changedProperties.debounceDuration
+    ) {
+      this._performRequest = this.debounceDuration
+        ? debounce(this.debounceDuration, this._performRequestImpl)
+        : this._performRequestImpl;
     }
 
     if (this.bucket) {
@@ -52,9 +56,12 @@ export class XsystemsGcpBucket extends LitElement {
   }
 
   _performRequestImpl(bucket, prefix, delimeter) {
-    const url = new URL(bucket + '/o', 'https://www.googleapis.com/storage/v1/b/');
+    const url = new URL(
+      `${bucket}/o`,
+      'https://www.googleapis.com/storage/v1/b/'
+    );
 
-    const searchParams = url.searchParams;
+    const { searchParams } = url;
 
     if (prefix) {
       searchParams.set('prefix', prefix);
@@ -64,50 +71,56 @@ export class XsystemsGcpBucket extends LitElement {
       searchParams.set('delimeter', delimeter);
     }
 
-    fetch(url).then(response => {
-      return response.json();
-    }).then(responseJson => {
-      this.dispatchEvent( new CustomEvent('response', { 
-        detail: responseJson.items.sort(this._sort.bind(this))
-                                  .map(this._wrapWithMetadata.bind(this))
-      }));    
-    });
+    fetch(url)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.dispatchEvent(
+          new CustomEvent('response', {
+            detail: responseJson.items
+              .sort(this._sort.bind(this))
+              .map(this._wrapWithMetadata.bind(this)),
+          })
+        );
+      });
   }
 
   _sort(item1, item2) {
     if (item1.name === item2.name) {
       return 0;
-    } else if (this.desc != (item1.name > item2.name)) {
-      return 1;
-    } else {
-      return -1;
     }
+
+    if (this.desc !== item1.name > item2.name) {
+      return 1;
+    }
+
+    return -1;
   }
 
   _wrapWithMetadata(item) {
     return {
-      isFile: this._computeIsFile(item),
+      isFile: XsystemsGcpBucket._computeIsFile(item),
       name: this._computeFilename(item),
-      url: this._computeFileUrl(this.bucket, item),
-      item: item
-    }
+      url: XsystemsGcpBucket._computeFileUrl(this.bucket, item),
+      item,
+    };
   }
 
   _computeFilename(item) {
-    const name = item.name;
-    if (this.prefix && this._computeIsFile(item)) {
-      const regex = new RegExp('^' + this.prefix);
+    const { name } = item;
+
+    if (this.prefix && XsystemsGcpBucket._computeIsFile(item)) {
+      const regex = new RegExp(`^${this.prefix}`);
       return name.replace(regex, '');
-    } else {
-      return name;
     }
+
+    return name;
   }
 
-  _computeFileUrl(bucket, item) {
-    return 'https://storage.googleapis.com/' + bucket + '/' + item.name;
+  static _computeFileUrl(bucket, item) {
+    return `https://storage.googleapis.com/${bucket}/${item.name}`;
   }
 
-  _computeIsFile(item) {
+  static _computeIsFile(item) {
     return !item.name.endsWith('/');
   }
 }

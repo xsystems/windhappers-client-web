@@ -1,23 +1,23 @@
 import { LitElement, html, css } from 'lit-element';
 import { cache } from 'lit-html/directives/cache';
-import { windhappersStyles } from './windhappers-styles';
 import { debounce } from 'throttle-debounce';
+import { windhappersStyles } from './windhappers-styles.js';
 
-import '@material/mwc-textfield'
+import '@material/mwc-textfield';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
-import './components/xsystems-gallery'
-import './components/xsystems-google-sheets'
-import './components/xsystems-youtube-search'
-import './components/xsystems-youtube-video'
-import './windhappers-volunteer'
+import './components/xsystems-gallery.js';
+import './components/xsystems-google-sheets.js';
+import './components/xsystems-youtube-search.js';
+import './components/xsystems-youtube-video.js';
+import './windhappers-volunteer.js';
 
 export class WindhappersVideos extends LitElement {
   static get styles() {
     return [
       windhappersStyles,
       css`
-       :host {
+        :host {
           display: grid;
           padding-left: 1vh;
           padding-right: 1vh;
@@ -63,41 +63,41 @@ export class WindhappersVideos extends LitElement {
           cursor: pointer;
           padding: 1vh;
         }
-      `
-    ]
+      `,
+    ];
   }
 
   static get properties() {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       routePrefix: {
         type: String,
-        attribute: 'route-prefix'
+        attribute: 'route-prefix',
       },
       query: {
-        type: String
+        type: String,
       },
       volunteers: {
-        type: Array
+        type: Array,
       },
       _route: {
-        type: Object
+        type: Object,
       },
       _response: {
-        type: Object
+        type: Object,
       },
       _videoId: {
-        type: String
+        type: String,
       },
       _params: {
-        type: Object
+        type: Object,
       },
       _pageToken: {
-        type: String
-      }
+        type: String,
+      },
     };
   }
 
@@ -105,10 +105,12 @@ export class WindhappersVideos extends LitElement {
     super();
     this.query = '';
     this.volunteers = [];
-    this._setQuery = debounce(300, (query) => this.query = query);
+    this._setQuery = debounce(300, query => {
+      this.query = query;
+    });
     this._params = {
-      order: "date"
-    }
+      order: 'date',
+    };
   }
 
   updated(changedProperties) {
@@ -118,50 +120,78 @@ export class WindhappersVideos extends LitElement {
       return;
     }
 
-    if (changedProperties.has('query') 
-        && this.query !== changedProperties.query) {  
+    if (
+      changedProperties.has('query') &&
+      this.query !== changedProperties.query
+    ) {
       videoGallery.reset();
       this._pageToken = undefined;
     }
 
     if (this._response) {
-      if (changedProperties.has('_response') 
-          && this._response !== changedProperties._response) {      
-        this._addItems(videoGallery, this._response.items);
+      if (
+        changedProperties.has('_response') &&
+        this._response !== changedProperties._response
+      ) {
+        WindhappersVideos._addItems(videoGallery, this._response.items);
       }
 
-      if (videoGallery.isEmpty()
-          && !this._videoId 
-          && changedProperties.has('_videoId') 
-          && this._videoId !== changedProperties._videoId) { 
-        this._addItems(videoGallery, this._response.items);
+      if (
+        videoGallery.isEmpty() &&
+        !this._videoId &&
+        changedProperties.has('_videoId') &&
+        this._videoId !== changedProperties._videoId
+      ) {
+        WindhappersVideos._addItems(videoGallery, this._response.items);
       }
     }
   }
 
   render() {
     return html`
-      <app-location @route-changed="${event => this._route = event.detail.value}"></app-location>
-      <app-route  .route="${this._route}"
-                  pattern="${this.routePrefix}/:videoId"
-                  @data-changed="${event => this._videoId = event.detail.value.videoId}"
-                  @active-changed="${event => { if (!event.detail.value) { this._videoId = null; } }}"></app-route>
+      <app-location
+        @route-changed="${event => {
+          this._route = event.detail.value;
+        }}"
+      ></app-location>
+      <app-route
+        .route="${this._route}"
+        pattern="${this.routePrefix}/:videoId"
+        @data-changed="${event => {
+          this._videoId = event.detail.value.videoId;
+        }}"
+        @active-changed="${event => {
+          if (!event.detail.value) {
+            this._videoId = null;
+          }
+        }}"
+      ></app-route>
 
       ${cache(this._pages(this.routePrefix, this._videoId))}
 
-      <xsystems-google-sheets hidden
-                              key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
-                              @rows="${event => this.volunteers = event.detail.rows}"></xsystems-google-sheets>
+      <xsystems-google-sheets
+        hidden
+        key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        @rows="${event => {
+          this.volunteers = event.detail.rows;
+        }}"
+      ></xsystems-google-sheets>
 
       <div id="volunteerContainer">
-        ${this.volunteers.filter(volunteer => this._isRelatedVolunteer(volunteer)).map(volunteer => html`
-          <windhappers-volunteer  ?narrow="${this.narrow}"
-                                  name="${volunteer.name}"
-                                  role="${volunteer.role}"
-                                  email="${volunteer.email}"
-                                  email-personal="${volunteer.emailpersonal}"
-                                  phone="${volunteer.phone}"></windhappers-volunteer>
-        `)}
+        ${this.volunteers
+          .filter(volunteer => WindhappersVideos._isRelatedVolunteer(volunteer))
+          .map(
+            volunteer => html`
+              <windhappers-volunteer
+                ?narrow="${this.narrow}"
+                name="${volunteer.name}"
+                role="${volunteer.role}"
+                email="${volunteer.email}"
+                email-personal="${volunteer.emailpersonal}"
+                phone="${volunteer.phone}"
+              ></windhappers-volunteer>
+            `
+          )}
       </div>
     `;
   }
@@ -179,43 +209,58 @@ export class WindhappersVideos extends LitElement {
           <mwc-icon>arrow_back</mwc-icon> Terug
         </a>
 
-        <xsystems-youtube-video id="videoPlayer" video-id="${videoId}"></xsystems-youtube-video>
-      `;
-    } else {
-      return html`
-        <mwc-textfield  id="queryInput"
-                        icontrailing="search"
-                        fullwidth
-                        placeholder="Welke video zoek je?"
-                        @input="${event => this._setQuery(event.target.value)}"></mwc-textfield>
-
-        <xsystems-youtube-search  id="youtubeSearch"
-                                  key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
-                                  query=${this.query}
-                                  channel="UCWBof-CO7GALxQfbO6z9c8A"
-                                  type="video"
-                                  .pageToken=${this._pageToken}
-                                  .params=${this._params}
-                                  @response="${event => this._response = event.detail}"></xsystems-youtube-search>
-
-        <xsystems-gallery id="videoGallery"
-                          ?narrow="${this.narrow}"
-                          route-prefix="${routePrefix}"></xsystems-gallery>
+        <xsystems-youtube-video
+          id="videoPlayer"
+          video-id="${videoId}"
+        ></xsystems-youtube-video>
       `;
     }
+
+    return html`
+      <mwc-textfield
+        id="queryInput"
+        icontrailing="search"
+        fullwidth
+        placeholder="Welke video zoek je?"
+        @input="${event => {
+          this._setQuery(event.target.value);
+        }}"
+      ></mwc-textfield>
+
+      <xsystems-youtube-search
+        id="youtubeSearch"
+        key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+        query=${this.query}
+        channel="UCWBof-CO7GALxQfbO6z9c8A"
+        type="video"
+        .pageToken=${this._pageToken}
+        .params=${this._params}
+        @response="${event => {
+          this._response = event.detail;
+        }}"
+      ></xsystems-youtube-search>
+
+      <xsystems-gallery
+        id="videoGallery"
+        ?narrow="${this.narrow}"
+        route-prefix="${routePrefix}"
+      ></xsystems-gallery>
+    `;
   }
 
-  _isRelatedVolunteer(volunteer) {
-    return ['Redacteur video\'s'].indexOf(volunteer.role) > -1;
+  static _isRelatedVolunteer(volunteer) {
+    return ["Redacteur video's"].indexOf(volunteer.role) > -1;
   }
 
-  _addItems(videoGallery, items) {
-    videoGallery.addItems(items.map(video => ({
-      id: video.id.videoId,
-      title: video.snippet.title,
-      description: video.snippet.description,
-      thumbnail: video.snippet.thumbnails.high.url
-    })));
+  static _addItems(videoGallery, items) {
+    videoGallery.addItems(
+      items.map(video => ({
+        id: video.id.videoId,
+        title: video.snippet.title,
+        description: video.snippet.description,
+        thumbnail: video.snippet.thumbnails.high.url,
+      }))
+    );
   }
 }
 

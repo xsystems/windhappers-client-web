@@ -11,7 +11,6 @@ import './windhappers-article-abstract.js';
 import './windhappers-article-full.js';
 
 export class WindhappersArticles extends LitElement {
-
   static get styles() {
     return [
       windhappersStyles,
@@ -21,8 +20,7 @@ export class WindhappersArticles extends LitElement {
           background-color: white;
           border-radius: 2px;
           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-                      0 1px 10px 0 rgba(0, 0, 0, 0.12),
-                      0 2px 4px -1px rgba(0, 0, 0, 0.4);
+            0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
         }
 
         windhappers-article-abstract:not(:last-child) {
@@ -57,7 +55,7 @@ export class WindhappersArticles extends LitElement {
         type: Object,
       },
       _articleId: {
-        type: String,
+        type: Number,
       },
     };
   }
@@ -70,12 +68,22 @@ export class WindhappersArticles extends LitElement {
 
   render() {
     return html`
-      <app-location @route-changed="${event => this._route = event.detail.value}"></app-location>
-      <app-route  
+      <app-location
+        @route-changed="${event => {
+          this._route = event.detail.value;
+        }}"
+      ></app-location>
+      <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:articleId"
-        @data-changed="${event => this._articleId = event.detail.value.articleId}"
-        @active-changed="${event => { if (!event.detail.value) { this._articleId = null; } }}"
+        @data-changed="${event => {
+          this._articleId = parseInt(event.detail.value.articleId, 10);
+        }}"
+        @active-changed="${event => {
+          if (!event.detail.value) {
+            this._articleId = null;
+          }
+        }}"
       >
       </app-route>
 
@@ -85,7 +93,7 @@ export class WindhappersArticles extends LitElement {
 
   _pages(articles, articleId) {
     if (articles && articleId) {
-      const article = articles.find(article => article.id == articleId);
+      const article = articles.find(it => it.id === articleId);
       return html`
         <windhappers-article-full
           ?narrow=${this.narrow}
@@ -94,7 +102,9 @@ export class WindhappersArticles extends LitElement {
         >
         </windhappers-article-full>
       `;
-    } else if (articles) {
+    }
+
+    if (articles) {
       return html`
         ${this.articles.map(
           article => html`
@@ -107,31 +117,14 @@ export class WindhappersArticles extends LitElement {
           `
         )}
       `;
-    } else {
-      return noChange;
     }
-  }
 
-  _getLocaleDate(date) {
-    return new Date(date).toLocaleDateString();
-  }
-
-  _getLocaleTime(date) {
-    return new Date(date).toLocaleTimeString(
-      [], 
-      { 
-        hour12: false, 
-        hour: '2-digit', 
-        minute: '2-digit'
-      }
-    );
+    return noChange;
   }
 
   async _fetchArticles(cmsUrl, pinned) {
     const filter = `?hidden=false${pinned ? '&pinned=true' : ''}`;
-    fetch(
-      `${cmsUrl}/articles${filter}`
-    ).then(async response => {
+    fetch(`${cmsUrl}/articles${filter}`).then(async response => {
       const articles = await response.json();
       if (response.ok) {
         this.articles = articles;

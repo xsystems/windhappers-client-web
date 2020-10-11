@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { cache } from 'lit-html/directives/cache';
-import { windhappersStyles } from './windhappers-styles';
+import { windhappersStyles } from './windhappers-styles.js';
 
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
 import '@polymer/app-layout/app-drawer/app-drawer';
@@ -40,8 +40,8 @@ export class WindhappersClientWeb extends LitElement {
           height: 50px;
         }
 
-        [main-title], 
-        [condensed-title], 
+        [main-title],
+        [condensed-title],
         [drawer-toggle] {
           color: white;
         }
@@ -89,7 +89,7 @@ export class WindhappersClientWeb extends LitElement {
           max-width: 1024px;
           align-self: center;
         }
-      `
+      `,
     ];
   }
 
@@ -132,7 +132,11 @@ export class WindhappersClientWeb extends LitElement {
   firstUpdated() {
     const header = this.shadowRoot.querySelector('#header');
     header._scrollHandler = () => {
-      this._handleScroll(header.scrollTarget.scrollHeight - header._scrollTargetHeight - header._scrollTop);
+      this._handleScroll(
+        header.scrollTarget.scrollHeight -
+          header._scrollTargetHeight -
+          header._scrollTop
+      );
       header._scrollStateChanged();
     };
 
@@ -140,7 +144,8 @@ export class WindhappersClientWeb extends LitElement {
       headers: {
         Accept: 'text/plain',
       },
-    }).then(response => response.text())
+    })
+      .then(response => response.text())
       .then(environment => {
         this._environment = environment;
       });
@@ -157,20 +162,33 @@ export class WindhappersClientWeb extends LitElement {
 
   render() {
     return html`
-      <app-location @route-changed="${event => this._route = event.detail.value}"></app-location>
-      <app-route  .route="${this._route}"
-                  pattern="/:page"
-                  @data-changed="${event => this.page = event.detail.value.page}">
+      <app-location
+        @route-changed="${event => {
+          this._route = event.detail.value;
+        }}"
+      ></app-location>
+      <app-route
+        .route="${this._route}"
+        pattern="/:page"
+        @data-changed="${event => {
+          this.page = event.detail.value.page;
+        }}"
+      >
       </app-route>
 
       <main>
-        <app-drawer-layout  fullbleed
-                            @narrow-changed=${this._handleNarrow}
-                            responsive-width="1024px">
+        <app-drawer-layout
+          fullbleed
+          @narrow-changed=${this._handleNarrow}
+          responsive-width="1024px"
+        >
           <app-drawer id="drawer" slot="drawer" swipe-open>
             <div id="drawerContent">
               <a id="windhappers-icon-link" href="home">
-                <img  src="../images/windhappers-icon_144x144.png" alt="De Windhappers">
+                <img
+                  src="../images/windhappers-icon_144x144.png"
+                  alt="De Windhappers"
+                />
               </a>
               <nav>
                 <a href="home">Home</a>
@@ -187,19 +205,31 @@ export class WindhappersClientWeb extends LitElement {
             </div>
           </app-drawer>
           <app-header-layout fullbleed has-scrolling-region>
-            <app-header id="header" 
-                        slot="header"
-                        fixed
-                        condenses
-                        effects="material"
-                        threshold="50">
+            <app-header
+              id="header"
+              slot="header"
+              fixed
+              condenses
+              effects="material"
+              threshold="50"
+            >
               <app-toolbar sticky>
                 <mwc-icon-button icon="menu" drawer-toggle></mwc-icon-button>
                 <h4 condensed-title>De Windhappers</h4>
-                <a class="social-link" href="https://twitter.com/DeWindhappers" target="_blank" rel="noopener">
+                <a
+                  class="social-link"
+                  href="https://twitter.com/DeWindhappers"
+                  target="_blank"
+                  rel="noopener"
+                >
                   <mwc-icon>&#xf081;</mwc-icon>
                 </a>
-                <a class="social-link" href="https://www.facebook.com/Windhappers-227735227966870" target="_blank" rel="noopener">
+                <a
+                  class="social-link"
+                  href="https://www.facebook.com/Windhappers-227735227966870"
+                  target="_blank"
+                  rel="noopener"
+                >
                   <mwc-icon>&#xf082;</mwc-icon>
                 </a>
               </app-toolbar>
@@ -218,31 +248,54 @@ export class WindhappersClientWeb extends LitElement {
   _pages(page) {
     switch (page) {
       case 'contact':
-        import('./windhappers-contact');
-        return html`<windhappers-contact ?narrow=${this.narrow}></windhappers-contact>`;
+        import('./windhappers-contact').then(() => {});
+        return html`<windhappers-contact
+          ?narrow=${this.narrow}
+        ></windhappers-contact>`;
       case 'disciplines':
-        import('./windhappers-disciplines');
-        return html`<windhappers-disciplines ?narrow=${this.narrow} route-prefix="/disciplines"></windhappers-disciplines>`;
+        import('./windhappers-disciplines').then(() => {});
+        return html`<windhappers-disciplines
+          ?narrow=${this.narrow}
+          route-prefix="/disciplines"
+        ></windhappers-disciplines>`;
       case 'photos':
-        import('./windhappers-photos');
-        return html`<windhappers-photos ?narrow=${this.narrow} route-prefix="/photos"></windhappers-photos>`;
+        import('./windhappers-photos').then(() => {});
+        return html`<windhappers-photos
+          ?narrow=${this.narrow}
+          route-prefix="/photos"
+        ></windhappers-photos>`;
       case 'videos':
-        import('./windhappers-videos');
-        return html`<windhappers-videos ?narrow=${this.narrow} route-prefix="/videos"></windhappers-videos>`;
+        import('./windhappers-videos').then(() => {});
+        return html`<windhappers-videos
+          ?narrow=${this.narrow}
+          route-prefix="/videos"
+        ></windhappers-videos>`;
       case 'membership':
-        import('./windhappers-membership');
-        return html`<windhappers-membership ?narrow=${this.narrow} route-prefix="/membership"></windhappers-membership>`;
+        import('./windhappers-membership').then(() => {});
+        return html`<windhappers-membership
+          ?narrow=${this.narrow}
+          route-prefix="/membership"
+        ></windhappers-membership>`;
       case 'calendar':
-        import('./windhappers-calendar');
-        return html`<windhappers-calendar ?narrow=${this.narrow} route-prefix="/calendar"></windhappers-calendar>`;
+        import('./windhappers-calendar').then(() => {});
+        return html`<windhappers-calendar
+          ?narrow=${this.narrow}
+          route-prefix="/calendar"
+        ></windhappers-calendar>`;
       case 'documents':
-        import('./windhappers-documents');
-        return html`<windhappers-documents ?narrow=${this.narrow} route-prefix="/documents"></windhappers-documents>`;
+        import('./windhappers-documents').then(() => {});
+        return html`<windhappers-documents
+          ?narrow=${this.narrow}
+          route-prefix="/documents"
+        ></windhappers-documents>`;
       case 'location':
-        import('./windhappers-location');
-        return html`<windhappers-location ?narrow=${this.narrow} route-prefix="/location"></windhappers-location>`;
+        import('./windhappers-location').then(() => {});
+        return html`<windhappers-location
+          ?narrow=${this.narrow}
+          route-prefix="/location"
+        ></windhappers-location>`;
       case 'articles':
-        import('./windhappers-articles');
+        import('./windhappers-articles').then(() => {});
         return html`
           <windhappers-articles
             ?narrow=${this.narrow}
@@ -253,7 +306,7 @@ export class WindhappersClientWeb extends LitElement {
         `;
       case 'home':
       default:
-        import('./windhappers-home');
+        import('./windhappers-home').then(() => {});
         return html`
           <windhappers-home
             ?narrow=${this.narrow}
@@ -284,10 +337,16 @@ export class WindhappersClientWeb extends LitElement {
   }
 
   _handleScroll(distanceFromBottom) {
-    if (distanceFromBottom < this.scrollThreshold && !this._scrollThresholdTriggered) {
+    if (
+      distanceFromBottom < this.scrollThreshold &&
+      !this._scrollThresholdTriggered
+    ) {
       this._scrollThresholdTriggered = true;
       this._loadMore();
-    } else if (distanceFromBottom >= this.scrollThreshold && this._scrollThresholdTriggered) {
+    } else if (
+      distanceFromBottom >= this.scrollThreshold &&
+      this._scrollThresholdTriggered
+    ) {
       this._scrollThresholdTriggered = false;
     }
   }

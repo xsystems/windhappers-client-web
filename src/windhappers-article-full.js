@@ -6,7 +6,6 @@ import { windhappersStyles } from './windhappers-styles.js';
 import '@material/mwc-icon';
 
 export class WindhappersArticleFull extends LitElement {
-
   static get styles() {
     return [
       windhappersStyles,
@@ -15,10 +14,10 @@ export class WindhappersArticleFull extends LitElement {
           display: grid;
           grid-gap: 1vh;
           grid-template-columns: 1fr;
-          grid-template-areas: 
-            "header"
-            "main"
-            "footer";
+          grid-template-areas:
+            'header'
+            'main'
+            'footer';
           padding: 2vh;
         }
 
@@ -65,17 +64,17 @@ export class WindhappersArticleFull extends LitElement {
 
         :host([narrow]) .content-section {
           grid-template-columns: 1fr;
-          grid-template-areas: 
-            "heading"
-            "media"
-            "content";
+          grid-template-areas:
+            'heading'
+            'media'
+            'content';
         }
 
         :host(:not([narrow])) .content-section {
           grid-template-columns: 1fr auto;
-          grid-template-areas: 
-            "heading media"
-            "content media";
+          grid-template-areas:
+            'heading media'
+            'content media';
         }
 
         h4 {
@@ -142,15 +141,21 @@ export class WindhappersArticleFull extends LitElement {
         <h3>${this.article.title}</h3>
         <div id="metadata">
           <mwc-icon>event</mwc-icon>
-          <span id="updatedTime">${this._getLocaleDate(this.article.updated_at)}</span>
+          <span id="updatedTime"
+            >${WindhappersArticleFull._getLocaleDate(
+              this.article.updated_at
+            )}</span
+          >
           <mwc-icon>schedule</mwc-icon>
-          <span>${this._getLocaleTime(this.article.updated_at)}</span>
+          <span
+            >${WindhappersArticleFull._getLocaleTime(
+              this.article.updated_at
+            )}</span
+          >
         </div>
       </header>
       <main>
-        <section id="abstract">
-          ${md(this.article.abstract)}
-        </section>
+        <section id="abstract">${md(this.article.abstract)}</section>
 
         ${this.article.sections.map(
           section => html`
@@ -158,41 +163,38 @@ export class WindhappersArticleFull extends LitElement {
               <h4>${section.title}</h4>
               ${section.media
                 ? html`
-                  <img 
-                    src="${section.media.formats.thumbnail.url}"
-                    alt="${section.media.formats.alternativeText}"
-                    title="${section.media.formats.caption}"
-                  />
-                `
-                : nothing
-              }
-              <div>
-                ${md(section.content)}
-              </div>
+                    <img
+                      src="${section.media.formats.thumbnail.url}"
+                      alt="${section.media.formats.alternativeText}"
+                      title="${section.media.formats.caption}"
+                    />
+                  `
+                : nothing}
+              <div>${md(section.content)}</div>
             </section>
           `
         )}
       </main>
       <footer>
         <a href="${this.articlesUrl}">Alle artikelen ...</a>
-        <span>${this.article.created_by.firstname} ${this.article.created_by.lastname}</span>
+        <span
+          >${this.article.created_by.firstname}
+          ${this.article.created_by.lastname}</span
+        >
       </footer>
     `;
   }
 
-  _getLocaleDate(date) {
+  static _getLocaleDate(date) {
     return new Date(date).toLocaleDateString();
   }
 
-  _getLocaleTime(date) {
-    return new Date(date).toLocaleTimeString(
-      [], 
-      { 
-        hour12: false, 
-        hour: '2-digit', 
-        minute: '2-digit'
-      }
-    );
+  static _getLocaleTime(date) {
+    return new Date(date).toLocaleTimeString([], {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   }
 }
 

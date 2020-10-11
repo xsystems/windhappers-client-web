@@ -12,24 +12,26 @@ export class WindhappersHome extends LitElement {
       windhappersStyles,
       css`
         :host {
+          flex: 1;
           grid-gap: 1vh;
+          grid-template-rows: auto 1fr;
           padding: 1vh;
         }
 
         :host([narrow]) {
           display: grid;
           grid-template-columns: 1fr;
-          grid-template-areas: 
-            "notifications"
-            "articles";
+          grid-template-areas:
+            'notifications'
+            'articles';
         }
 
         :host(:not([narrow])) {
           display: grid;
           grid-template-columns: 1fr auto;
-          grid-template-areas: 
-            "notifications notifications"
-            "articles      calendar";
+          grid-template-areas:
+            'notifications notifications'
+            'articles      calendar';
         }
 
         #notifications {
@@ -73,7 +75,7 @@ export class WindhappersHome extends LitElement {
       cmsUrl: {
         type: String,
         attribute: 'cms-url',
-      }
+      },
     };
   }
 
@@ -96,15 +98,18 @@ export class WindhappersHome extends LitElement {
     return html`
       <div id="notifications">
         ${this._notifications.map(
-            notification => html`
-              <windhappers-notification type="${notification.type}" ?removable="${notification.removable}">
-                ${md(notification.content)}
-              </windhappers-notification>
-            `
+          notification => html`
+            <windhappers-notification
+              type="${notification.type}"
+              ?removable="${notification.removable}"
+            >
+              ${md(notification.content)}
+            </windhappers-notification>
+          `
         )}
       </div>
 
-      <windhappers-articles 
+      <windhappers-articles
         ?narrow=${this.narrow}
         route-prefix="/articles"
         cms-url="${this.cmsUrl}"
@@ -124,9 +129,7 @@ export class WindhappersHome extends LitElement {
   }
 
   async _fetchNotifications(cmsUrl) {
-    fetch(
-      `${cmsUrl}/notifications?hidden=false`
-    ).then(async response => {
+    fetch(`${cmsUrl}/notifications?hidden=false`).then(async response => {
       const notifications = await response.json();
       if (response.ok) {
         this._notifications = notifications;

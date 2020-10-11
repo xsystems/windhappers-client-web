@@ -1,9 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
-import { windhappersStyles } from './windhappers-styles';
+import { MD5 } from 'crypto-es/lib/md5';
+import { windhappersStyles } from './windhappers-styles.js';
 
-import '@material/mwc-icon'
-
-import { MD5 } from 'crypto-es/lib/md5'
+import '@material/mwc-icon';
 
 export class WindhappersVolunteer extends LitElement {
   static get styles() {
@@ -37,7 +36,7 @@ export class WindhappersVolunteer extends LitElement {
 
         hr {
           height: 1px;
-          border: 0; 
+          border: 0;
           border-top: 1px solid var(--secondary-text-color);
           margin: 1vh 0;
           padding: 0;
@@ -69,43 +68,53 @@ export class WindhappersVolunteer extends LitElement {
         a > * {
           vertical-align: middle;
         }
-      `
-    ]
+      `,
+    ];
   }
 
   static get properties() {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       name: {
-        type: String
+        type: String,
       },
       role: {
-        type: String
+        type: String,
       },
       email: {
-        type: String
+        type: String,
       },
       emailPersonal: {
         type: String,
-        attribute: 'email-personal'
+        attribute: 'email-personal',
       },
       phone: {
-        type: String
-      }
+        type: String,
+      },
     };
   }
 
   render() {
     return html`
-      <img  id="avatar"
-            sizing="cover"
-            src="${this._computeGravatarUrl(this.emailPersonal, this.email)}">
+      <img
+        id="avatar"
+        sizing="cover"
+        src="${WindhappersVolunteer._computeGravatarUrl(
+          this.emailPersonal,
+          this.email
+        )}"
+      />
       <div id="name">${this.name}</div>
       <div id="role">${this.role}</div>
-      <hr ?hidden="${this._computeHiddenActions(this.email, this.phone)}">
+      <hr
+        ?hidden="${WindhappersVolunteer._computeHiddenActions(
+          this.email,
+          this.phone
+        )}"
+      />
       <a ?hidden="${!this.email}" href="mailto:${this.email}">
         <mwc-icon>email</mwc-icon>
         <span>${this.email}</span>
@@ -117,13 +126,17 @@ export class WindhappersVolunteer extends LitElement {
     `;
   }
 
-  _computeHiddenActions(email, phone) {
+  static _computeHiddenActions(email, phone) {
     return !(email || phone);
   }
 
-  _computeGravatarUrl(emailPrimary, emailSecondary) {
-    let email = emailPrimary ? emailPrimary.toLowerCase() : emailSecondary.toLowerCase();
-    return `https://secure.gravatar.com/avatar/${MD5(email)}?size=100&default=mm`
+  static _computeGravatarUrl(emailPrimary, emailSecondary) {
+    const email = emailPrimary
+      ? emailPrimary.toLowerCase()
+      : emailSecondary.toLowerCase();
+    return `https://secure.gravatar.com/avatar/${MD5(
+      email
+    )}?size=100&default=mm`;
   }
 }
 

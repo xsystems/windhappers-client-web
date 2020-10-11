@@ -1,9 +1,9 @@
 import { LitElement, html, css } from 'lit-element';
 import { nothing } from 'lit-html';
-import { windhappersStyles } from './windhappers-styles';
+import { windhappersStyles } from './windhappers-styles.js';
 
-import '@material/mwc-icon'; 
-import '@material/mwc-icon-button'; 
+import '@material/mwc-icon';
+import '@material/mwc-icon-button';
 
 export class WindhappersNotification extends LitElement {
   static get styles() {
@@ -34,27 +34,27 @@ export class WindhappersNotification extends LitElement {
           box-shadow: var(--shadow-elevation-4dp);
         }
 
-        :host([type="info"]) #bar {
+        :host([type='info']) #bar {
           background-color: var(--paper-blue-500);
         }
 
-        :host([type="warning"]) #bar {
+        :host([type='warning']) #bar {
           background-color: var(--paper-amber-500);
         }
 
-        :host([type="error"]) #bar {
+        :host([type='error']) #bar {
           background-color: var(--paper-red-500);
         }
 
-        :host([type="info"]) #icon-notification {
+        :host([type='info']) #icon-notification {
           color: var(--paper-blue-500);
         }
 
-        :host([type="warning"]) #icon-notification {
+        :host([type='warning']) #icon-notification {
           color: var(--paper-amber-500);
         }
 
-        :host([type="error"]) #icon-notification {
+        :host([type='error']) #icon-notification {
           color: var(--paper-red-500);
         }
 
@@ -70,18 +70,18 @@ export class WindhappersNotification extends LitElement {
         ::slotted(p:last-child) {
           margin-bottom: 0;
         }
-      `
-    ]
+      `,
+    ];
   }
 
   static get properties() {
     return {
       type: {
-        type: String
+        type: String,
       },
       removable: {
-        type: Boolean
-      }
+        type: Boolean,
+      },
     };
   }
 
@@ -94,16 +94,20 @@ export class WindhappersNotification extends LitElement {
     return html`
       <div id="bar"></div>
       <div id="main">
-        <mwc-icon id="icon-notification">${this._computeIcon(this.type)}</mwc-icon>
+        <mwc-icon id="icon-notification"
+          >${WindhappersNotification._computeIcon(this.type)}</mwc-icon
+        >
         <div id="content">
           <slot></slot>
         </div>
         ${this.removable
           ? html`
-              <mwc-icon-button icon="close" @click=${this.remove}></mwc-icon-button>
+              <mwc-icon-button
+                icon="close"
+                @click=${this.remove}
+              ></mwc-icon-button>
             `
-          : nothing
-        }
+          : nothing}
       </div>
     `;
   }
@@ -112,12 +116,12 @@ export class WindhappersNotification extends LitElement {
     this.parentNode.removeChild(this);
   }
 
-  _computeIcon(type) {
-    if (type == "warning" || type == "error") {
+  static _computeIcon(type) {
+    if (type === 'warning' || type === 'error') {
       return type;
-    } else {
-      return "info";
     }
+
+    return 'info';
   }
 }
 

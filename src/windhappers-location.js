@@ -1,8 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
-import { windhappersStyles } from './windhappers-styles';
+import { windhappersStyles } from './windhappers-styles.js';
 
-import './components/xsystems-google-maps'
-import './windhappers-notification';
+import './components/xsystems-google-maps.js';
+import './windhappers-notification.js';
 
 export class WindhappersLocation extends LitElement {
   static get styles() {
@@ -26,19 +26,19 @@ export class WindhappersLocation extends LitElement {
         windhappers-notification:last-child {
           margin-bottom: 1vh;
         }
-      `
-    ]
+      `,
+    ];
   }
 
   static get properties() {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       _markers: {
-        type: Array
-      }
+        type: Array,
+      },
     };
   }
 
@@ -55,25 +55,32 @@ export class WindhappersLocation extends LitElement {
             Nieuweweg 75, 2544NG Den Haag<br/>
             <i>52.039124, 4.236238</i>
           `,
-          open: true
+          open: true,
         },
-        icon: '/images/windhappers-icon_64x64.png'
-      }
-    ]
+        icon: '/images/windhappers-icon_64x64.png',
+      },
+    ];
   }
 
   render() {
     return html`
-      <xsystems-google-maps key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
-                            latitude="52.079124"
-                            longitude="4.236238"
-                            .markers=${this._markers}></xsystems-google-maps>
+      <xsystems-google-maps
+        key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+        latitude="52.079124"
+        longitude="4.236238"
+        .markers=${this._markers}
+      ></xsystems-google-maps>
 
       <windhappers-notification type="info" removable>
-        De Windhappers is een Haagse kanovereniging die zich bevindt achter de bekende Haagse Kunstijsbaan "De Uithof". Ons botenhuis met stalling en kantine is herkenbaar aan ons logo. Het water waar het botenhuis aan ligt heet De Wennetjessloot.
+        De Windhappers is een Haagse kanovereniging die zich bevindt achter de
+        bekende Haagse Kunstijsbaan "De Uithof". Ons botenhuis met stalling en
+        kantine is herkenbaar aan ons logo. Het water waar het botenhuis aan
+        ligt heet De Wennetjessloot.
       </windhappers-notification>
       <windhappers-notification type="warning" removable>
-        Houd rekening met de volgende aanrijroute: Vanaf de Lozerlaan neem de afslag Uithof en Jaap Edenweg, deze weg afrijden tot het achterste deel van de parkeerplaats. Loop vanaf hier naar het verenigings-gebouw.
+        Houd rekening met de volgende aanrijroute: Vanaf de Lozerlaan neem de
+        afslag Uithof en Jaap Edenweg, deze weg afrijden tot het achterste deel
+        van de parkeerplaats. Loop vanaf hier naar het verenigings-gebouw.
       </windhappers-notification>
     `;
   }

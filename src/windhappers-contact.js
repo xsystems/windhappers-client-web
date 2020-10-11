@@ -1,8 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
-import { windhappersStyles } from './windhappers-styles';
+import { windhappersStyles } from './windhappers-styles.js';
 
-import './components/xsystems-google-sheets'
-import './windhappers-volunteer'
+import './components/xsystems-google-sheets.js';
+import './windhappers-volunteer.js';
 
 export class WindhappersContact extends LitElement {
   static get styles() {
@@ -22,19 +22,19 @@ export class WindhappersContact extends LitElement {
         :host([narrow]) {
           grid-template-columns: auto;
         }
-      `
-    ]
+      `,
+    ];
   }
 
   static get properties() {
     return {
       narrow: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       contacts: {
-        type: Array
-      }
+        type: Array,
+      },
     };
   }
 
@@ -45,19 +45,27 @@ export class WindhappersContact extends LitElement {
 
   render() {
     return html`
-      <xsystems-google-sheets hidden
-                              key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
-                              @rows="${event => this.contacts = event.detail.rows}">
+      <xsystems-google-sheets
+        hidden
+        key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        @rows="${event => {
+          this.contacts = event.detail.rows;
+        }}"
+      >
       </xsystems-google-sheets>
 
-      ${this.contacts.map(contact => html`
-        <windhappers-volunteer  ?narrow="${this.narrow}"
-                                name="${contact.name}"
-                                role="${contact.role}"
-                                email="${contact.email}"
-                                email-personal="${contact.emailpersonal}"
-                                phone="${contact.phone}"></windhappers-volunteer>
-      `)}
+      ${this.contacts.map(
+        contact => html`
+          <windhappers-volunteer
+            ?narrow="${this.narrow}"
+            name="${contact.name}"
+            role="${contact.role}"
+            email="${contact.email}"
+            email-personal="${contact.emailpersonal}"
+            phone="${contact.phone}"
+          ></windhappers-volunteer>
+        `
+      )}
     `;
   }
 }

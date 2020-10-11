@@ -8,7 +8,7 @@ export class XsystemsFlickrPhoto extends LitElement {
        * Flickr API key.
        */
       key: {
-        type: String
+        type: String,
       },
 
       /**
@@ -16,7 +16,7 @@ export class XsystemsFlickrPhoto extends LitElement {
        */
       photoId: {
         type: String,
-        attribute: 'photo-id'
+        attribute: 'photo-id',
       },
 
       /**
@@ -26,7 +26,7 @@ export class XsystemsFlickrPhoto extends LitElement {
        * This enables the 'sharing' of individual photos by passing around the id and secret.
        */
       secret: {
-        type: String
+        type: String,
       },
 
       /**
@@ -34,12 +34,12 @@ export class XsystemsFlickrPhoto extends LitElement {
        */
       debounceDuration: {
         type: Number,
-        attribute: 'debounce-duration'
+        attribute: 'debounce-duration',
       },
 
       _response: {
-        type: Object
-      }
+        type: Object,
+      },
     };
   }
 
@@ -49,9 +49,13 @@ export class XsystemsFlickrPhoto extends LitElement {
   }
 
   updated(changedProperties) {
-    if (changedProperties.has('debounceDuration') 
-        && this.debounceDuration !== changedProperties.debounceDuration) {
-      this._performRequest = this.debounceDuration ? debounce(this.debounceDuration, this._performRequestImpl) : this._performRequestImpl;
+    if (
+      changedProperties.has('debounceDuration') &&
+      this.debounceDuration !== changedProperties.debounceDuration
+    ) {
+      this._performRequest = this.debounceDuration
+        ? debounce(this.debounceDuration, this._performRequestImpl)
+        : this._performRequestImpl;
     }
 
     if (this.key && this.photoId) {
@@ -65,7 +69,7 @@ export class XsystemsFlickrPhoto extends LitElement {
     queryParams.nojsoncallback = 1;
     queryParams.method = 'flickr.photos.getInfo';
     queryParams.api_key = key;
-    queryParams.photo_id = photoId
+    queryParams.photo_id = photoId;
 
     if (secret != null) {
       queryParams.secret = secret;
@@ -74,13 +78,15 @@ export class XsystemsFlickrPhoto extends LitElement {
     const url = new URL('https://api.flickr.com/services/rest');
     url.search = new URLSearchParams(queryParams).toString();
 
-    fetch(url).then(response => {
-      return response.json();
-    }).then(responseJson => {
-      this.dispatchEvent( new CustomEvent('response', { 
-        detail: responseJson.photo
-      }));    
-    });
+    fetch(url)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.dispatchEvent(
+          new CustomEvent('response', {
+            detail: responseJson.photo,
+          })
+        );
+      });
   }
 }
 

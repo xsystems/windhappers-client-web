@@ -8,7 +8,7 @@ export class XsystemsFlickrPhotosets extends LitElement {
        * Flickr API key.
        */
       key: {
-        type: String
+        type: String,
       },
 
       /**
@@ -16,14 +16,14 @@ export class XsystemsFlickrPhotosets extends LitElement {
        */
       userId: {
         type: String,
-        attribute: 'user-id'
+        attribute: 'user-id',
       },
 
       /**
        * The page of results to return.
        */
       page: {
-        type: Number
+        type: Number,
       },
 
       /**
@@ -31,7 +31,7 @@ export class XsystemsFlickrPhotosets extends LitElement {
        */
       resultsPerPage: {
         type: Number,
-        attribute: 'results-per-page'
+        attribute: 'results-per-page',
       },
 
       /**
@@ -41,7 +41,7 @@ export class XsystemsFlickrPhotosets extends LitElement {
        */
       primaryPhotoExtras: {
         type: Array,
-        attribute: 'primary-photo-extras'
+        attribute: 'primary-photo-extras',
       },
 
       /**
@@ -49,12 +49,12 @@ export class XsystemsFlickrPhotosets extends LitElement {
        */
       debounceDuration: {
         type: Number,
-        attribute: 'debounce-duration'
+        attribute: 'debounce-duration',
       },
 
       _response: {
-        type: Object
-      }
+        type: Object,
+      },
     };
   }
 
@@ -66,13 +66,23 @@ export class XsystemsFlickrPhotosets extends LitElement {
   }
 
   updated(changedProperties) {
-    if (changedProperties.has('debounceDuration') 
-        && this.debounceDuration !== changedProperties.debounceDuration) {
-      this._performRequest = this.debounceDuration ? debounce(this.debounceDuration, this._performRequestImpl) : this._performRequestImpl;
+    if (
+      changedProperties.has('debounceDuration') &&
+      this.debounceDuration !== changedProperties.debounceDuration
+    ) {
+      this._performRequest = this.debounceDuration
+        ? debounce(this.debounceDuration, this._performRequestImpl)
+        : this._performRequestImpl;
     }
 
     if (this.key && this.userId && this.page !== changedProperties.page) {
-      this._performRequest(this.key, this.userId, this.page, this.resultsPerPage, this.primaryPhotoExtras);
+      this._performRequest(
+        this.key,
+        this.userId,
+        this.page,
+        this.resultsPerPage,
+        this.primaryPhotoExtras
+      );
     }
   }
 
@@ -99,13 +109,15 @@ export class XsystemsFlickrPhotosets extends LitElement {
     const url = new URL('https://api.flickr.com/services/rest');
     url.search = new URLSearchParams(queryParams).toString();
 
-    fetch(url).then(response => {
-      return response.json();
-    }).then(responseJson => {
-      this.dispatchEvent( new CustomEvent('response', { 
-        detail: responseJson.photosets
-      }));    
-    });
+    fetch(url)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.dispatchEvent(
+          new CustomEvent('response', {
+            detail: responseJson.photosets,
+          })
+        );
+      });
   }
 }
 
