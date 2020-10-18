@@ -104,9 +104,9 @@ export class WindhappersHome extends LitElement {
   render() {
     return html`
       <windhappers-notification id="covid19" type="warning">
-        In verband met de aanscherping van de <b>COVID-19</b> richtlijnen is onze kantine per
-        <b>29 september 2020</b> tot nader order gesloten. De kleedkamers, douches en toiletten
-        blijven wel open voor gebruik. Neem te allen tijde
+        In verband met de aanscherping van de <b>COVID-19</b> richtlijnen zijn de kantine, douches en kleedkamers tot nader order gesloten.
+        De toiletten in de hal blijven via de achterdeur beschikbaar evenals het EHBO materiaal en de lockers.
+        Neem te allen tijde
         <a
           target="_blank"
           rel="noopener"
