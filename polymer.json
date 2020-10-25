@@ -4,6 +4,7 @@
   "sources": [
     "src/**.js",
     "images/*",
+    "configuration/*",
     "manifest.json",
     "package.json",
     "LICENSE",

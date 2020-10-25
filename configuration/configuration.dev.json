@@ -1,5 +1,5 @@
 {
   "cms": {
-    "port": 1337
+    "url": "https://api.dev.windhappers.nl"
   }
 }

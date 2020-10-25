@@ -156,7 +156,7 @@ export class WindhappersClientWeb extends LitElement {
       this._loadConfiguration(this._environment);
     }
     if (changedProperties.has('_configuration') && this._configuration) {
-      this._computeCmsUrl(this._configuration.cms);
+      this._cmsUrl = this._configuration.cms.url;
     }
   }
 
@@ -324,12 +324,6 @@ export class WindhappersClientWeb extends LitElement {
       .then(configuration => {
         this._configuration = configuration;
       });
-  }
-
-  _computeCmsUrl(cms) {
-    const host = cms.host ? cms.host : window.location.hostname;
-    const port = cms.port ? cms.port : window.location.port;
-    this._cmsUrl = `${window.location.protocol}//${host}:${port}`;
   }
 
   _handleNarrow(event) {
