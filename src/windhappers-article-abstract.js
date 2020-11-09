@@ -3,7 +3,6 @@ import { md } from './directives/md.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
 export class WindhappersArticleAbstract extends LitElement {
-
   static get styles() {
     return [
       windhappersStyles,
@@ -16,19 +15,19 @@ export class WindhappersArticleAbstract extends LitElement {
 
         :host([narrow]) {
           grid-template-columns: 1fr;
-          grid-template-areas: 
-            "header"
-            "poster"
-            "main"
-            "footer";
+          grid-template-areas:
+            'header'
+            'poster'
+            'main'
+            'footer';
         }
 
         :host(:not([narrow])) {
           grid-template-columns: 1fr auto;
-          grid-template-areas: 
-            "header poster"
-            "main poster"
-            "footer poster";
+          grid-template-areas:
+            'header poster'
+            'main poster'
+            'footer poster';
         }
 
         header {
@@ -101,8 +100,8 @@ export class WindhappersArticleAbstract extends LitElement {
       <footer>
         <a href="${this.articleUrl}">Lees verder ...</a>
       </footer>
-      <img 
-        src="${this.article.poster.formats.thumbnail.url}"
+      <img
+        src="${this.article.poster.formats.small.url}"
         alt="${this.article.poster.alternativeText}"
         title="${this.article.poster.caption}"
       />
@@ -110,4 +109,7 @@ export class WindhappersArticleAbstract extends LitElement {
   }
 }
 
-customElements.define('windhappers-article-abstract', WindhappersArticleAbstract);
+customElements.define(
+  'windhappers-article-abstract',
+  WindhappersArticleAbstract
+);

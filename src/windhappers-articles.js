@@ -123,7 +123,9 @@ export class WindhappersArticles extends LitElement {
   }
 
   async _fetchArticles(cmsUrl, pinned) {
-    const filter = `?hidden=false${pinned ? '&pinned=true' : ''}`;
+    const filter = `?_sort=created_at:DESC&hidden=false${
+      pinned ? '&pinned=true' : ''
+    }`;
     fetch(`${cmsUrl}/articles${filter}`).then(async response => {
       const articles = await response.json();
       if (response.ok) {

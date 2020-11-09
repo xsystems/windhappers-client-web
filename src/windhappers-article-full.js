@@ -72,6 +72,7 @@ export class WindhappersArticleFull extends LitElement {
 
         :host(:not([narrow])) .content-section {
           grid-template-columns: 1fr auto;
+          grid-template-rows: auto 1fr;
           grid-template-areas:
             'heading media'
             'content media';
@@ -164,7 +165,7 @@ export class WindhappersArticleFull extends LitElement {
               ${section.media
                 ? html`
                     <img
-                      src="${section.media.formats.thumbnail.url}"
+                      src="${section.media.formats.small.url}"
                       alt="${section.media.formats.alternativeText}"
                       title="${section.media.formats.caption}"
                     />
