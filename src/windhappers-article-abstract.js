@@ -34,8 +34,9 @@ export class WindhappersArticleAbstract extends LitElement {
           grid-area: header;
         }
 
-        h3 {
+        h2 {
           margin-bottom: 0vh;
+          font-size: larger;
         }
 
         main {
@@ -55,7 +56,7 @@ export class WindhappersArticleAbstract extends LitElement {
         }
 
         a {
-          color: var(--primary-color, inherit);
+          color: var(--paper-blue-800, inherit);
         }
 
         img {
@@ -94,14 +95,14 @@ export class WindhappersArticleAbstract extends LitElement {
   render() {
     return html`
       <header>
-        <h3>${this.article.title}</h3>
+        <h2>${this.article.title}</h2>
       </header>
       <main>${md(this.article.abstract)}</main>
       <footer>
         <a href="${this.articleUrl}">Lees verder ...</a>
       </footer>
       <img
-        src="${this.article.poster.formats.small.url}"
+        src="${this.article.poster.formats.medium.url}"
         alt="${this.article.poster.alternativeText}"
         title="${this.article.poster.caption}"
       />

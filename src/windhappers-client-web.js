@@ -186,7 +186,7 @@ export class WindhappersClientWeb extends LitElement {
             <div id="drawerContent">
               <a id="windhappers-icon-link" href="home">
                 <img
-                  src="../images/windhappers-icon_144x144.png"
+                  src="../images/windhappers-icon_512x512.png"
                   alt="De Windhappers"
                 />
               </a>

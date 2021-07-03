@@ -35,27 +35,27 @@ export class WindhappersNotification extends LitElement {
         }
 
         :host([type='info']) #bar {
-          background-color: var(--paper-blue-500);
+          background-color: var(--paper-blue-800);
         }
 
         :host([type='warning']) #bar {
-          background-color: var(--paper-amber-500);
+          background-color: var(--paper-orange-800);
         }
 
         :host([type='error']) #bar {
-          background-color: var(--paper-red-500);
+          background-color: var(--paper-red-800);
         }
 
         :host([type='info']) #icon-notification {
-          color: var(--paper-blue-500);
+          color: var(--paper-blue-800);
         }
 
         :host([type='warning']) #icon-notification {
-          color: var(--paper-amber-500);
+          color: var(--paper-orange-800);
         }
 
         :host([type='error']) #icon-notification {
-          color: var(--paper-red-500);
+          color: var(--paper-red-800);
         }
 
         mwc-icon-button {

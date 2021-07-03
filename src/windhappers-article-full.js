@@ -165,7 +165,7 @@ export class WindhappersArticleFull extends LitElement {
               ${section.media
                 ? html`
                     <img
-                      src="${section.media.formats.small.url}"
+                      src="${section.media.formats.medium.url}"
                       alt="${section.media.formats.alternativeText}"
                       title="${section.media.formats.caption}"
                     />
