@@ -114,7 +114,7 @@ export class WindhappersArticleFull extends LitElement {
         }
 
         a {
-          color: var(--primary-color, inherit);
+          color: var(--paper-blue-800, inherit);
         }
       `,
     ];

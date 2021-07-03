@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { md } from './directives/md.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
@@ -112,7 +113,7 @@ export class WindhappersHome extends LitElement {
       <windhappers-articles
         ?narrow=${this.narrow}
         route-prefix="/articles"
-        cms-url="${this.cmsUrl}"
+        cms-url="${ifDefined(this.cmsUrl)}"
         pinned
       >
       </windhappers-articles>

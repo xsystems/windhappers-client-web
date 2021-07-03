@@ -17,7 +17,7 @@
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+      href="fonts/fonts.css"
       onload="this.onload=null;this.rel='stylesheet'"
     >
     <link
@@ -36,21 +36,6 @@
     <link rel="preconnect" crossorigin="anonymous" href="https://calendar.google.com">
     <link rel="preconnect" crossorigin="anonymous" href="https://www.gstatic.com">
 
-    <link rel="preload" href="/src/windhappers-home.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@material/mwc-icon/mwc-icon.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-route/app-route.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@material/mwc-icon-button/mwc-icon-button.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-route/app-location.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/src/windhappers-styles.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/lit-html/directives/cache.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-layout/app-drawer/app-drawer.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/lit-element/lit-element.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-layout/app-header/app-header.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js" as="script" crossorigin=anonymous>
-    <link rel="preload" href="/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js" as="script" crossorigin=anonymous>
-
     <style>
       html,
       body {
@@ -63,6 +48,8 @@
 
     <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>
     <script type="module">
+      window.polymerSkipLoadingFontRoboto = true;
+
       // Take care of cases in which the browser runs this
       // script before it has finished running
       // webcomponents-loader.js (e.g. Firefox script execution order)

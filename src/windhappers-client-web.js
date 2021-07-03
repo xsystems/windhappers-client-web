@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { cache } from 'lit-html/directives/cache';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { windhappersStyles } from './windhappers-styles.js';
 
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
@@ -248,70 +249,70 @@ export class WindhappersClientWeb extends LitElement {
   _pages(page) {
     switch (page) {
       case 'contact':
-        import('./windhappers-contact').then(() => {});
+        import('./windhappers-contact.js').then(() => {});
         return html`<windhappers-contact
           ?narrow=${this.narrow}
         ></windhappers-contact>`;
       case 'disciplines':
-        import('./windhappers-disciplines').then(() => {});
+        import('./windhappers-disciplines.js').then(() => {});
         return html`<windhappers-disciplines
           ?narrow=${this.narrow}
           route-prefix="/disciplines"
         ></windhappers-disciplines>`;
       case 'photos':
-        import('./windhappers-photos').then(() => {});
+        import('./windhappers-photos.js').then(() => {});
         return html`<windhappers-photos
           ?narrow=${this.narrow}
           route-prefix="/photos"
         ></windhappers-photos>`;
       case 'videos':
-        import('./windhappers-videos').then(() => {});
+        import('./windhappers-videos.js').then(() => {});
         return html`<windhappers-videos
           ?narrow=${this.narrow}
           route-prefix="/videos"
         ></windhappers-videos>`;
       case 'membership':
-        import('./windhappers-membership').then(() => {});
+        import('./windhappers-membership.js').then(() => {});
         return html`<windhappers-membership
           ?narrow=${this.narrow}
           route-prefix="/membership"
         ></windhappers-membership>`;
       case 'calendar':
-        import('./windhappers-calendar').then(() => {});
+        import('./windhappers-calendar.js').then(() => {});
         return html`<windhappers-calendar
           ?narrow=${this.narrow}
           route-prefix="/calendar"
         ></windhappers-calendar>`;
       case 'documents':
-        import('./windhappers-documents').then(() => {});
+        import('./windhappers-documents.js').then(() => {});
         return html`<windhappers-documents
           ?narrow=${this.narrow}
           route-prefix="/documents"
         ></windhappers-documents>`;
       case 'location':
-        import('./windhappers-location').then(() => {});
+        import('./windhappers-location.js').then(() => {});
         return html`<windhappers-location
           ?narrow=${this.narrow}
           route-prefix="/location"
         ></windhappers-location>`;
       case 'articles':
-        import('./windhappers-articles').then(() => {});
+        import('./windhappers-articles.js').then(() => {});
         return html`
           <windhappers-articles
             ?narrow=${this.narrow}
             route-prefix="/articles"
-            cms-url="${this._cmsUrl}"
+            cms-url="${ifDefined(this._cmsUrl)}"
           >
           </windhappers-articles>
         `;
       case 'home':
       default:
-        import('./windhappers-home').then(() => {});
+        import('./windhappers-home.js').then(() => {});
         return html`
           <windhappers-home
             ?narrow=${this.narrow}
             route-prefix="/home"
-            cms-url="${this._cmsUrl}"
+            cms-url="${ifDefined(this._cmsUrl)}"
           >
           </windhappers-home>
         `;
