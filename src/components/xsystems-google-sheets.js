@@ -10,31 +10,31 @@ export class XsystemsGoogleSheets extends LitElement {
       key: {
         type: String,
       },
-      worksheet: {
-        type: Number,
+      spreadsheetId: {
+        type: String,
+      },
+      range: {
+        type: String,
       },
     };
   }
 
-  constructor() {
-    super();
-    this.worksheet = 1;
-  }
-
   updated() {
-    if (this.key && this.worksheet) {
+    if (this.key && this.spreadsheetId && this.range) {
       fetch(
-        `https://spreadsheets.google.com/feeds/list/${this.key}/${this.worksheet}/public/values?alt=json`
+        `https://sheets.googleapis.com/v4/spreadsheets/${this.spreadsheetId}/values/${this.range}?key=${this.key}`
       )
         .then(response => response.json())
         .then(spreadsheet => {
-          const rows = spreadsheet.feed.entry.map(row => {
-            return Object.fromEntries(
-              Object.entries(row)
-                .filter(([key]) => key.startsWith('gsx$'))
-                .map(([key, value]) => [key.slice(4), value.$t])
-            );
-          });
+          const { values } = spreadsheet;
+          const headers = values.shift(1);
+
+          const rows = values.map(value =>
+            Object.fromEntries(
+              headers.map((header, index) => [header, value[index]])
+            )
+          );
+
           this.dispatchEvent(
             new CustomEvent('rows', {
               detail: { rows },

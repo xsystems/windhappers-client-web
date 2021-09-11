@@ -124,8 +124,9 @@ export class WindhappersMembership extends LitElement {
 
       <xsystems-google-sheets
         hidden
-        key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
-        worksheet="2"
+        key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+        spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        range="Kosten"
         @rows="${event => {
           this._rows = event.detail.rows;
         }}"
@@ -234,7 +235,9 @@ export class WindhappersMembership extends LitElement {
 
       <xsystems-google-sheets
         hidden
-        key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+        spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        range="Vrijwilligers"
         @rows="${event => {
           this._volunteers = event.detail.rows;
         }}"
@@ -252,7 +255,7 @@ export class WindhappersMembership extends LitElement {
                 name="${volunteer.name}"
                 role="${volunteer.role}"
                 email="${volunteer.email}"
-                email-personal="${volunteer.emailpersonal}"
+                email-personal="${volunteer.email_personal}"
                 phone="${volunteer.phone}"
               ></windhappers-volunteer>
             `

@@ -47,7 +47,9 @@ export class WindhappersContact extends LitElement {
     return html`
       <xsystems-google-sheets
         hidden
-        key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+        spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+        range="Vrijwilligers"
         @rows="${event => {
           this.contacts = event.detail.rows;
         }}"
@@ -61,7 +63,7 @@ export class WindhappersContact extends LitElement {
             name="${contact.name}"
             role="${contact.role}"
             email="${contact.email}"
-            email-personal="${contact.emailpersonal}"
+            email-personal="${contact.email_personal}"
             phone="${contact.phone}"
           ></windhappers-volunteer>
         `

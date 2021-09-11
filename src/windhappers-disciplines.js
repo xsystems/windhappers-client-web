@@ -174,7 +174,9 @@ export class WindhappersDisciplines extends LitElement {
 
         <xsystems-google-sheets
           hidden
-          key="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+          key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
+          spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
+          range="Vrijwilligers"
           @rows="${event => {
             this.volunteers = event.detail.rows;
           }}"
@@ -190,7 +192,7 @@ export class WindhappersDisciplines extends LitElement {
                   name="${volunteer.name}"
                   role="${volunteer.role}"
                   email="${volunteer.email}"
-                  email-personal="${volunteer.emailpersonal}"
+                  email-personal="${volunteer.email_personal}"
                   phone="${volunteer.phone}"
                 ></windhappers-volunteer>
               `
@@ -251,7 +253,7 @@ export class WindhappersDisciplines extends LitElement {
           </p>
 
           <div class="photo">
-            <img src="/images/canoe-polo-1.jpg" />
+            <img src="/images/canoe-polo-1.jpg" alt="Afbeelding kanopolo" />
           </div>
 
           <section>
@@ -315,7 +317,7 @@ export class WindhappersDisciplines extends LitElement {
             tocht gevaren.
           </p>
           <div class="photo">
-            <img src="/images/cruising-1.jpg" />
+            <img src="/images/cruising-1.jpg" alt="Afbeelding toervaren" />
           </div>
           <p>
             Regelmatig leggen we de boten op de auto of verenigingstrailer om
@@ -351,7 +353,7 @@ export class WindhappersDisciplines extends LitElement {
             is.
           </p>
           <div class="photo">
-            <img src="images/sea-kayaking-2.jpg" />
+            <img src="images/sea-kayaking-2.jpg" alt="Afbeedling zeevaren" />
           </div>
           <p>
             Binnen onze vereniging is een groep zeevaarders actief, die samen
@@ -376,7 +378,10 @@ export class WindhappersDisciplines extends LitElement {
         role: 'Branding en wildwatervaren',
         content: html`
           <div class="photo">
-            <img src="/images/surf-kayaking-1.jpg" />
+            <img
+              src="/images/surf-kayaking-1.jpg"
+              alt="Afbeelding brandingvaren"
+            />
           </div>
           <p>
             De langste en snelste surf, zonder om te gaan, dat is de uitdaging.
@@ -442,7 +447,10 @@ export class WindhappersDisciplines extends LitElement {
             mogelijk was, is hij meestal heringedeeld als Klasse 5.
           </dd>
           <div class="photo">
-            <img src="/images/wildwater-canoeing-1.jpg" />
+            <img
+              src="/images/wildwater-canoeing-1.jpg"
+              alt="Afbeelding wildwatervaren"
+            />
           </div>
           <p>
             Het wildwatervaren is in het begin van de vorige eeuw ontstaan. De
@@ -493,7 +501,10 @@ export class WindhappersDisciplines extends LitElement {
             zoveel mogelijk punten te scoren.
           </p>
           <div class="photo">
-            <img src="/images/playboating-1.jpg" />
+            <img
+              src="/images/playboating-1.jpg"
+              alt="Afbeelding freestylekajakken"
+            />
           </div>
           <p>
             Wildwater Freestyle is een nog betrekkelijk jonge sport. Eind jaren
