@@ -19,3 +19,4 @@
 /_site/
 /dist/
 build
+out-tsc
