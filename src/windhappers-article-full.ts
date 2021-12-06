@@ -1,11 +1,12 @@
-import { LitElement, html, css, nothing } from 'lit';
+import '@material/mwc-icon';
+
+import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { md } from './directives/md.js';
-import { windhappersStyles } from './windhappers-styles.js';
 
-import '@material/mwc-icon';
+import { md } from './directives/md.js';
 import { WindhappersArticle } from './entities/WindhappersArticle.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-article-full')
 export class WindhappersArticleFull extends LitElement {
@@ -139,53 +140,55 @@ export class WindhappersArticleFull extends LitElement {
   articlesUrl?: string;
 
   render() {
-    return this.article ? html`
-      <header>
-        <h3>${this.article.title}</h3>
-        <div id="metadata">
-          <mwc-icon>event</mwc-icon>
-          <span id="updatedTime"
-            >${WindhappersArticleFull._getLocaleDate(
-      this.article.updated_at
-    )}</span
-          >
-          <mwc-icon>schedule</mwc-icon>
-          <span
-            >${WindhappersArticleFull._getLocaleTime(
-      this.article.updated_at
-    )}</span
-          >
-        </div>
-      </header>
-      <main>
-        <section id="abstract">${md(this.article.abstract)}</section>
+    return this.article
+      ? html`
+          <header>
+            <h3>${this.article.title}</h3>
+            <div id="metadata">
+              <mwc-icon>event</mwc-icon>
+              <span id="updatedTime"
+                >${WindhappersArticleFull._getLocaleDate(
+                  this.article.updated_at
+                )}</span
+              >
+              <mwc-icon>schedule</mwc-icon>
+              <span
+                >${WindhappersArticleFull._getLocaleTime(
+                  this.article.updated_at
+                )}</span
+              >
+            </div>
+          </header>
+          <main>
+            <section id="abstract">${md(this.article.abstract)}</section>
 
-        ${this.article.sections.map(
-      section => html`
-            <section class="content-section">
-              <h4>${section.title}</h4>
-              ${section.media
-                ? html`
-                  <img
-                    src="${section.media.formats.medium.url}"
-                    alt="${section.media.formats.alternativeText}"
-                    title="${section.media.formats.caption}"
-                  />
-                `
-              : nothing}
-              <div>${md(section.content)}</div>
-            </section>
-          `
-    )}
-      </main>
-      <footer>
-        <a href="${ifDefined(this.articlesUrl)}">Alle artikelen ...</a>
-        <span
-          >${this.article.created_by.firstname}
-          ${this.article.created_by.lastname}</span
-        >
-      </footer>
-    ` : nothing;
+            ${this.article.sections.map(
+              section => html`
+                <section class="content-section">
+                  <h4>${section.title}</h4>
+                  ${section.media
+                    ? html`
+                        <img
+                          src="${section.media.formats.medium.url}"
+                          alt="${section.media.formats.alternativeText}"
+                          title="${section.media.formats.caption}"
+                        />
+                      `
+                    : nothing}
+                  <div>${md(section.content)}</div>
+                </section>
+              `
+            )}
+          </main>
+          <footer>
+            <a href="${ifDefined(this.articlesUrl)}">Alle artikelen ...</a>
+            <span
+              >${this.article.created_by.firstname}
+              ${this.article.created_by.lastname}</span
+            >
+          </footer>
+        `
+      : nothing;
   }
 
   private static _getLocaleDate(date: string) {

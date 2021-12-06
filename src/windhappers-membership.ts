@@ -1,12 +1,13 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import './windhappers-notification.js';
 import './windhappers-volunteer.js';
 import './components/xsystems-google-sheets.js';
-import { Volunteer } from './entities/Volunteer.js';
+
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
 import { Cost } from './entities/Cost.js';
+import { Volunteer } from './entities/Volunteer.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-membership')
 export class WindhappersMembership extends LitElement {
@@ -124,29 +125,35 @@ export class WindhappersMembership extends LitElement {
         key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
         spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
         range="Kosten"
-        @rows="${(event: CustomEvent<Cost[]>) => { this.costs = event.detail; }}"
+        @rows="${(event: CustomEvent<Cost[]>) => {
+          this.costs = event.detail;
+        }}"
       ></xsystems-google-sheets>
 
       <article>
         <h2>Contributie</h2>
         <table>
-          ${this.costs.slice(0, 1).map(cost => html`
+          ${this.costs.slice(0, 1).map(
+            cost => html`
               <tr>
                 <th>Omschrijving</th>
                 <th>${cost.period1}</th>
                 <th>${cost.period2}</th>
               </tr>
-            `)}
+            `
+          )}
           ${this.costs
-        .slice(1)
-        .filter(cost => cost.type === 'contribution')
-        .map(cost => html`
-          <tr>
-            <td>${cost.description}</td>
-            <td>${cost.period1}</td>
-            <td>${cost.period2}</td>
-          </tr>
-        `)}
+            .slice(1)
+            .filter(cost => cost.type === 'contribution')
+            .map(
+              cost => html`
+                <tr>
+                  <td>${cost.description}</td>
+                  <td>${cost.period1}</td>
+                  <td>${cost.period2}</td>
+                </tr>
+              `
+            )}
         </table>
       </article>
 
@@ -168,25 +175,26 @@ export class WindhappersMembership extends LitElement {
         <h2>Stalling</h2>
         <table>
           ${this.costs.slice(0, 1).map(
-          cost => html`
-            <tr>
-              <th>Omschrijving</th>
-              <th>${cost.period1}</th>
-              <th>${cost.period2}</th>
-            </tr>
-          `)}
+            cost => html`
+              <tr>
+                <th>Omschrijving</th>
+                <th>${cost.period1}</th>
+                <th>${cost.period2}</th>
+              </tr>
+            `
+          )}
           ${this.costs
-        .slice(1)
-        .filter(cost => cost.type === 'storage')
-        .map(
-          cost => html`
+            .slice(1)
+            .filter(cost => cost.type === 'storage')
+            .map(
+              cost => html`
                 <tr>
                   <td>${cost.description}</td>
                   <td>${cost.period1}</td>
                   <td>${cost.period2}</td>
                 </tr>
               `
-        )}
+            )}
         </table>
       </article>
 
@@ -194,26 +202,26 @@ export class WindhappersMembership extends LitElement {
         <h2>Overige</h2>
         <table>
           ${this.costs.slice(0, 1).map(
-          cost => html`
+            cost => html`
               <tr>
                 <th>Omschrijving</th>
                 <th>${cost.period1}</th>
                 <th>${cost.period2}</th>
               </tr>
             `
-        )}
+          )}
           ${this.costs
-        .slice(1)
-        .filter(cost => cost.type === 'other')
-        .map(
-          cost => html`
+            .slice(1)
+            .filter(cost => cost.type === 'other')
+            .map(
+              cost => html`
                 <tr>
                   <td>${cost.description}</td>
                   <td>${cost.period1}</td>
                   <td>${cost.period2}</td>
                 </tr>
               `
-        )}
+            )}
         </table>
       </article>
 
@@ -228,16 +236,18 @@ export class WindhappersMembership extends LitElement {
         key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
         spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
         range="Vrijwilligers"
-        @rows="${(event: CustomEvent<Volunteer[]>) => { this._volunteers = event.detail; }}"
+        @rows="${(event: CustomEvent<Volunteer[]>) => {
+          this._volunteers = event.detail;
+        }}"
       ></xsystems-google-sheets>
 
       <div id="volunteerContainer">
         ${this._volunteers
-        .filter(volunteer =>
-          WindhappersMembership._isRelatedVolunteer(volunteer)
-        )
-        .map(
-          volunteer => html`
+          .filter(volunteer =>
+            WindhappersMembership._isRelatedVolunteer(volunteer)
+          )
+          .map(
+            volunteer => html`
               <windhappers-volunteer
                 ?narrow="${this.narrow}"
                 name="${volunteer.name}"
@@ -247,7 +257,7 @@ export class WindhappersMembership extends LitElement {
                 phone="${volunteer.phone}"
               ></windhappers-volunteer>
             `
-        )}
+          )}
       </div>
     `;
   }

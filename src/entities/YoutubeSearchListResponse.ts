@@ -1,4 +1,4 @@
-import { YoutubeSearchResult } from "./YoutubeSearchResult.js";
+import { YoutubeSearchResult } from './YoutubeSearchResult.js';
 
 export interface YoutubeSearchListResponse {
   nextPageToken: string;

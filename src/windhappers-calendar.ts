@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import './windhappers-notification.js';
 import './components/xsystems-google-calendar.js';
+
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-calendar')
 export class WindhappersCalendar extends LitElement {

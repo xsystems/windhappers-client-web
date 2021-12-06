@@ -3,8 +3,8 @@ module.exports = {
     '/index.html',
     '/manifest.json',
     '/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js',
-    '/images/*'
+    '/images/*',
   ],
   navigateFallback: '/index.html',
-  navigateFallbackWhitelist: [/^(?!.*\.js$|\/data\/).*/]
+  navigateFallbackWhitelist: [/^(?!.*\.js$|\/data\/).*/],
 };

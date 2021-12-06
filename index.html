@@ -55,8 +55,10 @@
       // script before it has finished running
       // webcomponents-loader.js (e.g. Firefox script execution order)
       window.WebComponents = window.WebComponents || {
-        waitFor(callback){ window.addEventListener('WebComponentsReady', callback) }
-      }
+        waitFor(callback) {
+          window.addEventListener('WebComponentsReady', callback);
+        },
+      };
 
       window.WebComponents.waitFor(async () => {
         import('./out-tsc/src/windhappers-client-web.js').then(() => {

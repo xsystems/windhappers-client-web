@@ -1,9 +1,3 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { cache } from 'lit/directives/cache.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
 import '@polymer/app-layout/app-drawer/app-drawer';
 import '@polymer/app-layout/app-header-layout/app-header-layout';
@@ -14,10 +8,17 @@ import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import '@material/mwc-icon-button';
 import '@material/mwc-icon';
+
+import { AppHeaderElement } from '@polymer/app-layout/app-header/app-header';
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+
 import { WindhappersConfiguration } from './entities/WindhappersConfiguration.js';
 import { WindhappersPhotos } from './windhappers-photos.js';
+import { windhappersStyles } from './windhappers-styles.js';
 import { WindhappersVideos } from './windhappers-videos.js';
-import { AppHeaderElement } from '@polymer/app-layout/app-header/app-header';
 
 @customElement('windhappers-client-web')
 export class WindhappersClientWeb extends LitElement {
@@ -139,15 +140,14 @@ export class WindhappersClientWeb extends LitElement {
   })
   _cmsUrl?: string;
 
-
   firstUpdated() {
     const header = this.shadowRoot!.querySelector<AppHeaderElement>('#header')!;
     header._scrollHandler = () => {
       if (header.scrollTarget) {
         this._handleScroll(
           header.scrollTarget.scrollHeight -
-          header._scrollTargetHeight -
-          header._scrollTop
+            header._scrollTargetHeight -
+            header._scrollTop
         );
         header._scrollStateChanged();
       }
@@ -177,15 +177,15 @@ export class WindhappersClientWeb extends LitElement {
     return html`
       <app-location
         @route-changed="${(event: CustomEvent) => {
-        this._route = event.detail.value;
-      }}"
+          this._route = event.detail.value;
+        }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="/:page"
         @data-changed="${(event: CustomEvent) => {
-        this.page = event.detail.value.page;
-      }}"
+          this.page = event.detail.value.page;
+        }}"
       >
       </app-route>
 
@@ -261,54 +261,54 @@ export class WindhappersClientWeb extends LitElement {
   private _pages(page: string) {
     switch (page) {
       case 'contact':
-        import('./windhappers-contact.js').then(() => { });
+        import('./windhappers-contact.js').then(() => {});
         return html`<windhappers-contact
           ?narrow=${this.narrow}
         ></windhappers-contact>`;
       case 'disciplines':
-        import('./windhappers-disciplines.js').then(() => { });
+        import('./windhappers-disciplines.js').then(() => {});
         return html`<windhappers-disciplines
           ?narrow=${this.narrow}
           route-prefix="/disciplines"
         ></windhappers-disciplines>`;
       case 'photos':
-        import('./windhappers-photos.js').then(() => { });
+        import('./windhappers-photos.js').then(() => {});
         return html`<windhappers-photos
           ?narrow=${this.narrow}
           route-prefix="/photos"
         ></windhappers-photos>`;
       case 'videos':
-        import('./windhappers-videos.js').then(() => { });
+        import('./windhappers-videos.js').then(() => {});
         return html`<windhappers-videos
           ?narrow=${this.narrow}
           route-prefix="/videos"
         ></windhappers-videos>`;
       case 'membership':
-        import('./windhappers-membership.js').then(() => { });
+        import('./windhappers-membership.js').then(() => {});
         return html`<windhappers-membership
           ?narrow=${this.narrow}
           route-prefix="/membership"
         ></windhappers-membership>`;
       case 'calendar':
-        import('./windhappers-calendar.js').then(() => { });
+        import('./windhappers-calendar.js').then(() => {});
         return html`<windhappers-calendar
           ?narrow=${this.narrow}
           route-prefix="/calendar"
         ></windhappers-calendar>`;
       case 'documents':
-        import('./windhappers-documents.js').then(() => { });
+        import('./windhappers-documents.js').then(() => {});
         return html`<windhappers-documents
           ?narrow=${this.narrow}
           route-prefix="/documents"
         ></windhappers-documents>`;
       case 'location':
-        import('./windhappers-location.js').then(() => { });
+        import('./windhappers-location.js').then(() => {});
         return html`<windhappers-location
           ?narrow=${this.narrow}
           route-prefix="/location"
         ></windhappers-location>`;
       case 'articles':
-        import('./windhappers-articles.js').then(() => { });
+        import('./windhappers-articles.js').then(() => {});
         return html`
           <windhappers-articles
             ?narrow=${this.narrow}
@@ -319,7 +319,7 @@ export class WindhappersClientWeb extends LitElement {
         `;
       case 'home':
       default:
-        import('./windhappers-home.js').then(() => { });
+        import('./windhappers-home.js').then(() => {});
         return html`
           <windhappers-home
             ?narrow=${this.narrow}
@@ -359,7 +359,9 @@ export class WindhappersClientWeb extends LitElement {
   }
 
   private _loadMore() {
-    const mediaPage = this.shadowRoot!.querySelector<WindhappersPhotos | WindhappersVideos>('windhappers-photos,windhappers-videos');
+    const mediaPage = this.shadowRoot!.querySelector<
+      WindhappersPhotos | WindhappersVideos
+    >('windhappers-photos,windhappers-videos');
 
     if (mediaPage) {
       mediaPage.loadMore();

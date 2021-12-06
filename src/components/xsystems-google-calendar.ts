@@ -1,8 +1,8 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-
 import '@material/mwc-icon';
 import '@material/mwc-icon-button';
+
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 @customElement('xsystems-google-calendar')
 export class XsystemsGoogleCalendar extends LitElement {
@@ -50,13 +50,25 @@ export class XsystemsGoogleCalendar extends LitElement {
       <iframe
         id="calendar"
         xmlns="https://www.w3.org/1999/xhtml"
-        src="${XsystemsGoogleCalendar._computeUrl(this.calendars, this.narrow, this.timeZone, this.language, this.backgroundColor)}"
+        src="${XsystemsGoogleCalendar._computeUrl(
+          this.calendars,
+          this.narrow,
+          this.timeZone,
+          this.language,
+          this.backgroundColor
+        )}"
       >
       </iframe>
     `;
   }
 
-  private static _computeUrl(calendars: string[], narrow: boolean, timeZone?: string, language?: string, backgroundColor?: string) {
+  private static _computeUrl(
+    calendars: string[],
+    narrow: boolean,
+    timeZone?: string,
+    language?: string,
+    backgroundColor?: string
+  ) {
     if (calendars.length <= 0) {
       return '';
     }

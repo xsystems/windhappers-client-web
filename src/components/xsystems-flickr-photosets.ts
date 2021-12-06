@@ -72,7 +72,11 @@ export class XsystemsFlickrPhotosets extends LitElement {
         : this._performRequestImpl;
     }
 
-    if (this.key && this.userId && this.page !== changedProperties.get('page')) {
+    if (
+      this.key &&
+      this.userId &&
+      this.page !== changedProperties.get('page')
+    ) {
       this._performRequest(
         this.key,
         this.userId,
@@ -83,7 +87,13 @@ export class XsystemsFlickrPhotosets extends LitElement {
     }
   }
 
-  private _performRequestImpl(key: string, userId: string, page: number, resultsPerPage: number, primaryPhotoExtras?: string[]) {
+  private _performRequestImpl(
+    key: string,
+    userId: string,
+    page: number,
+    resultsPerPage: number,
+    primaryPhotoExtras?: string[]
+  ) {
     const queryParams = new URLSearchParams();
     queryParams.append('format', 'json');
     queryParams.append('nojsoncallback', '1');
@@ -94,7 +104,10 @@ export class XsystemsFlickrPhotosets extends LitElement {
     queryParams.append('per_page', `${resultsPerPage}`);
 
     if (Array.isArray(primaryPhotoExtras) && primaryPhotoExtras.length > 0) {
-      queryParams.append('primary_photo_extras', `${primaryPhotoExtras.join()}`);
+      queryParams.append(
+        'primary_photo_extras',
+        `${primaryPhotoExtras.join()}`
+      );
     }
 
     const url = new URL('https://api.flickr.com/services/rest');

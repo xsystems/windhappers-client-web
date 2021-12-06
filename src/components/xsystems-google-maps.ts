@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+
 import { GoogleMapsMarker } from '../entities/GoogleMapsMarker';
 
 @customElement('xsystems-google-maps')
@@ -58,7 +59,10 @@ export class XsystemsGoogleMaps extends LitElement {
   }
 
   private _initMap() {
-    const center = (this.latitude && this.longitude) ? { lat: this.latitude, lng: this.longitude } : undefined;
+    const center =
+      this.latitude && this.longitude
+        ? { lat: this.latitude, lng: this.longitude }
+        : undefined;
     const map = new google.maps.Map(this.shadowRoot?.querySelector('#map')!, {
       center,
       zoom: this.zoom,

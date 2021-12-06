@@ -39,7 +39,7 @@ export class XsystemsFlickrPhoto extends LitElement {
     type: Number,
     attribute: 'debounce-duration',
   })
-  debounceDuration = 500
+  debounceDuration = 500;
 
   private _performRequest = this.debounceDuration
     ? debounce(this.debounceDuration, this._performRequestImpl)

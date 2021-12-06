@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { windhappersStyles } from './windhappers-styles.js';
-import { XsystemsDocument } from './entities/XsystemsDocument.js';
-
 import './components/xsystems-gcp-bucket.js';
+
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+import { XsystemsDocument } from './entities/XsystemsDocument.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-documents')
 export class WindhappersDocuments extends LitElement {
@@ -63,21 +64,24 @@ export class WindhappersDocuments extends LitElement {
         <h2>Verenigingsdocumenten</h2>
         <ul>
           ${this._responseAssociationDocuments
-        .filter(item => item.isFile)
-        .map(
-          item => html`
-            <li>
-              <a href="${item.url}" target="_blank" rel="noopener"
-                >${item.name}</a
-              >
-            </li>
-          `)}
+            .filter(item => item.isFile)
+            .map(
+              item => html`
+                <li>
+                  <a href="${item.url}" target="_blank" rel="noopener"
+                    >${item.name}</a
+                  >
+                </li>
+              `
+            )}
         </ul>
         <xsystems-gcp-bucket
           bucket="windhappers-site"
           object-prefix="association_documents/"
           desc
-          @response=${(event: CustomEvent<XsystemsDocument[]>) => { this._responseAssociationDocuments = event.detail; }}
+          @response=${(event: CustomEvent<XsystemsDocument[]>) => {
+            this._responseAssociationDocuments = event.detail;
+          }}
         ></xsystems-gcp-bucket>
       </article>
 
@@ -85,19 +89,23 @@ export class WindhappersDocuments extends LitElement {
         <h2>Handleidingen</h2>
         <ul>
           ${this._responseManuals
-        .filter(item => item.isFile)
-        .map(item => html`
-          <li>
-            <a href="${item.url}" target="_blank" rel="noopener"
-              >${item.name}</a
-            >
-          </li>
-        `)}
+            .filter(item => item.isFile)
+            .map(
+              item => html`
+                <li>
+                  <a href="${item.url}" target="_blank" rel="noopener"
+                    >${item.name}</a
+                  >
+                </li>
+              `
+            )}
         </ul>
         <xsystems-gcp-bucket
           bucket="windhappers-site"
           object-prefix="manuals/"
-          @response=${(event: CustomEvent<XsystemsDocument[]>) => { this._responseManuals = event.detail; }}
+          @response=${(event: CustomEvent<XsystemsDocument[]>) => {
+            this._responseManuals = event.detail;
+          }}
         ></xsystems-gcp-bucket>
       </article>
 
@@ -140,20 +148,24 @@ export class WindhappersDocuments extends LitElement {
         Nieuwsbrieven die op regelmatige basis uitkomen.
         <ul>
           ${this._responseNewsletters
-        .filter(item => item.isFile)
-        .map(item => html`
-          <li>
-            <a href="${item.url}" target="_blank" rel="noopener"
-              >${item.name}</a
-            >
-          </li>
-        `)}
+            .filter(item => item.isFile)
+            .map(
+              item => html`
+                <li>
+                  <a href="${item.url}" target="_blank" rel="noopener"
+                    >${item.name}</a
+                  >
+                </li>
+              `
+            )}
         </ul>
         <xsystems-gcp-bucket
           bucket="windhappers-site"
           object-prefix="newsletters/"
           desc
-          @response=${(event: CustomEvent<XsystemsDocument[]>) => { this._responseNewsletters = event.detail; }}
+          @response=${(event: CustomEvent<XsystemsDocument[]>) => {
+            this._responseNewsletters = event.detail;
+          }}
         ></xsystems-gcp-bucket>
       </article>
     `;

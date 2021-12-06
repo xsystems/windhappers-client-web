@@ -1,6 +1,7 @@
 import { LitElement, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { debounce } from 'throttle-debounce';
+
 import { GcpStorageObject } from '../entities/GcpStorageObject';
 import { GcpStorageObjects } from '../entities/GcpStorageObjects';
 
@@ -55,7 +56,11 @@ export class XsystemsGcpBucket extends LitElement {
     }
   }
 
-  private _performRequestImpl(bucket: string, objectPrefix?: string, delimeter?: string) {
+  private _performRequestImpl(
+    bucket: string,
+    objectPrefix?: string,
+    delimeter?: string
+  ) {
     const url = new URL(
       `${bucket}/o`,
       'https://www.googleapis.com/storage/v1/b/'
@@ -103,7 +108,7 @@ export class XsystemsGcpBucket extends LitElement {
         name: this._computeFilename(item),
         url: XsystemsGcpBucket._computeFileUrl(bucket, item),
       };
-    }
+    };
   }
 
   private _computeFilename(item: GcpStorageObject) {

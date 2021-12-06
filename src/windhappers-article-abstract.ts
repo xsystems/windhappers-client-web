@@ -1,6 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+
 import { md } from './directives/md.js';
 import { WindhappersArticle } from './entities/WindhappersArticle.js';
 import { windhappersStyles } from './windhappers-styles.js';
@@ -96,19 +97,21 @@ export class WindhappersArticleAbstract extends LitElement {
   articleUrl?: string;
 
   render() {
-    return this.article ? html`
-      <header>
-        <h2>${this.article.title}</h2>
-      </header>
-      <main>${md(this.article.abstract)}</main>
-      <footer>
-        <a href="${ifDefined(this.articleUrl)}">Lees verder ...</a>
-      </footer>
-      <img
-        src="${this.article.poster.formats.medium.url}"
-        alt="${this.article.poster.alternativeText}"
-        title="${this.article.poster.caption}"
-      />
-    ` : nothing;
+    return this.article
+      ? html`
+          <header>
+            <h2>${this.article.title}</h2>
+          </header>
+          <main>${md(this.article.abstract)}</main>
+          <footer>
+            <a href="${ifDefined(this.articleUrl)}">Lees verder ...</a>
+          </footer>
+          <img
+            src="${this.article.poster.formats.medium.url}"
+            alt="${this.article.poster.alternativeText}"
+            title="${this.article.poster.caption}"
+          />
+        `
+      : nothing;
   }
 }

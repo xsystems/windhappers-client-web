@@ -1,9 +1,3 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { cache } from 'lit/directives/cache.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import './components/xsystems-flickr-photo.js';
@@ -12,13 +6,20 @@ import './components/xsystems-flickr-photosets.js';
 import './components/xsystems-gallery.js';
 import './components/xsystems-google-sheets.js';
 import './windhappers-volunteer.js';
+
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+
+import { XsystemsFlickrPhotoset } from './components/xsystems-flickr-photoset.js';
+import { XsystemsFlickrPhotosets } from './components/xsystems-flickr-photosets.js';
 import { XsystemsGallerry } from './components/xsystems-gallery.js';
-import { Volunteer } from './entities/Volunteer.js';
 import { FlickrPhoto } from './entities/FlickrPhoto.js';
 import { FlickrPhotoset } from './entities/FlickrPhotoset.js';
 import { FlickrPhotosets } from './entities/FlickrPhotosets.js';
-import { XsystemsFlickrPhotosets } from './components/xsystems-flickr-photosets.js';
-import { XsystemsFlickrPhotoset } from './components/xsystems-flickr-photoset.js';
+import { Volunteer } from './entities/Volunteer.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-photos')
 export class WindhappersPhotos extends LitElement {
@@ -137,8 +138,10 @@ export class WindhappersPhotos extends LitElement {
   private _photoId?: string;
 
   updated(changedProperties: PropertyValues) {
-    const photosetGallery = this.shadowRoot!.querySelector<XsystemsGallerry>('#photosetGallery');
-    const photoGallery = this.shadowRoot!.querySelector<XsystemsGallerry>('#photoGallery');
+    const photosetGallery =
+      this.shadowRoot!.querySelector<XsystemsGallerry>('#photosetGallery');
+    const photoGallery =
+      this.shadowRoot!.querySelector<XsystemsGallerry>('#photoGallery');
 
     if (photosetGallery && this._responsePhotosets) {
       if (
@@ -178,15 +181,9 @@ export class WindhappersPhotos extends LitElement {
           changedProperties.has('_responsePhotoset') &&
           this._responsePhotoset !== changedProperties.get('_responsePhotoset')
         ) {
-          WindhappersPhotos._addPhotoset(
-            photoGallery,
-            this._responsePhotoset
-          );
+          WindhappersPhotos._addPhotoset(photoGallery, this._responsePhotoset);
         } else if (photoGallery.isEmpty()) {
-          WindhappersPhotos._addPhotoset(
-            photoGallery,
-            this._responsePhotoset
-          );
+          WindhappersPhotos._addPhotoset(photoGallery, this._responsePhotoset);
         }
       }
     }
@@ -196,38 +193,38 @@ export class WindhappersPhotos extends LitElement {
     return html`
       <app-location
         @route-changed="${(event: CustomEvent) => {
-        this._route = event.detail.value;
-      }}"
+          this._route = event.detail.value;
+        }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:photosetId"
         @data-changed="${(event: CustomEvent) => {
-        this._photosetId = event.detail.value.photosetId;
-      }}"
+          this._photosetId = event.detail.value.photosetId;
+        }}"
         @active-changed="${(event: CustomEvent) => {
-        if (!event.detail.value) {
-          this._responsePhotoset = undefined;
-          this._photosetIdPrevious = this._photosetId;
-          this._photosetId = undefined;
-          this._photoId = undefined;
-        }
-      }}"
+          if (!event.detail.value) {
+            this._responsePhotoset = undefined;
+            this._photosetIdPrevious = this._photosetId;
+            this._photosetId = undefined;
+            this._photoId = undefined;
+          }
+        }}"
         @tail-changed="${(event: CustomEvent) => {
-        this._routeTail = event.detail.value;
-      }}"
+          this._routeTail = event.detail.value;
+        }}"
       ></app-route>
       <app-route
         .route="${this._routeTail}"
         pattern="/:photoId"
         @data-changed="${(event: CustomEvent) => {
-        this._photoId = event.detail.value.photoId;
-      }}"
+          this._photoId = event.detail.value.photoId;
+        }}"
         @active-changed="${(event: CustomEvent) => {
-        if (!event.detail.value) {
-          this._photoId = undefined;
-        }
-      }}"
+          if (!event.detail.value) {
+            this._photoId = undefined;
+          }
+        }}"
       ></app-route>
 
       ${cache(this._pages(this.routePrefix, this._photosetId, this._photoId))}
@@ -237,14 +234,16 @@ export class WindhappersPhotos extends LitElement {
         key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
         spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
         range="Vrijwilligers"
-        @rows="${(event: CustomEvent<Volunteer[]>) => { this.volunteers = event.detail; }}"
+        @rows="${(event: CustomEvent<Volunteer[]>) => {
+          this.volunteers = event.detail;
+        }}"
       ></xsystems-google-sheets>
 
       <div id="volunteerContainer">
         ${this.volunteers
-        .filter(volunteer => WindhappersPhotos._isRelatedVolunteer(volunteer))
-        .map(
-          volunteer => html`
+          .filter(volunteer => WindhappersPhotos._isRelatedVolunteer(volunteer))
+          .map(
+            volunteer => html`
               <windhappers-volunteer
                 ?narrow="${this.narrow}"
                 name="${volunteer.name}"
@@ -254,7 +253,7 @@ export class WindhappersPhotos extends LitElement {
                 phone="${volunteer.phone}"
               ></windhappers-volunteer>
             `
-        )}
+          )}
       </div>
     `;
   }
@@ -264,7 +263,9 @@ export class WindhappersPhotos extends LitElement {
       ? 'xsystems-flickr-photoset'
       : 'xsystems-flickr-photosets';
 
-    const element = this.shadowRoot!.querySelector<XsystemsFlickrPhotoset | XsystemsFlickrPhotosets>(elementName);
+    const element = this.shadowRoot!.querySelector<
+      XsystemsFlickrPhotoset | XsystemsFlickrPhotosets
+    >(elementName);
 
     const response = this._photosetId
       ? this._responsePhotoset
@@ -288,17 +289,21 @@ export class WindhappersPhotos extends LitElement {
           key="757b4474c3d5653a8958a33d9cf647a2"
           photo-id="${photoId}"
           @response="${(event: CustomEvent<FlickrPhoto>) => {
-          this._responsePhoto = event.detail;
-        }}"
+            this._responsePhoto = event.detail;
+          }}"
         ></xsystems-flickr-photo>
 
         <a
           id="photo"
-          href="${ifDefined(WindhappersPhotos._photoToUrl(this._responsePhoto, 'o'))}"
+          href="${ifDefined(
+            WindhappersPhotos._photoToUrl(this._responsePhoto, 'o')
+          )}"
           download
         >
           <img
-            src="${ifDefined(WindhappersPhotos._photoToUrl(this._responsePhoto, 'b'))}"
+            src="${ifDefined(
+              WindhappersPhotos._photoToUrl(this._responsePhoto, 'b')
+            )}"
             alt="${this._responsePhoto?.title?._content || 'Foto zonder titel'}"
           />
         </a>
@@ -316,8 +321,8 @@ export class WindhappersPhotos extends LitElement {
           user-id="143394479@N04"
           photoset-id="${photosetId}"
           @response="${(event: CustomEvent<FlickrPhotoset>) => {
-          this._responsePhotoset = event.detail;
-        }}"
+            this._responsePhotoset = event.detail;
+          }}"
         ></xsystems-flickr-photoset>
 
         <xsystems-gallery
@@ -333,8 +338,8 @@ export class WindhappersPhotos extends LitElement {
         key="757b4474c3d5653a8958a33d9cf647a2"
         user-id="143394479@N04"
         @response="${(event: CustomEvent<FlickrPhotosets>) => {
-        this._responsePhotosets = event.detail;
-      }}"
+          this._responsePhotosets = event.detail;
+        }}"
       ></xsystems-flickr-photosets>
 
       <xsystems-gallery
@@ -349,7 +354,10 @@ export class WindhappersPhotos extends LitElement {
     return ["Redacteur foto's"].indexOf(volunteer.role) > -1;
   }
 
-  private static _addPhotosets(photosetGallery: XsystemsGallerry, photosets: FlickrPhotosets) {
+  private static _addPhotosets(
+    photosetGallery: XsystemsGallerry,
+    photosets: FlickrPhotosets
+  ) {
     photosetGallery.addItems(
       photosets.photoset.map(photoset => ({
         id: photoset.id,
@@ -360,7 +368,10 @@ export class WindhappersPhotos extends LitElement {
     );
   }
 
-  private static _addPhotoset(photoGallery: XsystemsGallerry, photoset: FlickrPhotoset) {
+  private static _addPhotoset(
+    photoGallery: XsystemsGallerry,
+    photoset: FlickrPhotoset
+  ) {
     photoGallery.addItems(
       photoset.photo.map(photo => ({
         id: photo.id,

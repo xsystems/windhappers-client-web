@@ -1,9 +1,10 @@
-import { LitElement, html, css, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@material/mwc-icon';
 import '@material/mwc-icon-button';
+
+import { css, html, LitElement, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-notification')
 export class WindhappersNotification extends LitElement {
@@ -94,13 +95,13 @@ export class WindhappersNotification extends LitElement {
           <slot></slot>
         </div>
         ${this.removable
-        ? html`
-            <mwc-icon-button
-              icon="close"
-              @click=${this.remove}
-            ></mwc-icon-button>
-          `
-        : nothing}
+          ? html`
+              <mwc-icon-button
+                icon="close"
+                @click=${this.remove}
+              ></mwc-icon-button>
+            `
+          : nothing}
       </div>
     `;
   }

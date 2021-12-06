@@ -1,9 +1,3 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { cache } from 'lit/directives/cache.js';
-import { debounce } from 'throttle-debounce';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@material/mwc-textfield';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
@@ -12,11 +6,18 @@ import './components/xsystems-google-sheets.js';
 import './components/xsystems-youtube-search.js';
 import './components/xsystems-youtube-video.js';
 import './windhappers-volunteer.js';
+
+import { TextField } from '@material/mwc-textfield';
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+import { debounce } from 'throttle-debounce';
+
 import { XsystemsGallerry } from './components/xsystems-gallery.js';
 import { Volunteer } from './entities/Volunteer.js';
-import { TextField } from '@material/mwc-textfield';
-import { YoutubeSearchResult } from './entities/YoutubeSearchResult.js';
 import { YoutubeSearchListResponse } from './entities/YoutubeSearchListResponse.js';
+import { YoutubeSearchResult } from './entities/YoutubeSearchResult.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-videos')
 export class WindhappersVideos extends LitElement {
@@ -126,7 +127,8 @@ export class WindhappersVideos extends LitElement {
   });
 
   updated(changedProperties: PropertyValues) {
-    const videoGallery = this.shadowRoot?.querySelector<XsystemsGallerry>('#videoGallery');
+    const videoGallery =
+      this.shadowRoot?.querySelector<XsystemsGallerry>('#videoGallery');
 
     if (!videoGallery) {
       return;
@@ -163,20 +165,20 @@ export class WindhappersVideos extends LitElement {
     return html`
       <app-location
         @route-changed="${(event: CustomEvent) => {
-        this._route = event.detail.value;
-      }}"
+          this._route = event.detail.value;
+        }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:videoId"
         @data-changed="${(event: CustomEvent) => {
-        this._videoId = event.detail.value.videoId;
-      }}"
+          this._videoId = event.detail.value.videoId;
+        }}"
         @active-changed="${(event: CustomEvent) => {
-        if (!event.detail.value) {
-          this._videoId = undefined;
-        }
-      }}"
+          if (!event.detail.value) {
+            this._videoId = undefined;
+          }
+        }}"
       ></app-route>
 
       ${cache(this._pages(this.routePrefix, this._videoId))}
@@ -186,14 +188,16 @@ export class WindhappersVideos extends LitElement {
         key="AIzaSyDTj9__sWn_MKroJ6vlad1pCCidRBi6a5g"
         spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
         range="Vrijwilligers"
-        @rows="${(event: CustomEvent<Volunteer[]>) => { this.volunteers = event.detail; }}"
+        @rows="${(event: CustomEvent<Volunteer[]>) => {
+          this.volunteers = event.detail;
+        }}"
       ></xsystems-google-sheets>
 
       <div id="volunteerContainer">
         ${this.volunteers
-        .filter(volunteer => WindhappersVideos._isRelatedVolunteer(volunteer))
-        .map(
-          volunteer => html`
+          .filter(volunteer => WindhappersVideos._isRelatedVolunteer(volunteer))
+          .map(
+            volunteer => html`
               <windhappers-volunteer
                 ?narrow="${this.narrow}"
                 name="${volunteer.name}"
@@ -203,7 +207,7 @@ export class WindhappersVideos extends LitElement {
                 phone="${volunteer.phone}"
               ></windhappers-volunteer>
             `
-        )}
+          )}
       </div>
     `;
   }
@@ -235,8 +239,8 @@ export class WindhappersVideos extends LitElement {
         fullwidth
         placeholder="Welke video zoek je?"
         @input="${(event: Event) => {
-        this._setQuery((event.target as TextField).value);
-      }}"
+          this._setQuery((event.target as TextField).value);
+        }}"
       ></mwc-textfield>
 
       <xsystems-youtube-search
@@ -248,8 +252,8 @@ export class WindhappersVideos extends LitElement {
         .pageToken=${this._pageToken}
         .params=${this._params}
         @response="${(event: CustomEvent) => {
-        this._response = event.detail;
-      }}"
+          this._response = event.detail;
+        }}"
       ></xsystems-youtube-search>
 
       <xsystems-gallery
@@ -264,7 +268,10 @@ export class WindhappersVideos extends LitElement {
     return ["Redacteur video's"].indexOf(volunteer.role) > -1;
   }
 
-  private static _addItems(videoGallery: XsystemsGallerry, results: YoutubeSearchResult[]) {
+  private static _addItems(
+    videoGallery: XsystemsGallerry,
+    results: YoutubeSearchResult[]
+  ) {
     videoGallery.addItems(
       results.map(result => ({
         id: result.id.videoId,

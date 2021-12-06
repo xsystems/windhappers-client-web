@@ -118,7 +118,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
         this.resultsPerPage,
         this.extras,
         this.media,
-        this.privacyFilter,
+        this.privacyFilter
       );
     }
   }
@@ -131,7 +131,7 @@ export class XsystemsFlickrPhotoset extends LitElement {
     resultsPerPage: number,
     extras: string[],
     media: string,
-    privacyFilter?: number,
+    privacyFilter?: number
   ) {
     const queryParams = new URLSearchParams();
     queryParams.append('format', 'json');
@@ -142,7 +142,12 @@ export class XsystemsFlickrPhotoset extends LitElement {
     queryParams.append('photoset_id', photosetId);
     queryParams.append('page', `${page}`);
     queryParams.append('per_page', `${resultsPerPage}`);
-    queryParams.append('extras', `description,${Array.isArray(extras) && extras.length > 0 ? extras.join() : ''}`);
+    queryParams.append(
+      'extras',
+      `description,${
+        Array.isArray(extras) && extras.length > 0 ? extras.join() : ''
+      }`
+    );
     queryParams.append('media', media);
 
     if (privacyFilter != null) {

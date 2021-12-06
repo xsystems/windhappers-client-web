@@ -1,8 +1,3 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { cache } from 'lit/directives/cache.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import '@material/mwc-icon';
@@ -10,9 +5,15 @@ import './components/xsystems-gallery.js';
 import './components/xsystems-google-sheets.js';
 import './windhappers-notification.js';
 import './windhappers-volunteer.js';
-import { Volunteer } from './entities/Volunteer.js';
-import { Discipline } from './entities/Discipline.js';
+
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+
 import { XsystemsGallerry } from './components/xsystems-gallery.js';
+import { Discipline } from './entities/Discipline.js';
+import { Volunteer } from './entities/Volunteer.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-disciplines')
 export class WindhappersDisciplines extends LitElement {
@@ -128,7 +129,8 @@ export class WindhappersDisciplines extends LitElement {
   }
 
   updated(changedProperties: PropertyValues) {
-    const disciplineGallery = this.shadowRoot!.querySelector<XsystemsGallerry>('#disciplineGallery');
+    const disciplineGallery =
+      this.shadowRoot!.querySelector<XsystemsGallerry>('#disciplineGallery');
 
     if (
       disciplineGallery &&
@@ -144,20 +146,20 @@ export class WindhappersDisciplines extends LitElement {
     return html`
       <app-location
         @route-changed="${(event: CustomEvent) => {
-        this._route = event.detail.value;
-      }}"
+          this._route = event.detail.value;
+        }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:disciplineId"
         @data-changed="${(event: CustomEvent) => {
-        this._disciplineId = event.detail.value.disciplineId;
-      }}"
+          this._disciplineId = event.detail.value.disciplineId;
+        }}"
         @active-changed="${(event: CustomEvent) => {
-        if (!event.detail.value) {
-          this._disciplineId = undefined;
-        }
-      }}"
+          if (!event.detail.value) {
+            this._disciplineId = undefined;
+          }
+        }}"
       ></app-route>
 
       ${cache(
@@ -187,15 +189,15 @@ export class WindhappersDisciplines extends LitElement {
           spreadsheetId="17WpTzAng1WyamrsJR40S2yECPQJGENhPaM4S0zeSdEY"
           range="Vrijwilligers"
           @rows="${(event: CustomEvent<Volunteer[]>) => {
-          this.volunteers = event.detail;
-        }}"
+            this.volunteers = event.detail;
+          }}"
         ></xsystems-google-sheets>
 
         <div id="volunteerContainer">
           ${this.volunteers
-          .filter(volunteer => response[disciplineId].role === volunteer.role)
-          .map(
-            volunteer => html`
+            .filter(volunteer => response[disciplineId].role === volunteer.role)
+            .map(
+              volunteer => html`
                 <windhappers-volunteer
                   ?narrow="${this.narrow}"
                   name="${volunteer.name}"
@@ -205,7 +207,7 @@ export class WindhappersDisciplines extends LitElement {
                   phone="${volunteer.phone}"
                 ></windhappers-volunteer>
               `
-          )}
+            )}
         </div>
       `;
     }
@@ -219,7 +221,10 @@ export class WindhappersDisciplines extends LitElement {
     `;
   }
 
-  static _addItems(disciplineGallery: XsystemsGallerry, disciplines: Discipline[]) {
+  static _addItems(
+    disciplineGallery: XsystemsGallerry,
+    disciplines: Discipline[]
+  ) {
     disciplineGallery.addItems(
       disciplines.map(discipline => ({
         id: discipline.id,

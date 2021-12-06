@@ -87,7 +87,10 @@ export default class XsystemsYoutubeSearch extends LitElement {
         : this._performRequestImpl;
     }
 
-    if (this.pageToken && this.pageToken === changedProperties.get('pageToken')) {
+    if (
+      this.pageToken &&
+      this.pageToken === changedProperties.get('pageToken')
+    ) {
       return;
     }
 
@@ -104,7 +107,7 @@ export default class XsystemsYoutubeSearch extends LitElement {
         this.resultsPerPage,
         this.params,
         this.channel,
-        this.pageToken,
+        this.pageToken
       );
     }
   }
@@ -116,7 +119,7 @@ export default class XsystemsYoutubeSearch extends LitElement {
     resultsPerPage: number,
     params?: object,
     channel?: string,
-    pageToken?: string,
+    pageToken?: string
   ) {
     const queryParams = {} as any;
     queryParams.key = key;

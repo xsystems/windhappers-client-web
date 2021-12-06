@@ -1,15 +1,15 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { cache } from 'lit/directives/cache.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@material/mwc-icon';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
-
 import './windhappers-article-abstract.js';
 import './windhappers-article-full.js';
+
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+
 import { WindhappersArticle } from './entities/WindhappersArticle.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-articles')
 export class WindhappersArticles extends LitElement {
@@ -51,7 +51,7 @@ export class WindhappersArticles extends LitElement {
   @property({
     type: Array,
   })
-  articles: WindhappersArticle[] = []
+  articles: WindhappersArticle[] = [];
 
   @property({
     type: Boolean,
@@ -79,20 +79,20 @@ export class WindhappersArticles extends LitElement {
     return html`
       <app-location
         @route-changed="${(event: CustomEvent) => {
-        this._route = event.detail.value;
-      }}"
+          this._route = event.detail.value;
+        }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:articleId"
         @data-changed="${(event: CustomEvent) => {
-        this._articleId = parseInt(event.detail.value.articleId, 10);
-      }}"
+          this._articleId = parseInt(event.detail.value.articleId, 10);
+        }}"
         @active-changed="${(event: CustomEvent) => {
-        if (!event.detail.value) {
-          this._articleId = undefined;
-        }
-      }}"
+          if (!event.detail.value) {
+            this._articleId = undefined;
+          }
+        }}"
       >
       </app-route>
 
@@ -111,8 +111,8 @@ export class WindhappersArticles extends LitElement {
         >
         </windhappers-article-full>
       `;
-    } else {
-      return html`
+    }
+    return html`
       ${this.articles.map(
         article => html`
           <windhappers-article-abstract
@@ -124,12 +124,12 @@ export class WindhappersArticles extends LitElement {
         `
       )}
     `;
-    }
   }
 
   private async _fetchArticles(cmsUrl: string, pinned: boolean) {
-    const filter = `?_sort=created_at:DESC&hidden=false${pinned ? '&pinned=true' : ''
-      }`;
+    const filter = `?_sort=created_at:DESC&hidden=false${
+      pinned ? '&pinned=true' : ''
+    }`;
     fetch(`${cmsUrl}/articles${filter}`).then(async response => {
       const articles = await response.json();
       if (response.ok) {

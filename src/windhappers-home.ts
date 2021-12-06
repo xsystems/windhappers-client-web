@@ -1,13 +1,14 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { md } from './directives/md.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import './windhappers-articles.js';
 import './windhappers-notification.js';
 import './components/xsystems-google-calendar.js';
+
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+
+import { md } from './directives/md.js';
 import { WindhappersNotification } from './entities/WindhappersNotification.js';
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-home')
 export class WindhappersHome extends LitElement {
@@ -99,7 +100,7 @@ export class WindhappersHome extends LitElement {
     return html`
       <div id="notifications">
         ${this._notifications.map(
-      notification => html`
+          notification => html`
             <windhappers-notification
               type="${notification.type}"
               ?removable="${notification.removable}"
@@ -107,7 +108,7 @@ export class WindhappersHome extends LitElement {
               ${md(notification.content)}
             </windhappers-notification>
           `
-    )}
+        )}
       </div>
 
       <windhappers-articles

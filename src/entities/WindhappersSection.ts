@@ -4,10 +4,10 @@ export interface WindhappersSection {
     formats: {
       alternativeText: string;
       caption: string;
-      medium : {
+      medium: {
         url: string;
-      }
-    }
-  }
+      };
+    };
+  };
   title: string;
 }

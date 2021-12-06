@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('xsystems-gallery')
@@ -20,8 +20,7 @@ export class XsystemsGallerry extends LitElement {
     .item {
       background-color: white;
       box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
-                  0 2px 4px -1px rgba(0, 0, 0, 0.4)
+        0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
     }
 
     a {
@@ -54,40 +53,41 @@ export class XsystemsGallerry extends LitElement {
    * Use a layout that accommodates narrow devices.
    */
   @property({
-    type: Boolean
+    type: Boolean,
   })
   narrow = false;
 
   @property({
     type: String,
-    attribute: 'route-prefix'
+    attribute: 'route-prefix',
   })
   routePrefix = '';
 
   @property({
-    type: Array
+    type: Array,
   })
   private _items: Array<{
-    id: string|number,
-    thumbnail: string,
-    title: string,
-    description: string
+    id: string | number;
+    thumbnail: string;
+    title: string;
+    description: string;
   }> = [];
 
   render() {
     return html`
-      ${this._items.map(item => html`
-        <div class="item">
-          <a class="thumbnail-link" href="${this.routePrefix}/${item.id}">
-            <img  class="thumbnail"
-                  src="${item.thumbnail}">
-          </a>
-          <a class="title-link" href="${this.routePrefix}/${item.id}">
-            <h3 class="title">${item.title}</h3>
-          </a>
-          <div class="description">${item.description}</div>
-        </div>
-      `)}
+      ${this._items.map(
+        item => html`
+          <div class="item">
+            <a class="thumbnail-link" href="${this.routePrefix}/${item.id}">
+              <img class="thumbnail" src="${item.thumbnail}" />
+            </a>
+            <a class="title-link" href="${this.routePrefix}/${item.id}">
+              <h3 class="title">${item.title}</h3>
+            </a>
+            <div class="description">${item.description}</div>
+          </div>
+        `
+      )}
     `;
   }
 
@@ -95,12 +95,14 @@ export class XsystemsGallerry extends LitElement {
     this._items = [];
   }
 
-  addItems(items: Array<{
-    id: string|number,
-    thumbnail: string,
-    title: string,
-    description: string
-  }>) {
+  addItems(
+    items: Array<{
+      id: string | number;
+      thumbnail: string;
+      title: string;
+      description: string;
+    }>
+  ) {
     this._items = this._items.concat(items);
   }
 

@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import CryptoES from 'crypto-es';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import '@material/mwc-icon';
+
+import CryptoES from 'crypto-es';
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-volunteer')
 export default class WindhappersVolunteer extends LitElement {
@@ -110,17 +111,17 @@ export default class WindhappersVolunteer extends LitElement {
         id="avatar"
         sizing="cover"
         src="${WindhappersVolunteer._computeGravatarUrl(
-      this.emailPersonal,
-      this.email
-    )}"
+          this.emailPersonal,
+          this.email
+        )}"
       />
       <div id="name">${this.name}</div>
       <div id="role">${this.role}</div>
       <hr
         ?hidden="${WindhappersVolunteer._computeHiddenActions(
-      this.email,
-      this.phone
-    )}"
+          this.email,
+          this.phone
+        )}"
       />
       <a ?hidden="${!this.email}" href="mailto:${this.email}">
         <mwc-icon>email</mwc-icon>
@@ -137,7 +138,10 @@ export default class WindhappersVolunteer extends LitElement {
     return !(email || phone);
   }
 
-  private static _computeGravatarUrl(emailPrimary?: string, emailSecondary?: string) {
+  private static _computeGravatarUrl(
+    emailPrimary?: string,
+    emailSecondary?: string
+  ) {
     const email = emailPrimary ?? emailSecondary;
     const emailHash = email ? CryptoES.MD5(email.toLocaleLowerCase()) : '';
     return `https://secure.gravatar.com/avatar/${emailHash}?size=100&default=mm`;

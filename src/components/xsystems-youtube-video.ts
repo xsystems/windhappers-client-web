@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('xsystems-youtube-video')
@@ -34,7 +34,8 @@ export class XsystemsYoutubeVideo extends LitElement {
           id="player"
           title="YouTube Video"
           type="text/html"
-          src="https://www.youtube.com/embed/${this.videoId}?modestbranding=1&amp;rel=0&amp;iv_load_policy=3"
+          src="https://www.youtube.com/embed/${this
+            .videoId}?modestbranding=1&amp;rel=0&amp;iv_load_policy=3"
           frameborder="0"
           allowfullscreen
         ></iframe>

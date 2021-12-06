@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { windhappersStyles } from './windhappers-styles.js';
-
 import './components/xsystems-google-maps.js';
 import './windhappers-notification.js';
+
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
+import { windhappersStyles } from './windhappers-styles.js';
 
 @customElement('windhappers-location')
 export class WindhappersLocation extends LitElement {

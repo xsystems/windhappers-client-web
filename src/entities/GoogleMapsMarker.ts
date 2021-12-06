@@ -6,5 +6,5 @@ export interface GoogleMapsMarker {
   info: {
     content: string;
     open: boolean;
-  }
+  };
 }

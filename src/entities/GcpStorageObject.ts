@@ -1,3 +1,3 @@
 export interface GcpStorageObject {
-  name: string
+  name: string;
 }

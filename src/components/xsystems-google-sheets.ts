@@ -1,10 +1,10 @@
 import { LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+
 import { SheetsApiValueRange } from '../entities/SheetsApiValueRange.js';
 
 @customElement('xsystems-google-sheets')
 export class XsystemsGoogleSheets extends LitElement {
-
   @property({
     type: Boolean,
     reflect: true,
@@ -36,15 +36,17 @@ export class XsystemsGoogleSheets extends LitElement {
           const { values } = valueRange;
           const headers = values.shift();
 
-          const rows = headers ? values.map(value =>
-            Object.fromEntries(
-              headers.map((header, index) => [header, value[index]])
-            )
-          ) : [];
+          const rows = headers
+            ? values.map(value =>
+                Object.fromEntries(
+                  headers.map((header, index) => [header, value[index]])
+                )
+              )
+            : [];
 
           this.dispatchEvent(
             new CustomEvent('rows', {
-              detail: rows ,
+              detail: rows,
             })
           );
         });
