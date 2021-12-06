@@ -33,7 +33,7 @@ export default {
         'images/**/*',
         'node_modules/@webcomponents/**/*',
         'node_modules/@fortawesome/fontawesome-free/**/*',
-        'node_modules/lit/polyfill-support.js',
+        'node_modules/lit/polyfill-support.*',
         'environment',
         'LICENSE',
         'manifest.json',
