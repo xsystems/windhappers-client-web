@@ -34,7 +34,7 @@
     "@web/dev-server-storybook": "^0.3.8",
     "@web/rollup-plugin-copy": "^0.3.0",
     "@web/rollup-plugin-html": "^1.8.0",
-    "@web/test-runner": "^0.13.15",
+    "@web/test-runner": "^0.13.21",
     "@web/test-runner-playwright": "^0.8.8",
     "concurrently": "^6.2.1",
     "eslint": "^7.32.0",
@@ -70,7 +70,7 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.ts": [
       "eslint --fix",
       "prettier --write",
       "git add"
@@ -79,21 +79,21 @@
   "name": "windhappers-client-web",
   "version": "0.0.0",
   "description": "Webcomponent windhappers-client-web following open-wc recommendations",
-  "author": "windhappers-client-web",
+  "author": "xSystems",
   "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@material/mwc-icon": "^0.14.0",
-    "@material/mwc-icon-button": "^0.14.0",
-    "@material/mwc-textfield": "^0.14.1",
+    "@material/mwc-icon": "^0.25.3",
+    "@material/mwc-icon-button": "^0.25.3",
+    "@material/mwc-textfield": "^0.25.3",
     "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
-    "@webcomponents/webcomponentsjs": "^2.4.3",
+    "@webcomponents/webcomponentsjs": "^2.6.0",
     "crypto-es": "^1.2.7",
-    "dompurify": "^2.3.1",
+    "dompurify": "^2.3.3",
     "lit": "^2.0.2",
-    "marked": "^4.0.5",
-    "throttle-debounce": "^2.1.0"
+    "marked": "^4.0.6",
+    "throttle-debounce": "^3.0.1"
   }
 }
