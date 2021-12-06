@@ -1,4 +1,5 @@
-import { LitElement, html, css, customElement, property } from 'lit-element';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
 import './windhappers-notification.js';

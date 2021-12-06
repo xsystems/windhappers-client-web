@@ -1,6 +1,6 @@
-import { LitElement, html, css, property, PropertyValues, customElement } from 'lit-element';
-import { noChange } from 'lit-html';
-import { cache } from 'lit-html/directives/cache.js';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
 import '@material/mwc-icon';

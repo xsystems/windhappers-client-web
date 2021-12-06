@@ -1,10 +1,11 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
 import './components/xsystems-google-sheets.js';
 import './windhappers-volunteer.js';
 import { Volunteer } from './entities/Volunteer.js';
-import { ifDefined } from 'lit-html/directives/if-defined';
 
 @customElement('windhappers-contact')
 export class WindhappersContact extends LitElement {

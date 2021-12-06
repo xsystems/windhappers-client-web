@@ -1,4 +1,5 @@
-import { customElement, LitElement, property, PropertyValues } from 'lit-element';
+import { LitElement, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { debounce } from 'throttle-debounce';
 
 @customElement('xsystems-youtube-search')

@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 import '@polymer/paper-styles/color';
 import '@polymer/paper-styles/typography';

@@ -1,6 +1,7 @@
-import { LitElement, html, css, property, PropertyValues, customElement } from 'lit-element';
-import { cache } from 'lit-html/directives/cache';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout';

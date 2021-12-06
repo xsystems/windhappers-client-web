@@ -1,5 +1,5 @@
-import { LitElement, html, css, customElement, property } from 'lit-element';
-import { nothing } from 'lit-html';
+import { LitElement, html, css, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
 import '@material/mwc-icon';

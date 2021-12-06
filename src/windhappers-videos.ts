@@ -1,5 +1,6 @@
-import { LitElement, html, css, customElement, property, PropertyValues } from 'lit-element';
-import { cache } from 'lit-html/directives/cache';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 import { debounce } from 'throttle-debounce';
 import { windhappersStyles } from './windhappers-styles.js';
 

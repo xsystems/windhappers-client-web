@@ -1,4 +1,5 @@
-import { customElement, LitElement, property } from 'lit-element';
+import { LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { SheetsApiValueRange } from '../entities/SheetsApiValueRange.js';
 
 @customElement('xsystems-google-sheets')

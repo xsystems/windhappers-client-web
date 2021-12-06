@@ -1,4 +1,5 @@
-import { LitElement, html, css, property, customElement } from 'lit-element';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 @customElement('xsystems-gallery')
 export class XsystemsGallerry extends LitElement {

@@ -1,5 +1,6 @@
-import { LitElement, html, css, property, PropertyValues, customElement } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { md } from './directives/md.js';
 import { windhappersStyles } from './windhappers-styles.js';
 
