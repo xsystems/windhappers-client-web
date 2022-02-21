@@ -130,15 +130,19 @@ export class WindhappersHome extends LitElement {
     `;
   }
 
-  private async _fetchNotifications(cmsUrl: string) {
-    fetch(`${cmsUrl}/notifications?hidden=false`).then(async response => {
-      const notifications = await response.json();
-      if (response.ok) {
-        this._notifications = notifications;
-        this.dispatchEvent(new CustomEvent('loaded'));
-      } else {
+  private _fetchNotifications(cmsUrl: string) {
+    fetch(`${cmsUrl}/notifications?hidden=false`)
+      .then(async response => {
+        if (response.ok) {
+          this._notifications =
+            (await response.json()) as WindhappersNotification[];
+          this.dispatchEvent(new CustomEvent('loaded'));
+        } else {
+          this.dispatchEvent(new CustomEvent('error'));
+        }
+      })
+      .catch(() => {
         this.dispatchEvent(new CustomEvent('error'));
-      }
-    });
+      });
   }
 }

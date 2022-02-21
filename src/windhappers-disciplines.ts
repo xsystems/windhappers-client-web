@@ -145,17 +145,19 @@ export class WindhappersDisciplines extends LitElement {
   render() {
     return html`
       <app-location
-        @route-changed="${(event: CustomEvent) => {
+        @route-changed="${(event: CustomEvent<{ value: object }>) => {
           this._route = event.detail.value;
         }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:disciplineId"
-        @data-changed="${(event: CustomEvent) => {
+        @data-changed="${(
+          event: CustomEvent<{ value: { disciplineId: number } }>
+        ) => {
           this._disciplineId = event.detail.value.disciplineId;
         }}"
-        @active-changed="${(event: CustomEvent) => {
+        @active-changed="${(event: CustomEvent<{ value: boolean }>) => {
           if (!event.detail.value) {
             this._disciplineId = undefined;
           }

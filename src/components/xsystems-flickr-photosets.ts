@@ -2,6 +2,8 @@ import { LitElement, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { debounce } from 'throttle-debounce';
 
+import { FlickrPhotosets } from '../entities/FlickrPhotosets.js';
+
 @customElement('xsystems-flickr-photosets')
 export class XsystemsFlickrPhotosets extends LitElement {
   /**
@@ -59,8 +61,8 @@ export class XsystemsFlickrPhotosets extends LitElement {
   debounceDuration = 100;
 
   private _performRequest = this.debounceDuration
-    ? debounce(this.debounceDuration, this._performRequestImpl)
-    : this._performRequestImpl;
+    ? debounce(this.debounceDuration, this._performRequestImpl.bind(this))
+    : this._performRequestImpl.bind(this);
 
   updated(changedProperties: PropertyValues) {
     if (
@@ -68,8 +70,8 @@ export class XsystemsFlickrPhotosets extends LitElement {
       this.debounceDuration !== changedProperties.get('debounceDuration')
     ) {
       this._performRequest = this.debounceDuration
-        ? debounce(this.debounceDuration, this._performRequestImpl)
-        : this._performRequestImpl;
+        ? debounce(this.debounceDuration, this._performRequestImpl.bind(this))
+        : this._performRequestImpl.bind(this);
     }
 
     if (
@@ -115,12 +117,15 @@ export class XsystemsFlickrPhotosets extends LitElement {
 
     fetch(url.toString())
       .then(response => response.json())
-      .then(responseJson => {
+      .then((responseJson: { photosets: FlickrPhotosets }) => {
         this.dispatchEvent(
           new CustomEvent('response', {
             detail: responseJson.photosets,
           })
         );
+      })
+      .catch(() => {
+        throw new Error('Failed to fetch Flickr Photosets');
       });
   }
 }

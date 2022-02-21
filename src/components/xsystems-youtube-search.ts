@@ -2,6 +2,8 @@ import { LitElement, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { debounce } from 'throttle-debounce';
 
+import { YoutubeSearchListResponse } from '../entities/YoutubeSearchListResponse.js';
+
 @customElement('xsystems-youtube-search')
 export default class XsystemsYoutubeSearch extends LitElement {
   /**
@@ -62,7 +64,7 @@ export default class XsystemsYoutubeSearch extends LitElement {
   @property({
     type: Object,
   })
-  params?: object;
+  params?: Record<string, string>;
 
   /**
    * Length of time in milliseconds to debounce multiple automatically generated requests.
@@ -74,8 +76,8 @@ export default class XsystemsYoutubeSearch extends LitElement {
   debounceDuration = 500;
 
   private _performRequest = this.debounceDuration
-    ? debounce(this.debounceDuration, this._performRequestImpl)
-    : this._performRequestImpl;
+    ? debounce(this.debounceDuration, this._performRequestImpl.bind(this))
+    : this._performRequestImpl.bind(this);
 
   updated(changedProperties: PropertyValues) {
     if (
@@ -83,8 +85,8 @@ export default class XsystemsYoutubeSearch extends LitElement {
       this.debounceDuration !== changedProperties.get('debounceDuration')
     ) {
       this._performRequest = this.debounceDuration
-        ? debounce(this.debounceDuration, this._performRequestImpl)
-        : this._performRequestImpl;
+        ? debounce(this.debounceDuration, this._performRequestImpl.bind(this))
+        : this._performRequestImpl.bind(this);
     }
 
     if (
@@ -117,15 +119,15 @@ export default class XsystemsYoutubeSearch extends LitElement {
     query: string,
     type: string,
     resultsPerPage: number,
-    params?: object,
+    params?: Record<string, string>,
     channel?: string,
     pageToken?: string
   ) {
-    const queryParams = {} as any;
+    const queryParams: Record<string, string> = {};
     queryParams.key = key;
     queryParams.part = 'snippet';
     queryParams.q = query;
-    queryParams.maxResults = resultsPerPage;
+    queryParams.maxResults = resultsPerPage.toString();
     queryParams.type = type;
 
     if (channel != null) {
@@ -145,12 +147,15 @@ export default class XsystemsYoutubeSearch extends LitElement {
 
     fetch(url.toString())
       .then(response => response.json())
-      .then(responseJson => {
+      .then((responseJson: YoutubeSearchListResponse) => {
         this.dispatchEvent(
-          new CustomEvent('response', {
+          new CustomEvent<YoutubeSearchListResponse>('response', {
             detail: responseJson,
           })
         );
+      })
+      .catch(() => {
+        throw new Error('Failed to search YouTube');
       });
   }
 }

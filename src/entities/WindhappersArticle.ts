@@ -1,4 +1,4 @@
-import { WindhappersSection } from './WindhappersSection';
+import { WindhappersSection } from './WindhappersSection.js';
 
 export interface WindhappersArticle {
   abstract: string;

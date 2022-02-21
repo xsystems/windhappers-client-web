@@ -114,6 +114,7 @@ export default class WindhappersVolunteer extends LitElement {
           this.emailPersonal,
           this.email
         )}"
+        alt="Avatar"
       />
       <div id="name">${this.name}</div>
       <div id="role">${this.role}</div>
@@ -143,7 +144,9 @@ export default class WindhappersVolunteer extends LitElement {
     emailSecondary?: string
   ) {
     const email = emailPrimary ?? emailSecondary;
-    const emailHash = email ? CryptoES.MD5(email.toLocaleLowerCase()) : '';
+    const emailHash = email
+      ? CryptoES.MD5(email.toLocaleLowerCase()).toString()
+      : '';
     return `https://secure.gravatar.com/avatar/${emailHash}?size=100&default=mm`;
   }
 }

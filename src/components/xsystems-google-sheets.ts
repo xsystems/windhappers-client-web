@@ -49,6 +49,9 @@ export class XsystemsGoogleSheets extends LitElement {
               detail: rows,
             })
           );
+        })
+        .catch(() => {
+          throw new Error('Failed to fetch value range from sheet.');
         });
     }
   }

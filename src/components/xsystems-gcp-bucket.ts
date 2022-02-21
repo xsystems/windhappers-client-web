@@ -2,8 +2,8 @@ import { LitElement, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { debounce } from 'throttle-debounce';
 
-import { GcpStorageObject } from '../entities/GcpStorageObject';
-import { GcpStorageObjects } from '../entities/GcpStorageObjects';
+import { GcpStorageObject } from '../entities/GcpStorageObject.js';
+import { GcpStorageObjects } from '../entities/GcpStorageObjects.js';
 
 @customElement('xsystems-gcp-bucket')
 export class XsystemsGcpBucket extends LitElement {
@@ -38,8 +38,8 @@ export class XsystemsGcpBucket extends LitElement {
   debounceDuration = 500;
 
   private _performRequest = this.debounceDuration
-    ? debounce(this.debounceDuration, this._performRequestImpl)
-    : this._performRequestImpl;
+    ? debounce(this.debounceDuration, this._performRequestImpl.bind(this))
+    : this._performRequestImpl.bind(this);
 
   updated(changedProperties: PropertyValues) {
     if (
@@ -47,8 +47,8 @@ export class XsystemsGcpBucket extends LitElement {
       this.debounceDuration !== changedProperties.get('debounceDuration')
     ) {
       this._performRequest = this.debounceDuration
-        ? debounce(this.debounceDuration, this._performRequestImpl)
-        : this._performRequestImpl;
+        ? debounce(this.debounceDuration, this._performRequestImpl.bind(this))
+        : this._performRequestImpl.bind(this);
     }
 
     if (this.bucket) {
@@ -86,6 +86,9 @@ export class XsystemsGcpBucket extends LitElement {
               .map(this._wrapWithMetadataFunction(bucket)),
           })
         );
+      })
+      .catch(() => {
+        throw new Error('Failed to fetch GCP Storage Objects');
       });
   }
 

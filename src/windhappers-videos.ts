@@ -122,7 +122,7 @@ export class WindhappersVideos extends LitElement {
   })
   private _pageToken?: string;
 
-  private _setQuery = debounce(300, query => {
+  private _setQuery = debounce(300, (query: string) => {
     this.query = query;
   });
 
@@ -164,17 +164,19 @@ export class WindhappersVideos extends LitElement {
   render() {
     return html`
       <app-location
-        @route-changed="${(event: CustomEvent) => {
+        @route-changed="${(event: CustomEvent<{ value: object }>) => {
           this._route = event.detail.value;
         }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:videoId"
-        @data-changed="${(event: CustomEvent) => {
+        @data-changed="${(
+          event: CustomEvent<{ value: { videoId: string } }>
+        ) => {
           this._videoId = event.detail.value.videoId;
         }}"
-        @active-changed="${(event: CustomEvent) => {
+        @active-changed="${(event: CustomEvent<{ value: boolean }>) => {
           if (!event.detail.value) {
             this._videoId = undefined;
           }
@@ -251,7 +253,7 @@ export class WindhappersVideos extends LitElement {
         type="video"
         .pageToken=${this._pageToken}
         .params=${this._params}
-        @response="${(event: CustomEvent) => {
+        @response="${(event: CustomEvent<YoutubeSearchListResponse>) => {
           this._response = event.detail;
         }}"
       ></xsystems-youtube-search>

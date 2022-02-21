@@ -61,11 +61,11 @@
       };
 
       window.WebComponents.waitFor(async () => {
-        import('./out-tsc/src/windhappers-client-web.js').then(() => {
+        await import('./out-tsc/src/windhappers-client-web.js').then(() => {
           if ('serviceWorker' in navigator) {
             // Registering a service worker doesn't speed up the first load of your site.
             // You can delay registering it until after your app has loaded.
-            navigator.serviceWorker.register('service-worker.js');
+            await navigator.serviceWorker.register('service-worker.js');
           }
         });
       });

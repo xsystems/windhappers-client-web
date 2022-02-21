@@ -78,17 +78,19 @@ export class WindhappersArticles extends LitElement {
   render() {
     return html`
       <app-location
-        @route-changed="${(event: CustomEvent) => {
+        @route-changed="${(event: CustomEvent<{ value: object }>) => {
           this._route = event.detail.value;
         }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:articleId"
-        @data-changed="${(event: CustomEvent) => {
+        @data-changed="${(
+          event: CustomEvent<{ value: { articleId: string } }>
+        ) => {
           this._articleId = parseInt(event.detail.value.articleId, 10);
         }}"
-        @active-changed="${(event: CustomEvent) => {
+        @active-changed="${(event: CustomEvent<{ value: boolean }>) => {
           if (!event.detail.value) {
             this._articleId = undefined;
           }
@@ -126,18 +128,22 @@ export class WindhappersArticles extends LitElement {
     `;
   }
 
-  private async _fetchArticles(cmsUrl: string, pinned: boolean) {
+  private _fetchArticles(cmsUrl: string, pinned: boolean) {
     const filter = `?_sort=created_at:DESC&hidden=false${
       pinned ? '&pinned=true' : ''
     }`;
-    fetch(`${cmsUrl}/articles${filter}`).then(async response => {
-      const articles = await response.json();
-      if (response.ok) {
-        this.articles = articles;
-        this.dispatchEvent(new CustomEvent('loaded'));
-      } else {
-        this.dispatchEvent(new CustomEvent('error'));
-      }
-    });
+    fetch(`${cmsUrl}/articles${filter}`)
+      .then(async response => {
+        const articles = (await response.json()) as WindhappersArticle[];
+        if (response.ok) {
+          this.articles = articles;
+          this.dispatchEvent(new CustomEvent('loaded'));
+        } else {
+          this.dispatchEvent(new CustomEvent('error'));
+        }
+      })
+      .catch(() => {
+        throw new Error('Failed to fetch articles');
+      });
   }
 }

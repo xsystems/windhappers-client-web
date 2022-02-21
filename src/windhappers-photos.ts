@@ -192,17 +192,19 @@ export class WindhappersPhotos extends LitElement {
   render() {
     return html`
       <app-location
-        @route-changed="${(event: CustomEvent) => {
+        @route-changed="${(event: CustomEvent<{ value: object }>) => {
           this._route = event.detail.value;
         }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="${this.routePrefix}/:photosetId"
-        @data-changed="${(event: CustomEvent) => {
+        @data-changed="${(
+          event: CustomEvent<{ value: { photosetId: string } }>
+        ) => {
           this._photosetId = event.detail.value.photosetId;
         }}"
-        @active-changed="${(event: CustomEvent) => {
+        @active-changed="${(event: CustomEvent<{ value: boolean }>) => {
           if (!event.detail.value) {
             this._responsePhotoset = undefined;
             this._photosetIdPrevious = this._photosetId;
@@ -210,17 +212,19 @@ export class WindhappersPhotos extends LitElement {
             this._photoId = undefined;
           }
         }}"
-        @tail-changed="${(event: CustomEvent) => {
+        @tail-changed="${(event: CustomEvent<{ value: object }>) => {
           this._routeTail = event.detail.value;
         }}"
       ></app-route>
       <app-route
         .route="${this._routeTail}"
         pattern="/:photoId"
-        @data-changed="${(event: CustomEvent) => {
+        @data-changed="${(
+          event: CustomEvent<{ value: { photoId: string } }>
+        ) => {
           this._photoId = event.detail.value.photoId;
         }}"
-        @active-changed="${(event: CustomEvent) => {
+        @active-changed="${(event: CustomEvent<{ value: boolean }>) => {
           if (!event.detail.value) {
             this._photoId = undefined;
           }

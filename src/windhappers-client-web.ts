@@ -161,6 +161,9 @@ export class WindhappersClientWeb extends LitElement {
       .then(response => response.text())
       .then(environment => {
         this._environment = environment;
+      })
+      .catch(() => {
+        throw new Error('Failed to fetch environment');
       });
   }
 
@@ -176,14 +179,14 @@ export class WindhappersClientWeb extends LitElement {
   render() {
     return html`
       <app-location
-        @route-changed="${(event: CustomEvent) => {
+        @route-changed="${(event: CustomEvent<{ value: object }>) => {
           this._route = event.detail.value;
         }}"
       ></app-location>
       <app-route
         .route="${this._route}"
         pattern="/:page"
-        @data-changed="${(event: CustomEvent) => {
+        @data-changed="${(event: CustomEvent<{ value: { page: string } }>) => {
           this.page = event.detail.value.page;
         }}"
       >
@@ -192,7 +195,9 @@ export class WindhappersClientWeb extends LitElement {
       <main>
         <app-drawer-layout
           fullbleed
-          @narrow-changed=${this._handleNarrow}
+          @narrow-changed=${(event: CustomEvent<{ value: boolean }>) => {
+            this._handleNarrow(event);
+          }}
           responsive-width="1024px"
         >
           <app-drawer id="drawer" slot="drawer" swipe-open>
@@ -261,54 +266,54 @@ export class WindhappersClientWeb extends LitElement {
   private _pages(page: string) {
     switch (page) {
       case 'contact':
-        import('./windhappers-contact.js').then(() => {});
+        import('./windhappers-contact.js');
         return html`<windhappers-contact
           ?narrow=${this.narrow}
         ></windhappers-contact>`;
       case 'disciplines':
-        import('./windhappers-disciplines.js').then(() => {});
+        import('./windhappers-disciplines.js');
         return html`<windhappers-disciplines
           ?narrow=${this.narrow}
           route-prefix="/disciplines"
         ></windhappers-disciplines>`;
       case 'photos':
-        import('./windhappers-photos.js').then(() => {});
+        import('./windhappers-photos.js');
         return html`<windhappers-photos
           ?narrow=${this.narrow}
           route-prefix="/photos"
         ></windhappers-photos>`;
       case 'videos':
-        import('./windhappers-videos.js').then(() => {});
+        import('./windhappers-videos.js');
         return html`<windhappers-videos
           ?narrow=${this.narrow}
           route-prefix="/videos"
         ></windhappers-videos>`;
       case 'membership':
-        import('./windhappers-membership.js').then(() => {});
+        import('./windhappers-membership.js');
         return html`<windhappers-membership
           ?narrow=${this.narrow}
           route-prefix="/membership"
         ></windhappers-membership>`;
       case 'calendar':
-        import('./windhappers-calendar.js').then(() => {});
+        import('./windhappers-calendar.js');
         return html`<windhappers-calendar
           ?narrow=${this.narrow}
           route-prefix="/calendar"
         ></windhappers-calendar>`;
       case 'documents':
-        import('./windhappers-documents.js').then(() => {});
+        import('./windhappers-documents.js');
         return html`<windhappers-documents
           ?narrow=${this.narrow}
           route-prefix="/documents"
         ></windhappers-documents>`;
       case 'location':
-        import('./windhappers-location.js').then(() => {});
+        import('./windhappers-location.js');
         return html`<windhappers-location
           ?narrow=${this.narrow}
           route-prefix="/location"
         ></windhappers-location>`;
       case 'articles':
-        import('./windhappers-articles.js').then(() => {});
+        import('./windhappers-articles.js');
         return html`
           <windhappers-articles
             ?narrow=${this.narrow}
@@ -319,7 +324,7 @@ export class WindhappersClientWeb extends LitElement {
         `;
       case 'home':
       default:
-        import('./windhappers-home.js').then(() => {});
+        import('./windhappers-home.js');
         return html`
           <windhappers-home
             ?narrow=${this.narrow}
@@ -334,12 +339,15 @@ export class WindhappersClientWeb extends LitElement {
   private _loadConfiguration(environment: string) {
     fetch(`configuration/configuration.${environment}.json`)
       .then(response => response.json())
-      .then(configuration => {
+      .then((configuration: WindhappersConfiguration) => {
         this._configuration = configuration;
+      })
+      .catch(() => {
+        throw new Error('Failed to fetch configuration');
       });
   }
 
-  private _handleNarrow(event: CustomEvent) {
+  private _handleNarrow(event: CustomEvent<{ value: boolean }>) {
     this.narrow = event.detail.value;
   }
 

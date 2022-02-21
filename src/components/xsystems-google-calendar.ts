@@ -49,6 +49,7 @@ export class XsystemsGoogleCalendar extends LitElement {
     return html`
       <iframe
         id="calendar"
+        title="Calendar"
         xmlns="https://www.w3.org/1999/xhtml"
         src="${XsystemsGoogleCalendar._computeUrl(
           this.calendars,

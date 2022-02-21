@@ -98,7 +98,7 @@ export class WindhappersNotification extends LitElement {
           ? html`
               <mwc-icon-button
                 icon="close"
-                @click=${this.remove}
+                @click=${() => this.remove()}
               ></mwc-icon-button>
             `
           : nothing}

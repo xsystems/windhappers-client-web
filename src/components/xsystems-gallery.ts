@@ -79,7 +79,7 @@ export class XsystemsGallerry extends LitElement {
         item => html`
           <div class="item">
             <a class="thumbnail-link" href="${this.routePrefix}/${item.id}">
-              <img class="thumbnail" src="${item.thumbnail}" />
+              <img class="thumbnail" src="${item.thumbnail}" alt="Thumbnail" />
             </a>
             <a class="title-link" href="${this.routePrefix}/${item.id}">
               <h3 class="title">${item.title}</h3>

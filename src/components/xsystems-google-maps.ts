@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { GoogleMapsMarker } from '../entities/GoogleMapsMarker';
+import { GoogleMapsMarker } from '../entities/GoogleMapsMarker.js';
 
 @customElement('xsystems-google-maps')
 export class XsystemsGoogleMaps extends LitElement {
@@ -49,7 +49,12 @@ export class XsystemsGoogleMaps extends LitElement {
 
   firstUpdated() {
     XsystemsGoogleMaps._loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${this.key}`,
+      `https://maps.googleapis.com/maps/api/js?key=${
+        this.key ??
+        (() => {
+          throw new Error('Missing Google Maps API key');
+        })()
+      }`,
       this._initMap.bind(this)
     );
   }
@@ -63,10 +68,16 @@ export class XsystemsGoogleMaps extends LitElement {
       this.latitude && this.longitude
         ? { lat: this.latitude, lng: this.longitude }
         : undefined;
-    const map = new google.maps.Map(this.shadowRoot?.querySelector('#map')!, {
-      center,
-      zoom: this.zoom,
-    });
+    const map = new google.maps.Map(
+      this.shadowRoot?.querySelector('#map') ??
+        (() => {
+          throw new Error('Map element is missing');
+        })(),
+      {
+        center,
+        zoom: this.zoom,
+      }
+    );
 
     this.markers.forEach(markerData => {
       const marker = new google.maps.Marker({

@@ -18,9 +18,13 @@ class Markdown extends AsyncDirective {
       resolve(
         unsafeHTML(markdown ? DOMPurify.sanitize(marked(markdown)) : nothing)
       );
-    }).then(htmlSanitized => {
-      this.setValue(htmlSanitized);
-    });
+    })
+      .then(htmlSanitized => {
+        this.setValue(htmlSanitized);
+      })
+      .catch(() => {
+        throw new Error('Failed to process the markdown and/or set the value.');
+      });
   }
 }
 
